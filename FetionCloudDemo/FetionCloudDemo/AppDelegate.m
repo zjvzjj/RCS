@@ -82,6 +82,7 @@ rcs_state* R = NULL;
     }
     
     NSString *password = [[CurrentUserTable getLastUser] password];
+    
     if (password.length > 0)
     {
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopToken"];
