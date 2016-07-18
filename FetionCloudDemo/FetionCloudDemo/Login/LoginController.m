@@ -77,7 +77,6 @@
 {
     self.ensureButton.userInteractionEnabled = NO;
     self.eyeButton.hidden = YES;
-
     self.nameText.text =  [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     [self.nameText addTarget:self action:@selector(textFieldOnEditing:) forControlEvents:UIControlEventEditingChanged];
     [self.passwordText addTarget:self action:@selector(textFieldOnEditing:) forControlEvents:UIControlEventEditingChanged];
@@ -145,7 +144,6 @@
         if(s->error_code == 200)
         {
             _provsid = [NSString stringWithUTF8String:s->session_id];
-            //[self AddLogC:"get sms code ok"];
             NSLog(@"获取验证码成功");
             
             dispatch_async(dispatch_get_main_queue(),^{
@@ -156,8 +154,7 @@
                 
             });
             
-        }
-        else{
+        }else{
             dispatch_async(dispatch_get_main_queue(),^{
                 
                 [[[UIAlertView alloc] initWithTitle:@"" message:@"获取验证码失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
@@ -169,7 +166,6 @@
 
         }
     }];
-    [self AddLogNs:[NSString stringWithFormat:@"call _rcsApi getSmsCode for:%@", _localNum]];
     
 }
 
@@ -216,13 +212,43 @@
     [globalRcsApi login:R username:_localNum password:_password callback:^(rcs_state* R, LoginResult *s) {
         if (s->error_code == 200) {
             
-            //[self AddLogC:"login ok"];
-            
             NSLog(@"userid=============%d,%s,%d",R->last_id,R->number,R->started);
             
             [FNUserConfig initWithUserid:_userId];
             
-             [self login];
+     //-----------------------------------start--------------------------------------
+            
+            
+            [DBManager initDBWithUserId:_userId];
+            
+            CurrentUserTable *table = [CurrentUserTable getWithUserId:_userId];
+            
+            if (table.account)
+            {
+                CurrentUserTable *t = [[CurrentUserTable alloc] init];
+                t.userId = _userId;
+                t.password = _password;
+                //t.account = _nameText.text;
+                t.account = _localNum;
+                t.nickName = table.nickName;
+                [CurrentUserTable update:t];
+                
+            }else{
+                
+                CurrentUserTable *t = [[CurrentUserTable alloc] init];
+                t.userId = _userId;
+                t.password = _password;
+                //t.account = _nameText.text;
+                t.account = _localNum;
+                [CurrentUserTable insert:t];
+                
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
+            [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
+            
+    //--------------------------------------end----------------------------------------
+            
             
             //切换VC
             dispatch_async(dispatch_get_main_queue(),^{
@@ -244,9 +270,6 @@
             NSLog(@"login failed");
         }
     }];
-
-   
-    
     
 //    if (![NSString isEligible:self.nameText.text])
 //    {
