@@ -44,7 +44,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *provisionButton;//验证按钮
 
-@property (nonatomic,assign)int UserID;
+@property (nonatomic,copy)NSString *userId;
 
 
 
@@ -183,7 +183,7 @@
            // [self AddLogC:"provision ok"];
             NSLog(@"验证成功");
             
-            _UserID = s->user_id;
+            _userId = [NSString stringWithFormat:@"%d",s->user_id];
             
             dispatch_async(dispatch_get_main_queue(),^{
                 
@@ -220,7 +220,7 @@
             
             NSLog(@"userid=============%d,%s,%d",R->last_id,R->number,R->started);
             
-            [FNUserConfig initWithUserid:[NSString stringWithFormat:@"%d",_UserID]];
+            [FNUserConfig initWithUserid:_userId];
             
              [self login];
             
