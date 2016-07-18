@@ -141,7 +141,7 @@ NSString *ContactAddGroupMsg = nil;
 //                        [[[UIAlertView alloc] initWithTitle:@"" message:@"不能添加自己为好友" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
 //                        
 //                        return ;
-//                    }
+//                    }account
 //                    
 //                    ContactDataTable *table = [ContactDataTable getWithUserId:bop];
 //                    if (table.account)

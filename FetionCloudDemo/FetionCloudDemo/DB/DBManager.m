@@ -57,7 +57,7 @@ static BOPFMDatabaseQueue *queue;
     [queue inDatabase:^(BOPFMDatabase *db) {
         
         //  联系人表
-        [db executeUpdate:@"create table ContactDataTable (userId text primary key, account text, nickName text, portrait text)"];
+        [db executeUpdate:@"create table ContactDataTable (userId text primary key, account text,username test, nickName text, portrait text)"];
         
         //  当前用户表
         [db executeUpdate:@"create table CurrentUserTable (userId text primary key, account text, password text, nickName text, time text)"];

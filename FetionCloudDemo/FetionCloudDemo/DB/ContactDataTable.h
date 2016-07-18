@@ -16,6 +16,8 @@
 
 @property (nonatomic, retain)NSString *nickName;//back
 
+@property (nonatomic, retain)NSString *username;//back
+
 @property (nonatomic, retain)NSString *portrait;//
 
 @property (nonatomic,copy) NSString *portraitPath;

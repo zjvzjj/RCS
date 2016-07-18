@@ -32,7 +32,7 @@
 #import "FNUserTable.h"
 #import "FNSystemConfig.h"
 
-
+#import "ContactDataTable.h"
 @interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (nonatomic, retain)BOPReachability *reachability;
@@ -101,6 +101,8 @@ rcs_state* R = NULL;
  
     _localNum = @"+8615901435217";
     
+    [FNUserInfo ShareStaticConst].localNum = _localNum;
+    
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     printf("--------%lld \r\n", milliseconds);
     
@@ -115,6 +117,25 @@ rcs_state* R = NULL;
     printf("%lld \r\n", milliseconds);
     
     [self registerListeners];
+    
+//    [DBManager initDBWithUserId:_localNum];
+//
+//    ContactDataTable *table = [ContactDataTable getWithUserId:@"882224"];
+//    if (!table.userId) {
+//        table.userId = [NSString stringWithFormat:@"%@",@"882224"];
+////        table.nickName = @"啦啦";
+////        table.username = @"42424242";
+//        [ContactDataTable insert:table];
+//        
+//    }else{
+//        table.userId = [NSString stringWithFormat:@"%@",@"88222451"];
+//        table.nickName = @"啦啦12";
+//        table.username = @"424242421";
+//        [ContactDataTable insert:table];
+//    }
+
+    
+    
     
     return YES;
 }
@@ -328,14 +349,24 @@ rcs_state* R = NULL;
                  break;
              }
              //[weakSelf AddLogNs:[NSString stringWithFormat:@"buddy %d:%d", i, p->user_id]];
-              _buddyRemoteId = p->user_id;
+             _buddyRemoteId = p->user_id;
              
              NSNumber *number = [[NSNumber alloc]initWithInt:_buddyRemoteId];
              
              [_buddyIDArray addObject:number];
              
              [FNUserInfo ShareStaticConst].buddyIDArray = _buddyIDArray;
-            
+             
+             [DBManager initDBWithUserId:_localNum];
+             
+             ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
+             
+             if (!table.userId)
+             {
+                 ContactDataTable *table = [[ContactDataTable alloc] init];
+                 table.userId = [NSString stringWithFormat:@"%@",number];
+                 [ContactDataTable insert:table];
+             }
          }
 
          i = 0;

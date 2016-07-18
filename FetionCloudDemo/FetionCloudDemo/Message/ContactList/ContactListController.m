@@ -27,7 +27,8 @@
 #import "AppDelegate.h"
 #import "FNUserInfo.h"
 
-
+#import "ContactDataTable.h"
+#import "DBManager.h"
 @interface ContactListController ()
 {
     NSMutableArray *_tokenizers;
@@ -52,12 +53,6 @@
     
     _buddyPortraitPath = [[NSMutableArray alloc]init];
     
-    _buddyIDArray = [[NSMutableArray alloc]init];
-    
-    _buddyIDArray = [FNUserInfo ShareStaticConst].buddyIDArray;
-
-    
-    [self getUserinfo];
     
 }
 
@@ -65,18 +60,20 @@
 
 - (void) getUserinfo{
     
+    _buddyIDArray = [[NSMutableArray alloc]init];
+    
+    [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
+
+    _buddyIDArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
+    
     for (int i=0; i<[_buddyIDArray count]; i++) {
         
-        NSNumber *number = [_buddyIDArray objectAtIndex:i];
-        
-        NSString * ids = [NSString stringWithFormat:@"%@",number];
-        
-        
-        [globalRcsApi usergetinfo:R ids:ids callback:^(rcs_state* R, UserInfoResult *s) {
+        ContactDataTable *user = _buddyIDArray[i];
+
+        [globalRcsApi usergetinfo:R ids:user.userId callback:^(rcs_state* R, UserInfoResult *s) {
             if(s->error_code == 200)
             {
                 //[self AddLogC:"user get info ok"];
-                NSLog(@"ids============%@",ids);
                 
                 int  j = 0;
                 while (1 && s->user_infos) {
@@ -89,48 +86,25 @@
                     NSLog(@"nickname = %s",u->nickname);
                     NSLog(@"user_id = %d",u->user_id);
                     
-                    ContactDataTable *infos = [ContactDataTable new];
-                    infos.userId = [NSString stringWithFormat:@"%d",u->user_id];
-                    infos.nickName = [NSString stringWithUTF8String:u->nickname];
-                    
+                    ContactDataTable *table = [ContactDataTable getWithUserId:user.userId];
+                    table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+                    table.nickName = [NSString stringWithUTF8String:u->nickname];
+                    table.username = [NSString stringWithUTF8String:u->username];
+
+                    [ContactDataTable update:table];
                     
                     //获取用户头像
-                    [ globalRcsApi usergetportrait:R userId:[ids intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
+                    [ globalRcsApi usergetportrait:R userId:[user.userId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
                         if(s->error_code == 200)
                         {
                             
                             NSLog(@"%s",s->file_path);
-                            
-                            infos.portraitPath = [NSString stringWithFormat:@"%s",s->file_path];
+                            table.portrait = [NSString stringWithUTF8String:s->file_path];
 
-                            [_buddyListArray addObject:infos];
-                            
-                            
-//                            [globalRcsApi msgfetchfile:R number:ids
-//                                             messageId:[NSString stringWithFormat:@"%d",s->sid]
-//                                              chatType:1
-//                                              filePath:infos.portraitPath
-//                                           contentType:2
-//                                              fileName:@""
-//                                            transferId:@""
-//                                                 start:0
-//                                              fileSize:10
-//                                                  hash:@""
-//                                                isBurn:NO
-//                                              callback:^(rcs_state* R, MessageResult *s) {
-//                                                  if (s->error_code == 200) {
-//                                                      
-//                                                      NSLog(@"succeed");
-//                                                      
-//                                                  }
-//                                                  else
-//                                                  {
-//                                                      NSLog(@"failed");
-//                                                      
-//                                                  }
-//                                              }];
-        
-            
+                            [ContactDataTable update:table];
+
+                            [_buddyListArray addObject:table];
+  
                             
                             dispatch_async(dispatch_get_main_queue(),^{
                                 
@@ -142,9 +116,10 @@
                         }else
                         {
                             
-                            infos.portraitPath = @"";
-                            
-                            [_buddyListArray addObject:infos];
+                            table.portrait = @"";
+                            [ContactDataTable update:table];
+
+                            [_buddyListArray addObject:table];
                             
                             dispatch_async(dispatch_get_main_queue(),^{
                                 
@@ -209,8 +184,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self getUserinfo];
     
-    _buddyIDArray = [FNUserInfo ShareStaticConst].buddyIDArray;
     
     //取消cell的选中状态
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];

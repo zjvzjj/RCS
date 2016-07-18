@@ -15,7 +15,7 @@
 
 + (ContactDataTable *)getWithUserId:(NSString *)userId
 {
-    userId = [self formatWithUserId:userId];
+//    userId = [self formatWithUserId:userId];
     __block ContactDataTable *user = [[ContactDataTable alloc] init];
     BOPFMDatabaseQueue *queue = [DBManager sharedDatabaseQueue];
     [queue inDatabase:^(BOPFMDatabase *db) {
@@ -74,10 +74,10 @@
     __block BOOL result = NO;
     BOPFMDatabaseQueue *queue = [DBManager sharedDatabaseQueue];
     [queue inDatabase:^(BOPFMDatabase *db) {
-        NSString *sql = @"update ContactDataTable set userId=?, account=?, nickName=?, portrait=?";
+        NSString *sql = @"update ContactDataTable set username=?, nickName=?, portrait=?";
         result = [db executeUpdate:sql,
                   user.userId,
-                  user.account,
+                  user.username,
                   user.nickName,
                   user.portrait
                   ];

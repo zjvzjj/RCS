@@ -15,6 +15,8 @@
 
 @property (strong ,nonatomic) NSMutableArray *buddyIDArray;
 
+@property (copy ,nonatomic) NSString *localNum;
+
 //@property (strong,nonatomic) NSMutableArray *BuddyInfoArray;
 
 //@property (strong,nonatomic) BuddyInfoEntity *buddyInfo;
