@@ -1,0 +1,4 @@
+message SendGroupMsgResults {
+	required int32 reCode = 1;
+	optional string msgId = 2;
+}

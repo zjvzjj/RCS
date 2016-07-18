@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RYContentView">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="133"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fK-og-1Js">
+                    <rect key="frame" x="122" y="39" width="55" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="1aW-qc-Rx2"/>
+                        <constraint firstAttribute="height" constant="55" id="l5c-hO-Ggk"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="sns_publish_selectpic_unselected"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="剩余6秒" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9C-a4-jQf">
+                    <rect key="frame" x="0.0" y="0.0" width="290" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="zP0-0t-jse"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开始录制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TY-Wb-bl2">
+                    <rect key="frame" x="120" y="102" width="60" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="1" green="0.25752893290000001" blue="0.059199475959999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGG-mB-jgY">
+                    <rect key="frame" x="30" y="47" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="aFt-Fp-ed1"/>
+                        <constraint firstAttribute="height" constant="40" id="uEq-T6-qr0"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="record_delete_normal"/>
+                    <state key="disabled" backgroundImage="record_delete_disable"/>
+                    <connections>
+                        <action selector="deleteVideoClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="HX0-li-ffF"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIz-2U-qbU">
+                    <rect key="frame" x="230" y="47" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="0EJ-KM-5FP"/>
+                        <constraint firstAttribute="width" constant="40" id="HvE-AT-uV8"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="record_icon_hook"/>
+                    <state key="disabled" backgroundImage="record_icon_hook_normal"/>
+                    <connections>
+                        <action selector="chechVideoBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Uba-hz-r5v"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Z9C-a4-jQf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="CBE-QC-PNp"/>
+                <constraint firstItem="3TY-Wb-bl2" firstAttribute="top" secondItem="2fK-og-1Js" secondAttribute="bottom" constant="8" id="EVr-gA-ZVE"/>
+                <constraint firstItem="2fK-og-1Js" firstAttribute="centerY" secondItem="VGG-mB-jgY" secondAttribute="centerY" id="HMy-rm-nh3"/>
+                <constraint firstAttribute="trailing" secondItem="JIz-2U-qbU" secondAttribute="trailing" constant="30" id="IzX-Xs-zhL"/>
+                <constraint firstItem="Z9C-a4-jQf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="PB9-Wa-n7s"/>
+                <constraint firstItem="2fK-og-1Js" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="d1N-OZ-BXM"/>
+                <constraint firstItem="3TY-Wb-bl2" firstAttribute="centerX" secondItem="2fK-og-1Js" secondAttribute="centerX" id="loY-nJ-tQB"/>
+                <constraint firstItem="2fK-og-1Js" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="qbl-nk-4gf"/>
+                <constraint firstAttribute="trailing" secondItem="Z9C-a4-jQf" secondAttribute="trailing" constant="10" id="tnF-2a-G97"/>
+                <constraint firstItem="VGG-mB-jgY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="tvW-wQ-7Oo"/>
+                <constraint firstItem="JIz-2U-qbU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="via-Fb-pcr"/>
+                <constraint firstItem="2fK-og-1Js" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wY2-x9-rea"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="checkVideoBtn" destination="JIz-2U-qbU" id="6Hk-mF-kcK"/>
+                <outlet property="deleteVideoBtn" destination="VGG-mB-jgY" id="QX5-DF-tzz"/>
+                <outlet property="recorderBtn" destination="2fK-og-1Js" id="29C-fA-yO2"/>
+                <outlet property="timeLabel" destination="Z9C-a4-jQf" id="K3u-Mg-aqJ"/>
+            </connections>
+            <point key="canvasLocation" x="225" y="222.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="record_delete_disable" width="50" height="50"/>
+        <image name="record_delete_normal" width="50" height="50"/>
+        <image name="record_icon_hook" width="50" height="50"/>
+        <image name="record_icon_hook_normal" width="50" height="50"/>
+        <image name="sns_publish_selectpic_unselected" width="24" height="24"/>
+    </resources>
+</document>

@@ -1,0 +1,3 @@
+message GetOneThemeInfoReqArgs {
+	optional int64 infoId = 1;
+}

@@ -1,0 +1,5 @@
+message PublishInfoRes{
+   required int64 homePageversion=1;
+   required int64 infoId = 2;
+}
+

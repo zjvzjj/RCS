@@ -1,0 +1,27 @@
+message UpAddressListReqArgs {
+	optional string type = 1;
+	repeated AddresslistIdDetailCombo addressList = 2;
+
+	message AddresslistIdDetailCombo {
+		optional string addresslistId = 1;
+		optional bytes addresslistDetail = 2;
+		optional string type = 3;
+	}
+}
+
+//message UpAddressListReqArgs {
+//	optional string type = 1;
+//	repeated AddresslistIdDetailCombo addressList = 2;
+//
+//	message AddresslistIdDetailCombo {
+//		optional string addresslistId = 1;
+//		optional AddressInfo addresslistDetail = 2;
+//		optional string type = 3;
+//		
+//		message AddressInfo {
+//			optional string name = 1;
+//			optional string mobile = 2;
+//			optional string email = 3;
+//		}
+//	}
+//}

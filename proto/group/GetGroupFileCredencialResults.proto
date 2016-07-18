@@ -1,0 +1,4 @@
+message GetGroupFileCredencialResults {
+	required int32 statusCode = 1;
+	optional string credential = 2;
+}

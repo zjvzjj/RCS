@@ -1,0 +1,10 @@
+message RtcReplyReqArgs {
+	optional CallInfo callInfo = 1;
+	optional string sdp = 2;
+	optional int32 statusCode = 3;
+
+	message CallInfo {
+		optional string peerUserId = 1;
+		optional string callId = 2;
+	}
+}

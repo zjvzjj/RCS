@@ -1,0 +1,1 @@
+message SetGroupMemberInfoRspArgs{   required String groupId=1;   required String userId=2;   required String newName=3;   required UpdateGroupMemberFieldFlags updateFieldFlags=4;   optional string groupMemberPortraitUrl=5;}enum UpdateGroupMemberFieldFlags{   GroupMemberName=0x01,   GroupMemberPortraitUrl=0x02;}

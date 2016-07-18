@@ -1,0 +1,9 @@
+message RtcInviteReqArgs {
+	optional CallInfo callInfo = 1;
+	optional string sdp = 2;
+
+	message CallInfo {
+		optional string peerUserId = 1;
+		optional string callId = 2;
+	}
+}

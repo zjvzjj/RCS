@@ -1,0 +1,6 @@
+message ModifyPwdReqArgs {
+	required int32 regType = 1;
+	optional string regValue = 2;
+	optional string passwd = 3;
+		
+}

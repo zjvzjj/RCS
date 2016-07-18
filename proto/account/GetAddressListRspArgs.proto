@@ -1,0 +1,35 @@
+message GetAddressListRspArgs {
+	required int32 retCode = 1;
+	optional string retDesc = 2;
+	optional bool isEnd = 3;
+	optional string nextAddresslistId = 4;
+	repeated AddresslistIdDetailCombo addressList = 5;
+
+	message AddresslistIdDetailCombo {
+		optional string addresslistId = 1;
+		optional bytes addresslistDetail = 2;
+		optional string type = 3;
+	}
+}
+
+
+
+//message GetAddressListRspArgs {
+//	required int32 retCode = 1;
+//	optional string retDesc = 2;
+//	optional bool isEnd = 3;
+//	optional string nextAddresslistId = 4;
+//	repeated AddresslistIdDetailCombo addressList = 5;
+//
+//	message AddresslistIdDetailCombo {
+//		optional string addresslistId = 1;
+//		optional AddressInfo addresslistDetail = 2;
+//		optional string type = 3;
+//
+//		message AddressInfo {
+//			optional string name = 1;
+//			optional string mobile = 2;
+//			optional string email = 3;
+//		}
+//	}
+//}

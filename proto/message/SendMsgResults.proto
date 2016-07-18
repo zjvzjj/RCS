@@ -1,0 +1,7 @@
+message SendMsgResults {
+	required int32 statusCode = 1;
+	optional string reason = 2;
+	optional string msgId = 3;
+	optional string sendTime = 4;
+	optional int64 syncId = 5;
+}

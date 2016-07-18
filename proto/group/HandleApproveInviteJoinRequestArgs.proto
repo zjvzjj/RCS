@@ -1,0 +1,11 @@
+message HandleApproveInviteJoinRequestArgs{
+     required string groupId= 1;
+     required string sourceId= 2;
+     repeated HandleApproveItem HandleApproveItem = 3; 
+}
+message HandleApproveItem {
+     required string invitedUserId = 1;
+     required string invitedUserNickname = 2;
+     required bool approveResult = 3;
+     Optional string invitedPortraitUrl = 4;
+}

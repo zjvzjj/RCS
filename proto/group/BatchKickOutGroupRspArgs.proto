@@ -1,0 +1,11 @@
+message BatchKickOutGroupRspArgs
+{
+    required int32 statusCode = 1;
+    repeated Result resultList = 2;
+
+    message Result
+    {
+        required string userId = 1;
+        required int32 statusCode = 2;
+    }
+}

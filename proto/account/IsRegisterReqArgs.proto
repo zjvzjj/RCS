@@ -1,0 +1,4 @@
+message IsRegisterReqArgs {
+	repeated string destIds = 1;
+
+}

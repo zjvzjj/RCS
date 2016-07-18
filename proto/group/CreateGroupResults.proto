@@ -1,0 +1,4 @@
+message CreateGroupResult {
+	required int32 reCode = 1;
+	optional string groupId = 2;
+}

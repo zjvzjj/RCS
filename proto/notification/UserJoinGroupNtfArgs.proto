@@ -1,0 +1,9 @@
+message UserJoinGroupNtfArgs {
+    optional string groupId = 1;
+    optional string sourceUserId = 2;
+    optional string sourceUserNickname = 3;
+    optional string invitedUserId = 4;
+    optional string invitedUserNickname = 5;
+    optional string groupName = 6;
+    optional string invitedUserPortraitUrl = 7;
+}

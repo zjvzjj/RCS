@@ -1,0 +1,3 @@
+message KeepAliveArgs {
+	optional int64 sysMsgId = 1;
+}

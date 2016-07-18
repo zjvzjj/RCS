@@ -1,0 +1,12 @@
+message ApproveInviteJoinNtfArgs {
+	optional string groupId = 1;
+	optional string sourceUser = 2;
+	repeated NtfItem approveList = 3;
+        optional string groupName = 4;
+
+	message NtfItem {
+		optional string invitedUserId = 1;
+		optional string invitedGroupNickName = 2;
+               optional string invitedUserPortraitUrl = 3;
+	}
+}

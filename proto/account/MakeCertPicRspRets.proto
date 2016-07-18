@@ -1,0 +1,7 @@
+message MakeCertPicRspRets {
+	required int32 retCode = 1;
+	optional int32 picType = 2;
+	optional string certPicKey = 3;
+	optional string certPicBase64Str = 4;
+	optional string certPicValue = 5;
+}

@@ -1,0 +1,15 @@
+message SendGroupMsgArgs {
+	optional string msgId = 1;
+	optional string eventName = 2;
+	optional string contentType = 3;
+	optional string fromUid = 4;
+	optional string fromNickName = 5;
+	optional string epid = 6;
+	optional string toGroupId = 7;
+	optional string msgContent = 8;
+	repeated string supportList = 9;
+	optional string smsMsgId = 10;
+	optional bool isHasAuthorization = 11 [default = false];
+	optional string source = 12;
+	optional string sn = 13;
+}

@@ -1,0 +1,5 @@
+message GetRelationShipReqArgs {
+	optional int32 extentNo = 1;
+	optional string targetUserId = 2;
+	optional string startUserId = 3;
+}

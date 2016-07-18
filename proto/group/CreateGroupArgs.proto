@@ -1,0 +1,6 @@
+message CreateGroupArgs {
+	optional string groupName = 1;
+	optional int32 groupType = 2;
+	optional string nickName = 3;
+       optional int32 groupConfig=4;       optional string groupPortraitUrl=5;
+}

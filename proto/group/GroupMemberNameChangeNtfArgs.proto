@@ -1,0 +1,8 @@
+message GroupMemberNameChangeNtfArgs
+{
+    required string groupId=1;
+    required string groupName=2;
+    required string oldGroupMemberName=3;
+    required string newGroupMemberName=4;
+    required string userId=5;
+}

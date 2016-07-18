@@ -1,0 +1,5 @@
+message GetSmsCodeRspRets {
+	required int32 retCode = 1;
+	optional string smsKey = 2;
+	optional string smsValue = 3;
+}

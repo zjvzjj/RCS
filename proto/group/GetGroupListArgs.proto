@@ -1,0 +1,4 @@
+message GetGroupListArgs {
+	optional int32 groupType = 1;
+	optional int32 groupListVersion = 2;
+}

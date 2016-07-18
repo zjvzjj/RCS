@@ -1,0 +1,5 @@
+message VerifyCertPicReqArgs {
+	optional string certPicKey = 1;
+	optional string verifyValue = 2;
+	
+}

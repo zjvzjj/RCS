@@ -1,0 +1,9 @@
+message GetPresenceResult {
+	required int32 statusCode = 1;
+	repeated PresenceItem resList = 2;
+
+	message PresenceItem {
+		optional string userId = 1;
+		optional int32 presenceValue = 2;
+	}
+}

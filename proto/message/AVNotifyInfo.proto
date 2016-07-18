@@ -1,0 +1,5 @@
+message AVNotifyInfo {
+	optional string notifyType = 1;
+	optional string notifyBody = 2;
+	optional string msgId = 3;
+}

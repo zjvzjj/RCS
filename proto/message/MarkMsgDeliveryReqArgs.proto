@@ -1,0 +1,3 @@
+message MarkMsgDeliveryReqArgs {
+	repeated string msgSendSuccessArgs = 1;
+}

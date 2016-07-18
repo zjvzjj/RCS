@@ -1,0 +1,5 @@
+message ChangeGroupOwnerArgs
+{
+	required string groupId = 1;
+	required string userId = 2;
+}

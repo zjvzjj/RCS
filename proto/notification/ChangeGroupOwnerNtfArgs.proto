@@ -1,0 +1,5 @@
+message ChangeGroupOwnerNtfArgs {
+	optional string groupId = 1;
+    optional string groupName = 2;
+	optional string userId = 3;
+}

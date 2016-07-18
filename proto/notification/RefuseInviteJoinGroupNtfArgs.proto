@@ -1,0 +1,10 @@
+message RefuseInviteJoinGroupNtfArgs {
+	optional string groupId = 1;
+	repeated NtfItem refuseList = 2;
+    optional string groupName = 3;
+
+	message NtfItem {
+		optional string invitedUserId = 1;
+		optional string invitedUserName = 2;
+	}
+}

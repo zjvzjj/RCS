@@ -1,0 +1,4 @@
+message SendSimpleMsgResults
+{
+	required int32 statusCode = 1;
+}

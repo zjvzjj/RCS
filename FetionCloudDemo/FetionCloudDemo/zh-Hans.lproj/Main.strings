@@ -1,0 +1,237 @@
+
+/* Class = "UIButton"; normalTitle = "免费注册"; ObjectID = "2pt-aj-Mni"; */
+"2pt-aj-Mni.normalTitle" = "免费注册";
+
+/* Class = "UINavigationItem"; title = "联系人"; ObjectID = "4qi-A1-wPW"; */
+"4qi-A1-wPW.title" = "联系人";
+
+/* Class = "UITabBarItem"; title = "联系人"; ObjectID = "5E5-eU-djG"; */
+"5E5-eU-djG.title" = "联系人";
+
+/* Class = "UITableViewController"; title = "消息"; ObjectID = "6fu-Vt-PZp"; */
+"6fu-Vt-PZp.title" = "消息";
+
+/* Class = "UIButton"; normalTitle = "注册"; ObjectID = "7JX-vM-swP"; */
+"7JX-vM-swP.normalTitle" = "注册";
+
+/* Class = "UITabBarItem"; title = "我的"; ObjectID = "7SP-gp-bwU"; */
+"7SP-gp-bwU.title" = "我的";
+
+/* Class = "UINavigationItem"; title = "讨论组"; ObjectID = "8CC-9h-5SJ"; */
+"8CC-9h-5SJ.title" = "讨论组";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "8kN-y0-c4s"; */
+"8kN-y0-c4s.normalTitle" = "确定";
+
+/* Class = "UINavigationItem"; title = "填写群昵称"; ObjectID = "9LG-Rg-lgb"; */
+"9LG-Rg-lgb.title" = "填写群昵称";
+
+/* Class = "UITextField"; placeholder = "请设置新密码"; ObjectID = "9jT-gF-RAZ"; */
+"9jT-gF-RAZ.placeholder" = "请设置新密码";
+
+/* Class = "UITextField"; placeholder = "6-11位，字母、数字"; ObjectID = "DpN-Vw-C0V"; */
+"DpN-Vw-C0V.placeholder" = "6-11位，字母、数字";
+
+/* Class = "UITextField"; placeholder = "输入上述密码"; ObjectID = "EFm-04-BwI"; */
+"EFm-04-BwI.placeholder" = "输入上述密码";
+
+/* Class = "UITabBarItem"; title = "消息"; ObjectID = "GrC-vt-M8A"; */
+"GrC-vt-M8A.title" = "消息";
+
+/* Class = "UINavigationItem"; title = "我的"; ObjectID = "HQr-xj-Xfe"; */
+"HQr-xj-Xfe.title" = "我的";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "HRs-Ea-QwL"; */
+"HRs-Ea-QwL.normalTitle" = "登录";
+
+/* Class = "UINavigationItem"; title = "添加联系人"; ObjectID = "Hbx-cY-pnp"; */
+"Hbx-cY-pnp.title" = "添加联系人";
+
+/* Class = "UILabel"; text = "账        号"; ObjectID = "IPT-3y-2Vh"; */
+"IPT-3y-2Vh.text" = "账        号";
+
+/* Class = "UILabel"; text = "原密码："; ObjectID = "KkP-is-UOj"; */
+"KkP-is-UOj.text" = "原密码：";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "KsO-1e-QGH"; */
+"KsO-1e-QGH.text" = "Title";
+
+/* Class = "UILabel"; text = "确认新密码："; ObjectID = "LqZ-Ec-uCL"; */
+"LqZ-Ec-uCL.text" = "确认新密码：";
+
+/* Class = "UIBarButtonItem"; title = "编辑"; ObjectID = "M0L-aE-gju"; */
+"M0L-aE-gju.title" = "编辑";
+
+/* Class = "UITextField"; text = "24k纯帅"; ObjectID = "MCg-Ut-eiQ"; */
+"MCg-Ut-eiQ.text" = "24k纯帅";
+
+/* Class = "UILabel"; text = "188888888"; ObjectID = "MMk-U8-aZO"; */
+"MMk-U8-aZO.text" = "188888888";
+
+/* Class = "UIButton"; normalTitle = "修改密码"; ObjectID = "MaN-MU-Z3n"; */
+"MaN-MU-Z3n.normalTitle" = "修改密码";
+
+/* Class = "UIButton"; normalTitle = "退出该群"; ObjectID = "N2e-2I-z1d"; */
+"N2e-2I-z1d.normalTitle" = "退出该群";
+
+/* Class = "UITextField"; placeholder = "长度为6-11位"; ObjectID = "Ovg-sv-Xj2"; */
+"Ovg-sv-Xj2.placeholder" = "长度为6-11位";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "PSy-h7-whK"; */
+"PSy-h7-whK.text" = "Title";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "PYO-Sn-IQm"; */
+"PYO-Sn-IQm.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "注册"; ObjectID = "SIT-No-Vuw"; */
+"SIT-No-Vuw.title" = "注册";
+
+/* Class = "UILabel"; text = "群名称"; ObjectID = "UeL-6t-DVi"; */
+"UeL-6t-DVi.text" = "群名称";
+
+/* Class = "UINavigationItem"; title = "修改密码"; ObjectID = "UsJ-Nb-Sf7"; */
+"UsJ-Nb-Sf7.title" = "修改密码";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Uyx-Sf-ALE"; */
+"Uyx-Sf-ALE.text" = "Title";
+
+/* Class = "UILabel"; text = "基本信息"; ObjectID = "V3o-vy-bZc"; */
+"V3o-vy-bZc.text" = "基本信息";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "VPd-97-anA"; */
+"VPd-97-anA.text" = "Title";
+
+/* Class = "UILabel"; text = "用户ID"; ObjectID = "Vvh-ju-QeD"; */
+"Vvh-ju-QeD.text" = "用户ID";
+
+/* Class = "UIButton"; normalTitle = "立即创建"; ObjectID = "XXu-H9-UBf"; */
+"XXu-H9-UBf.normalTitle" = "立即创建";
+
+/* Class = "UILabel"; text = "全部成员"; ObjectID = "YRb-UN-ElU"; */
+"YRb-UN-ElU.text" = "全部成员";
+
+/* Class = "UILabel"; text = "密        码"; ObjectID = "YUA-rW-imu"; */
+"YUA-rW-imu.text" = "密        码";
+
+/* Class = "UITextField"; placeholder = "账号"; ObjectID = "YeO-mX-yzF"; */
+"YeO-mX-yzF.placeholder" = "账号";
+
+/* Class = "UILabel"; text = "确认密码"; ObjectID = "Yh1-ne-nxo"; */
+"Yh1-ne-nxo.text" = "确认密码";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "YtF-mQ-aW3"; */
+"YtF-mQ-aW3.text" = "Title";
+
+/* Class = "UITextField"; placeholder = "最多可输入20个字符"; ObjectID = "Z7Q-FR-LXY"; */
+"Z7Q-FR-LXY.placeholder" = "最多可输入20个字符";
+
+/* Class = "UILabel"; text = "新密码："; ObjectID = "ZX3-Nq-Hhf"; */
+"ZX3-Nq-Hhf.text" = "新密码：";
+
+/* Class = "UILabel"; text = "群名称"; ObjectID = "aA9-RD-ihF"; */
+"aA9-RD-ihF.text" = "群名称";
+
+/* Class = "UIButton"; normalTitle = "退出"; ObjectID = "aze-38-Ohw"; */
+"aze-38-Ohw.normalTitle" = "退出";
+
+/* Class = "UILabel"; text = "群成员"; ObjectID = "blz-EC-oEU"; */
+"blz-EC-oEU.text" = "群成员";
+
+/* Class = "UINavigationItem"; title = "群信息"; ObjectID = "c30-r1-DWw"; */
+"c30-r1-DWw.title" = "群信息";
+
+/* Class = "UILabel"; text = "18888888888"; ObjectID = "cqY-fn-U7d"; */
+"cqY-fn-U7d.text" = "18888888888";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "d16-2f-xpT"; */
+"d16-2f-xpT.normalTitle" = "确定";
+
+/* Class = "UITextField"; placeholder = "请输入群名称，20个字符以内"; ObjectID = "dhR-On-M7a"; */
+"dhR-On-M7a.placeholder" = "请输入群名称，20个字符以内";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "eLp-Tq-Ol0"; */
+"eLp-Tq-Ol0.text" = "Title";
+
+/* Class = "UIViewController"; title = "设置"; ObjectID = "eT2-zT-J54"; */
+"eT2-zT-J54.title" = "设置";
+
+/* Class = "UITextField"; placeholder = "字母和数字的组合"; ObjectID = "g53-5r-CIe"; */
+"g53-5r-CIe.placeholder" = "字母和数字的组合";
+
+/* Class = "UILabel"; text = "备注"; ObjectID = "gLs-dt-pc6"; */
+"gLs-dt-pc6.text" = "备注";
+
+/* Class = "UIBarButtonItem"; title = "创建"; ObjectID = "hyx-l9-Sed"; */
+"hyx-l9-Sed.title" = "创建";
+
+/* Class = "UILabel"; text = "用户昵称"; ObjectID = "iU8-gM-H95"; */
+"iU8-gM-H95.text" = "用户昵称";
+
+/* Class = "UILabel"; text = "BOBU"; ObjectID = "jPU-o1-ShJ"; */
+"jPU-o1-ShJ.text" = "BOBU";
+
+/* Class = "UINavigationItem"; title = "联系人详情页"; ObjectID = "jZ6-Hx-AfF"; */
+"jZ6-Hx-AfF.title" = "联系人详情页";
+
+/* Class = "UINavigationItem"; title = "删除联系人"; ObjectID = "lXV-Ri-jun"; */
+"lXV-Ri-jun.title" = "删除联系人";
+
+/* Class = "UITextField"; placeholder = "6-11位，字母、数字、下划线"; ObjectID = "lig-Vq-2Ri"; */
+"lig-Vq-2Ri.placeholder" = "6-11位，字母、数字、下划线";
+
+/* Class = "UIButton"; normalTitle = "删除联系人"; ObjectID = "mFt-NV-zg5"; */
+"mFt-NV-zg5.normalTitle" = "删除联系人";
+
+/* Class = "UINavigationItem"; title = "我的群"; ObjectID = "mi9-7t-vre"; */
+"mi9-7t-vre.title" = "我的群";
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "mpA-B7-8Us"; */
+"mpA-B7-8Us.normalTitle" = "确定";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "o8q-8S-843"; */
+"o8q-8S-843.text" = "Subtitle";
+
+/* Class = "UITextField"; placeholder = "请再次输入新密码"; ObjectID = "oLY-yZ-rna"; */
+"oLY-yZ-rna.placeholder" = "请再次输入新密码";
+
+/* Class = "UITableViewController"; title = "联系人"; ObjectID = "rWU-DZ-Grr"; */
+"rWU-DZ-Grr.title" = "联系人";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "sl6-W7-gx1"; */
+"sl6-W7-gx1.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "请输入原密码"; ObjectID = "st6-kG-Jh6"; */
+"st6-kG-Jh6.placeholder" = "请输入原密码";
+
+/* Class = "UITextField"; placeholder = "设置备注名"; ObjectID = "szM-jx-wOF"; */
+"szM-jx-wOF.placeholder" = "设置备注名";
+
+/* Class = "UINavigationItem"; title = "群成员"; ObjectID = "tBD-zi-HqT"; */
+"tBD-zi-HqT.title" = "群成员";
+
+/* Class = "UILabel"; text = "昵称："; ObjectID = "tIM-6Q-2YB"; */
+"tIM-6Q-2YB.text" = "昵称：";
+
+/* Class = "UILabel"; text = "哈哈"; ObjectID = "tf0-II-aAY"; */
+"tf0-II-aAY.text" = "哈哈";
+
+/* Class = "UIBarButtonItem"; title = "删除"; ObjectID = "uK9-rV-mpc"; */
+"uK9-rV-mpc.title" = "删除";
+
+/* Class = "UIBarButtonItem"; title = "创建"; ObjectID = "vKn-pW-s1p"; */
+"vKn-pW-s1p.title" = "创建";
+
+/* Class = "UITableViewController"; title = "选择联系人"; ObjectID = "xfy-Bj-g1w"; */
+"xfy-Bj-g1w.title" = "选择联系人";
+
+/* Class = "UINavigationItem"; title = "设置昵称"; ObjectID = "yeU-2C-h1y"; */
+"yeU-2C-h1y.title" = "设置昵称";
+
+/* Class = "UINavigationItem"; title = "消息"; ObjectID = "yem-Ld-C1a"; */
+"yem-Ld-C1a.title" = "消息";
+
+/* Class = "UILabel"; text = "账号"; ObjectID = "zGF-Ro-hCX"; */
+"zGF-Ro-hCX.text" = "账号";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zbN-Fs-MyC"; */
+"zbN-Fs-MyC.normalTitle" = "Button";

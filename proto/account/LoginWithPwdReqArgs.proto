@@ -1,0 +1,10 @@
+message LoginwithPwdReqArgs
+{
+	optional int32 loginType = 1;
+	optional string loginValue = 2;
+	optional string pwd = 3;
+	optional string machineCode = 4;
+	optional string epid = 5;
+	optional string proxyAddress = 6;
+
+}

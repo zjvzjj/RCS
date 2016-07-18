@@ -1,0 +1,3 @@
+message RtcUpdateRspArgs {
+	optional int32 retCode = 1;
+}

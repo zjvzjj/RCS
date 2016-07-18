@@ -1,0 +1,26 @@
+message PullMsgResults {
+	required int32 statusCode = 1;
+	repeated MsgEntityArgs readMsgRspArgsList= 2;
+	optional bool isCompleted = 3;
+	optional int64 syncId = 4;
+
+	
+	message MsgEntityArgs {
+		optional string fromBopId = 1;
+		optional string toUserId = 2;
+		optional MsgEntity msg = 3;
+		optional string sendDate = 4;
+               optional int32 sendClientType = 5;               optional string sendClientPortraitUrl=6;
+
+		message MsgEntity {
+				optional string msgId = 1;
+				optional int64 syncId = 2;
+				optional string msgType = 3;
+				optional string msgAttribute = 4;
+				optional string msgContent = 5;
+				optional string senderNickname = 6;
+				optional string senderId = 7;
+				optional bytes extend = 8;
+			}
+	}
+}

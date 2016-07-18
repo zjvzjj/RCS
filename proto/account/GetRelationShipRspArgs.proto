@@ -1,0 +1,15 @@
+message GetRelationShipRspArgs {
+	required int32 retCode = 1;
+	optional string retDesc = 2;
+	optional int32 extentNo = 3 [default=1];
+	optional string targetUserId = 4;
+	optional bool isEnd = 5 [default=true];
+	optional string nextUserId = 6;
+	repeated AddressListRelationsEntity relations = 7;
+
+	message AddressListRelationsEntity {
+		optional string userid = 1;
+		optional string addresslistId = 2;
+		optional int64 version = 3;
+	}
+}

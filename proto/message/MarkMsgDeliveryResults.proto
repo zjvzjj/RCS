@@ -1,0 +1,4 @@
+message MarkMsgDeliveryResults {
+	required int32 statusCode = 1;
+	optional int32 hasMsgCount = 2;
+}

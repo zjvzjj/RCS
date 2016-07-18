@@ -1,0 +1,14 @@
+message PullNotifyResults {
+	optional int32 statusCode = 1;
+	repeated NotifyMsgSArgs argsList = 2;
+	optional bool isCompleted = 3;
+	optional int64 syncId = 4;
+
+	message NotifyMsgSArgs {
+		optional string sourceId = 1;
+		optional string tid = 2;
+		optional string notifyType = 3;
+		optional string notifyId = 4;
+		optional bytes notifyBody = 5;
+	}
+}

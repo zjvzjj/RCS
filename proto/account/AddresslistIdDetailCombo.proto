@@ -1,0 +1,5 @@
+message AddresslistIdDetailCombo {
+		optional string addresslistId = 1;
+		optional bytes addresslistDetail = 2;
+		optional string type = 3;
+	}

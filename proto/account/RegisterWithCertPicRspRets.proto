@@ -1,0 +1,5 @@
+message RegisterWithCertPicRspRets {
+	required int32 retCode = 1;
+	optional string bopUid = 2;
+	
+}

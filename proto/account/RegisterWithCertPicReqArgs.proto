@@ -1,0 +1,7 @@
+message RigsterWithCertPicReqArgs {
+	required int32 regType = 1;
+	optional string regValue = 2;
+	optional string pwd = 3;
+	optional string certPicKey = 4;
+	optional string certPicValue = 5;
+}

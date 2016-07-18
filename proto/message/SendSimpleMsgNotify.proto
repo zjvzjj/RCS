@@ -1,0 +1,4 @@
+message SendSimpleMsgNotify {
+	required string fromBopId = 1;
+	required string message = 2;
+}

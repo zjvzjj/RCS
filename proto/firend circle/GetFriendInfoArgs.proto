@@ -1,0 +1,7 @@
+message GetFriendInfoReq{
+     required string userId = 1;
+     optional int64 version = 2;
+     optional int32 count = 3;
+     optional int64 localLastInfoId=4;
+}
+

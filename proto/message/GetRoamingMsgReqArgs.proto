@@ -1,0 +1,2 @@
+message GetRoamingMsgReqArgs{required string peerId = 1;required string lastRmsId = 2;
+required int32 pageSize = 3;required int32 msgType = 4;}

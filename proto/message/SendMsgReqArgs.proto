@@ -1,0 +1,21 @@
+message SendMsgReqArgs
+{
+    optional string fromBopId = 1;
+    optional string toUserId = 2;
+    optional MsgEntity msg = 3;
+    optional string sendDate = 4;
+    optional int32 sendClientType = 5;    optional String sendClientPortraitUrl=6;
+
+    message MsgEntity
+    {
+        optional string msgId = 1;
+        optional int64 syncId = 2;
+        optional string msgType = 3;
+        optional string msgAttribute = 4;
+        optional string msgContent = 5;
+        optional string senderNickname = 6;
+        optional string senderId = 7;
+        optional bytes extend = 8;
+        optional string pushDesc = 9;
+    }
+}

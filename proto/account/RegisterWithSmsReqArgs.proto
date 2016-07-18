@@ -1,0 +1,9 @@
+message RegisterWithSmsReqArgs {
+	required int32 regType = 1;
+	optional string regValue = 2;
+	optional string pwd = 3;
+	optional string smsKey = 4;
+	optional string smsValue = 5;
+	optional bool isNeedSecurityKey = 6;
+
+}

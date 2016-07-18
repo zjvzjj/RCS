@@ -1,0 +1,5 @@
+message AddressInfo {
+	optional string name = 1;
+	optional string mobile = 2;
+	optional string email = 3;
+}

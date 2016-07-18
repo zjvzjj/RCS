@@ -1,0 +1,4 @@
+message StatusRspArgs {
+	required int32 retCode = 1;
+	
+}

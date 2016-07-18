@@ -1,0 +1,6 @@
+message BNKickNotifyArgs {
+	optional string eventType = 1;
+	optional string notifyDesc = 2;
+	optional int32 clientType = 3;
+	optional string clientVersion = 4;
+}

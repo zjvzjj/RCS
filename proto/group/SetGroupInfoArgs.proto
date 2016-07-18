@@ -1,0 +1,1 @@
+message SetGroupInfoArgs{    required string groupId=1;    required string groupName=2;    required int32 groupConfig=3;    required UpdateGroupFieldFlags updateFieldFlags=4;    optional string groupPortraitUrl=5;}enum UpdateGroupFieldFlags{    GroupName = 0x01;    GroupConfig = 0x02;    GroupPortraitUrl = 0x04;}

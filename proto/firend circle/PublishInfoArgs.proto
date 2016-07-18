@@ -1,0 +1,7 @@
+message PublishInfoReq{
+     required string publishUserId = 1;
+     required string content = 2; 
+     required int32 recvType = 3;
+     repeated string contactId = 4;
+}
+

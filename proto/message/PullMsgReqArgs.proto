@@ -1,0 +1,4 @@
+message PullMsgReqArgs {
+	optional int32 count = 1;
+	optional int64 syncId = 2;
+}

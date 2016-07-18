@@ -1,0 +1,12 @@
+
+message GetHomeInfoRes{
+	optional int64 homePageversion = 1;
+	repeated FriendInfoRecord friendInfos = 2;
+
+	message FriendInfoRecord{
+    	optional int64 infoId = 1;
+    	optional string content = 2;
+    	optional string userId=3;
+    	optional string pubilshDate=4;
+	}
+}

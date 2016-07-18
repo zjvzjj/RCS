@@ -1,0 +1,5 @@
+message NewMsgNotifyArgs {
+	optional string userId = 1;
+	optional string event = 2;
+	optional int32 msgType = 3;
+}

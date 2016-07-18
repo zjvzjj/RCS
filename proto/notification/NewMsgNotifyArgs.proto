@@ -1,0 +1,3 @@
+message NewMsgNotifyArgs {
+	required int32 event = 1;
+}

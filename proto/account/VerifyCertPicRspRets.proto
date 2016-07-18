@@ -1,0 +1,3 @@
+message VerifyCertPicRspRets {
+	required int32 retCode = 1;
+}

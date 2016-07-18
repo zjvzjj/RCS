@@ -1,0 +1,5 @@
+message BatchKickOutGroupReqArgs
+{
+    required string groupId=1;
+    repeated string userIdList=2;
+}

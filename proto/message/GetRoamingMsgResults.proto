@@ -1,0 +1,7 @@
+message GetRoamingMsgResults
+{	required int32 statusCode = 1;
+       optional  string lastRmsId = 2;
+       optional int32 pageCount = 3;
+        optional int32  msgType = 4;	repeated MsgEntityArgs msgRspArgsList = 5;	message MsgEntityArgs{  optional string fromBopId = 1;  optional string toUserId = 2;  optional MsgEntity msg = 3;  optional string sendDate = 4;    message MsgEntity
+      {       optional string msgId = 1;	optional int64 syncId = 2;	optional string msgType = 3;	optional string msgAttribute = 4;	optional string msgContent = 5;	optional string senderNickname = 6;	optional string senderId = 7;	repeated bytes extend = 8;       }}
+}

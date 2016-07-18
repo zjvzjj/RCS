@@ -1,0 +1,13 @@
+message GetGroupListResults {
+	required int32 reCode = 1;
+	repeated GroupInfo groupList = 2;
+	optional int32 groupListVersion = 3;
+
+	message GroupInfo {
+		optional string groupId = 1;
+		optional string groupName = 2;
+		optional int32 groupType = 3;
+		optional int32 groupConfig = 4;
+               optional string groupPortraitUrl=5;
+	}
+}

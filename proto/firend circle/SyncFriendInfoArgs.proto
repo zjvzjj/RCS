@@ -1,0 +1,4 @@
+message SyncFriendInfoReq{
+     optional string userId = 1;
+}
+

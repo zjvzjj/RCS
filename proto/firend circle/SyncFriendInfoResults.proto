@@ -1,0 +1,22 @@
+message SyncFriendInfoRes{
+     optional int64 version = 1; 
+     repeated FriendInfo infoList = 2;
+
+     message FriendInfo{
+          optional int64 infoId = 1;
+          optional string content = 2;
+          optional string userId=3;
+          optional string pubilshDate=4;
+          repeated string praises = 5;
+          repeated CommentInfo comments = 6;
+          optional int32 actionType = 7;
+     }
+
+     message CommentInfo{
+          optional int64 commentId=1;
+          optional string commentUserId=2;
+          optional string content=3;
+          optional string parentUserId = 4;
+     }
+}
+

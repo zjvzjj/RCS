@@ -1,0 +1,9 @@
+message UserExitGroupNtfArgs {
+	optional string groupId = 1;
+	optional int32 exitType = 2;
+    optional string exitUserId = 3;
+    optional string exitUserNickname = 4;
+    optional string sourceUserId = 5;
+    optional string sourceUserNickname = 6;
+    optional string groupName = 7;
+}

@@ -1,0 +1,5 @@
+message GroupMemberJoinNtArgs {
+	optional string groupId = 1;
+	optional string nickName = 2;
+	optional string userId = 3;
+}

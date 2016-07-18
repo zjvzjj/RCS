@@ -1,0 +1,5 @@
+message UploadBuddyListArgs {
+	optional string ownerId = 1;
+	optional string buddyListVersion = 2;
+	repeated string buddyList = 3;
+}

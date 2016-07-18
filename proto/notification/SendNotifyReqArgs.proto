@@ -1,0 +1,6 @@
+#import "./NotifyInfo.proto"
+message SendNotifyReqArgs {
+	optional NotifyInfo notifyInfo = 1;
+	optional string expireDate = 2;
+	repeated string toUserId = 3;
+}

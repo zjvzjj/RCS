@@ -1,0 +1,10 @@
+message IsRegisterRspArgs {
+	required int32 retCode = 1;
+	optional string retDesc = 2;
+	repeated RegisterStatusCombo regiserStatus = 3;
+
+	message RegisterStatusCombo {
+		optional string userId = 1;
+		optional int32 registerStatus = 2;
+	}
+}

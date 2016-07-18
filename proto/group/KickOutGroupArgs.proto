@@ -1,0 +1,4 @@
+message KickOutGroupArgs {
+	optional string groupId = 1;
+	optional string kickedUserId = 2;
+}

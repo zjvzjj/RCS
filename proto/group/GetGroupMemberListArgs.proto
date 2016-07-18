@@ -1,0 +1,3 @@
+message GetGroupMemberListArgs {
+	required string groupId = 1;
+}

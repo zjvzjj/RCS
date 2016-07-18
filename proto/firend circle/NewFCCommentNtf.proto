@@ -1,0 +1,6 @@
+message NewFCCommentNtf {
+	optional string commenter = 1;
+	optional string content = 2;
+	optional int64 themeId = 3;
+	optional int32 type = 4;
+}

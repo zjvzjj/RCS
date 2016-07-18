@@ -1,0 +1,3 @@
+message UploadBuddyListResult {
+	required int32 statusCode = 1;
+}

@@ -1,0 +1,5 @@
+message deletesyncqueueReq {
+     required string userId = 1;
+     required int64 version = 2;
+}
+

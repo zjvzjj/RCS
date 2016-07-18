@@ -1,0 +1,16 @@
+message GetOneThemeInfoRspArgs {
+	optional int64 infofId = 1;
+	optional string content = 2;
+	optional string userId = 3;
+	optional string publishDate = 4;
+	repeated string contactIds = 5;
+	repeated CommentInfo comments = 6;
+
+	message CommentInfo {
+		optional int64 commentId = 1;
+		optional string commentUserId = 2;
+		optional string content = 3;
+		optional string parentUserId = 4;
+	}
+}
+

@@ -1,0 +1,4 @@
+message SetGroupMemberInfoRspArgs
+{
+    required int32 statusCode = 1;
+}

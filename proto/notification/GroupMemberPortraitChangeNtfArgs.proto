@@ -1,0 +1,1 @@
+message GroupMemberPortraitChangeNtfArgs{       required string groupId=1;       required string groupName=2;       required string userId=3;       required string userNickname=4;       required string groupMemberPortraitUrl=5;}

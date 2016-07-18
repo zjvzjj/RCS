@@ -1,0 +1,5 @@
+message NotifyInfo {
+	optional string notifyType = 1;
+	optional string notifyInfo = 2;
+	optional string msgId = 3;
+}

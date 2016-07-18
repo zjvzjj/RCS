@@ -1,0 +1,4 @@
+message DeleteThemeInfoReqArgs {
+	optional int64 infoId = 1;
+	optional string userId = 2;
+}

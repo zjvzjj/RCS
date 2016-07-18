@@ -1,0 +1,7 @@
+message GetHomeInfoReq{
+     required string userId = 1;
+     required int64 homePageversion = 2; 
+     optional int32 count = 3;
+     optional int64 localLastInfoId=4; 
+}
+

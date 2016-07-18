@@ -1,0 +1,6 @@
+message GetAddressListReqArgs {
+	optional bool isDetail = 1 [default = false];
+	repeated string addresslistIds = 2;
+	optional string startAddresslistId = 3;
+	optional int32 countNum = 4;
+}

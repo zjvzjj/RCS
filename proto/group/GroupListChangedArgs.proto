@@ -1,0 +1,6 @@
+message GroupListChangedArgs {
+	optional string groupId = 1;
+	optional string groupName = 2;
+	optional string actionType = 3;
+    optional int32 groupType = 4;
+}

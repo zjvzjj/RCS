@@ -1,0 +1,10 @@
+message InviteJoinGroupArgs {
+	repeated InviteJoinGroupInfo inviteJoinGroupInfo = 1;
+
+	message InviteJoinGroupInfo {
+		optional string groupId = 1;
+		optional string invitedUserId = 2;
+		optional string userNickName = 3;
+               optional string userPortraitUrl=4;
+	}
+}

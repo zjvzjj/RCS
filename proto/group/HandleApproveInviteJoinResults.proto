@@ -1,0 +1,3 @@
+message HandleApproveInviteJoinResponse{
+     required int32 statusCode = 1;
+}

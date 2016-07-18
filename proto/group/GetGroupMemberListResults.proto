@@ -1,0 +1,12 @@
+message GetGroupMemberListResults {
+	required int32 reCode = 1;
+	repeated GroupMemberInfo groupMembers = 2;
+
+	message GroupMemberInfo {
+		optional string userId = 1;
+		optional string groupNickName = 2;
+		optional int32 identity = 3;
+		optional int32 userConfig = 4;
+               optional string groupMemberPortraitUrl=5;
+	}
+}

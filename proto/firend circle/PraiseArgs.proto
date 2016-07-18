@@ -1,0 +1,5 @@
+message PraiseReq{
+     required int64 praisedInfoId= 1;
+     required string praisedUserId = 2; 
+}
+

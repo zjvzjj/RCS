@@ -1,0 +1,6 @@
+message LoginWithPwdRspRets
+{
+	required int32 retCode = 1;
+	optional string credencial = 2;
+	optional string publicClientIp = 3;
+}

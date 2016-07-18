@@ -1,0 +1,3 @@
+message DelAddressListReqArgs {
+	repeated string addressIds = 1;
+}

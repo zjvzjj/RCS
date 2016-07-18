@@ -1,0 +1,5 @@
+message AddressListRelationsEntity {
+	optional string userid = 1;
+	optional string addresslistId = 2;
+	optional int64 version = 3;
+}

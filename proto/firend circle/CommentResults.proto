@@ -1,0 +1,4 @@
+message CommentResults {
+	optional int64 commentId = 1;
+	optional string commentTime = 2;
+}

@@ -1,0 +1,7 @@
+message SysNotify {
+	optional int64 msgId = 1;
+	optional int32 msgType = 2;
+	optional string msgBody = 3;
+	optional string title = 4;
+	optional string sendDate = 5;
+}

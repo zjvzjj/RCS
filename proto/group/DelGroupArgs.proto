@@ -1,0 +1,3 @@
+message DelGroupArgs {
+	optional string groupId = 1;
+}

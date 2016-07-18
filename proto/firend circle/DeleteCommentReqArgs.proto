@@ -1,0 +1,5 @@
+message DeleteCommentReqArgs {
+	optional int64 commentId = 1;
+	optional string userId = 2;
+	optional int64 infoId = 3;
+}

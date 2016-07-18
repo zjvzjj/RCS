@@ -1,0 +1,7 @@
+message AddressListDetailEntity {
+	optional string userid = 1;
+	optional string addresslistId = 2;
+	optional string type = 3;
+	optional bytes detail = 4;
+	optional fix64 uptime = 5;
+}

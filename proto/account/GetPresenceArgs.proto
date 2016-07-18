@@ -1,0 +1,3 @@
+message GetPresenceArgs {
+	repeated string userList = 1;
+}
