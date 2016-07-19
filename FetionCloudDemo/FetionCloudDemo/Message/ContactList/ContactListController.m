@@ -33,7 +33,7 @@
 {
     NSMutableArray *_tokenizers;
     NSMutableArray *_buddyListArray;
-
+    
 }
 
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
@@ -49,10 +49,7 @@
     
     _tokenizers = [[NSMutableArray alloc] init];
     
-    _buddyListArray = [[NSMutableArray alloc]init];
-    
     _buddyPortraitPath = [[NSMutableArray alloc]init];
-    
     
 }
 
@@ -61,15 +58,16 @@
 - (void) getUserinfo{
     
     _buddyIDArray = [[NSMutableArray alloc]init];
+    _buddyListArray = [[NSMutableArray alloc]init];
     
     [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
-
+    
     _buddyIDArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
     
     for (int i=0; i<[_buddyIDArray count]; i++) {
         
         ContactDataTable *user = _buddyIDArray[i];
-
+        
         [globalRcsApi usergetinfo:R ids:user.userId callback:^(rcs_state* R, UserInfoResult *s) {
             if(s->error_code == 200)
             {
@@ -90,8 +88,10 @@
                     table.userId = [NSString stringWithFormat:@"%d",u->user_id];
                     table.nickName = [NSString stringWithUTF8String:u->nickname];
                     table.username = [NSString stringWithUTF8String:u->username];
-
+                    
                     [ContactDataTable update:table];
+                    
+                    [_buddyListArray addObject:table];
                     
                     //获取用户头像
                     [ globalRcsApi usergetportrait:R userId:[user.userId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
@@ -100,11 +100,8 @@
                             
                             NSLog(@"%s",s->file_path);
                             table.portrait = [NSString stringWithUTF8String:s->file_path];
-
+                            
                             [ContactDataTable update:table];
-
-                            [_buddyListArray addObject:table];
-  
                             
                             dispatch_async(dispatch_get_main_queue(),^{
                                 
@@ -118,8 +115,6 @@
                             
                             table.portrait = @"";
                             [ContactDataTable update:table];
-
-                            [_buddyListArray addObject:table];
                             
                             dispatch_async(dispatch_get_main_queue(),^{
                                 
@@ -147,28 +142,28 @@
 //- (void) getUserPortrait{
 //
 //    for (int i=0; i<[_buddyIDArray count]; i++) {
-//        
+//
 //        NSNumber *number = [_buddyIDArray objectAtIndex:i];
-//                
+//
 //        [globalRcsApi usergetportrait:R userId:[number intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
 //            if(s->error_code == 200)
 //            {
-//                
+//
 //                NSLog(@"%s",s->file_path);
 //                [_buddyPortraitPath addObject:[NSString stringWithFormat:@"%s",s->file_path]];
-//                
+//
 //                dispatch_async(dispatch_get_main_queue(),^{
-//                    
+//
 //                    [self.tableView reloadData];
 //                });
-//                
+//
 //                NSLog(@"user get portrait ok");
-//                
+//
 //            }else
 //            {
-//                
+//
 //                NSLog(@"user get portrait failed");
-//                
+//
 //            }
 //        }];
 //    }
@@ -206,16 +201,16 @@
     NSMutableArray *personArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
     
     [_tokenizers removeAllObjects];
-
+    
     
     [_tokenizers addObjectsFromArray:personArray];
     
-        [_tokenizers insertObject:@"群" atIndex:0];
-        
-        [_tokenizers insertObject:@"讨论组" atIndex:1];
-        
+    [_tokenizers insertObject:@"群" atIndex:0];
+    
+    [_tokenizers insertObject:@"讨论组" atIndex:1];
+    
     [self.tableView reloadData];
-
+    
 }
 
 - (void)pushAddContact
@@ -275,50 +270,50 @@
     
     
     //NSData *data = [NSData dataWithContentsOfFile:infos.portraitPath];
-//
+    //
     
-//    NSString *imagename = [infos.portraitPath lastPathComponent];
-//    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *rootCachePath = [paths firstObject];
-//    
-//    NSString *imagePath = [NSString  stringWithFormat:@"%@/%@.jpg",rootCachePath,imagename];
-//    
-//    NSData *data = [NSData dataWithContentsOfFile:imagePath];
-//    cell.imageView.image = [UIImage imageWithData:data];
+    //    NSString *imagename = [infos.portraitPath lastPathComponent];
+    //
+    //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *rootCachePath = [paths firstObject];
+    //
+    //    NSString *imagePath = [NSString  stringWithFormat:@"%@/%@.jpg",rootCachePath,imagename];
+    //
+    //    NSData *data = [NSData dataWithContentsOfFile:imagePath];
+    //    cell.imageView.image = [UIImage imageWithData:data];
     
     
     
     
     //NSLog(@"%@",infos.portraitPath);
-//    NSString *imgPath = infos.portraitPath;
-//    NSData *data = [NSData dataWithContentsOfFile:imgPath];
-//    cell.imageView.image = [UIImage imageWithData:data];
-
+    //    NSString *imgPath = infos.portraitPath;
+    //    NSData *data = [NSData dataWithContentsOfFile:imgPath];
+    //    cell.imageView.image = [UIImage imageWithData:data];
     
     
     
     
-//    NSString *str = [FNUserInfo ShareStaticConst].imgpath;
-//    NSData *data = [NSData dataWithContentsOfFile:str];
-//    cell.imageView.image = [UIImage imageWithData:data];
-
     
-//    NSObject *sec = _tokenizers[indexPath.row];
-//    
-//    if ([sec isKindOfClass:[ContactDataTable class]])
-//    {
-//        ContactDataTable *t = (ContactDataTable *)sec;
-//        cell.textLabel.text = [t nickName];
-//        
-       //cell.imageView.image = [FNImage avatarWithIndex:(indexPath.row-2)];
-//    }
-//    else if ([sec isKindOfClass: [NSString class]])
-//    {
-//        cell.textLabel.text = sec;
-//        
-//        cell.imageView.image = [UIImage imageNamed:@"group_head_portrait"];
-//    }
+    //    NSString *str = [FNUserInfo ShareStaticConst].imgpath;
+    //    NSData *data = [NSData dataWithContentsOfFile:str];
+    //    cell.imageView.image = [UIImage imageWithData:data];
+    
+    
+    //    NSObject *sec = _tokenizers[indexPath.row];
+    //
+    //    if ([sec isKindOfClass:[ContactDataTable class]])
+    //    {
+    //        ContactDataTable *t = (ContactDataTable *)sec;
+    //        cell.textLabel.text = [t nickName];
+    //
+    //cell.imageView.image = [FNImage avatarWithIndex:(indexPath.row-2)];
+    //    }
+    //    else if ([sec isKindOfClass: [NSString class]])
+    //    {
+    //        cell.textLabel.text = sec;
+    //
+    //        cell.imageView.image = [UIImage imageNamed:@"group_head_portrait"];
+    //    }
     
     return cell;
 }
@@ -328,21 +323,21 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-//    if (indexPath.row == 0)
-//    {
-//        [self performSegueWithIdentifier:@"group" sender:nil];
-//    }
-//    else if (indexPath.row == 1)
-//    {
-//        [self performSegueWithIdentifier:@"discussionGroup" sender:nil];
-//    }
-//    else
-//    {
-//        [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
-//    }
     
-     [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
+    //    if (indexPath.row == 0)
+    //    {
+    //        [self performSegueWithIdentifier:@"group" sender:nil];
+    //    }
+    //    else if (indexPath.row == 1)
+    //    {
+    //        [self performSegueWithIdentifier:@"discussionGroup" sender:nil];
+    //    }
+    //    else
+    //    {
+    //        [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
+    //    }
+    
+    [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
     
 }
 
@@ -352,7 +347,7 @@
     {
         return NO;
     }
-
+    
     return YES;
 }
 
@@ -402,15 +397,15 @@
         conversationVC.toUserid = infos.userId;
         conversationVC.source = @"private";
         
-//        NSIndexPath *index = (NSIndexPath *)sender;
-//        ContactDataTable *infos = _tokenizers[index.row];
-//        ConversationController *conversationVC = segue.destinationViewController;
-//        conversationVC.toDisplayName = infos.nickName;
-//        
-//        conversationVC.toUserid = [Utility userIdWithoutAppKey:infos.userId];
-//       
-//        conversationVC.source = @"private";
-
+        //        NSIndexPath *index = (NSIndexPath *)sender;
+        //        ContactDataTable *infos = _tokenizers[index.row];
+        //        ConversationController *conversationVC = segue.destinationViewController;
+        //        conversationVC.toDisplayName = infos.nickName;
+        //        
+        //        conversationVC.toUserid = [Utility userIdWithoutAppKey:infos.userId];
+        //       
+        //        conversationVC.source = @"private";
+        
         
     }
     
