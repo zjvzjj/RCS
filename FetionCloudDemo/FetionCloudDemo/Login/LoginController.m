@@ -214,12 +214,12 @@
             
             NSLog(@"userid=============%d,%s,%d",R->last_id,R->number,R->started);
             
-            [FNUserConfig initWithUserid:_userId];
+            [FNUserConfig initWithUserid:_localNum];
             
      //-----------------------------------start--------------------------------------
             
             
-            [DBManager initDBWithUserId:_userId];
+            [DBManager initDBWithUserId:_localNum];
             
             CurrentUserTable *table = [CurrentUserTable getWithUserId:_userId];
             
@@ -311,6 +311,7 @@
 
 - (void)login
 {
+    //11111
     [self activityShow:YES];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
   // NSString *url = @"http://192.168.0.102:8080/as/user/login";
@@ -318,6 +319,13 @@
     
     //__block NSString *password = _passwordText.text;
     __block NSString *password = _password;
+
+    
+    
+    
+    
+    
+    
     
     
    // NSDictionary *parameter = @{@"uname":_nameText.text,@"pwd":_passwordText.text,@"appkey":APP_KEY};

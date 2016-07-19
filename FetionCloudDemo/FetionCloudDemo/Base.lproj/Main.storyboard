@@ -1496,7 +1496,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="deleteGroupMember" textLabel="VPd-97-anA" imageView="99i-6D-HI8" style="IBUITableViewCellStyleDefault" id="iQN-i8-Wpr">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iQN-i8-Wpr" id="jyP-VT-1HK">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1538,7 +1538,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupMemberCell" textLabel="PYO-Sn-IQm" imageView="BCt-pD-avJ" style="IBUITableViewCellStyleDefault" id="fTx-QY-9ah">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fTx-QY-9ah" id="vql-Zq-3ar">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -2018,8 +2018,8 @@
         <image name="联系人selected@2X.png" width="60" height="45"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="f86-pP-eRZ"/>
         <segue reference="GUi-6O-awD"/>
+        <segue reference="EH5-4R-ReI"/>
         <segue reference="MqQ-of-cDc"/>
     </inferredMetricsTieBreakers>
 </document>

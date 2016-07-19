@@ -74,28 +74,7 @@ rcs_state* R = NULL;
                                                  name:_kBOPReachabilityChangedNotification
                                                object:nil];
     
-    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
-    
-    if (name)
-    {
-        [DBManager initDBWithUserId:name];
-    }
-    
-    NSString *password = [[CurrentUserTable getLastUser] password];
-    
-    if (password.length > 0)
-    {
-        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopToken"];
-        NSString *bopId = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopId"];
-        [FNConfig setAppToken:token userId:bopId];
-        FNTabBarController *tabBar = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"tabbarController"];
-        self.window.rootViewController = tabBar;
-        
-        if (![[CurrentUserTable getLastUser] nickName])
-        {
-            [self performSelector:@selector(setNick) withObject:nil afterDelay:1];
-        }
-    }
+  
     
     
 /***************************************** RCSSDK *******************************************************/
@@ -135,7 +114,38 @@ rcs_state* R = NULL;
 //        [ContactDataTable insert:table];
 //    }
 
+    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     
+    if (name)
+    {
+        [DBManager initDBWithUserId:name];
+    }
+    
+    NSString *password = [[CurrentUserTable getLastUser] password];
+    
+    if (password.length > 0)
+    {
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopToken"];
+        NSString *bopId = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopId"];
+        [FNConfig setAppToken:token userId:bopId];
+        
+        FNTabBarController *tabBar = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"tabbarController"];
+        self.window.rootViewController = tabBar;
+        
+        [globalRcsApi login:R username:_localNum password:password callback:^(rcs_state* R, LoginResult *s) {
+            if (s->error_code == 200) {
+                
+            
+            }
+            
+        }];
+        
+        
+        //        if (![[CurrentUserTable getLastUser] nickName])
+        //        {
+        //            [self performSelector:@selector(setNick) withObject:nil afterDelay:1];
+        //        }
+    }
     
     
     return YES;

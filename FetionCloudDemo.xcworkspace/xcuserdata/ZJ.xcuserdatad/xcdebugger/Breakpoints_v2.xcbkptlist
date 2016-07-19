@@ -4,18 +4,28 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/DB/DBManager.m"
-            timestampString = "490529199.980597"
+            filePath = "FetionCloudDemo/FetionCloudDemo/Setting/SettingViewController.m"
+            timestampString = "490616703.394807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "+initDBWithUserId:"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "-actionSheet:didDismissWithButtonIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,14 +35,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/Message/ContactList/ContactListController.m"
-            timestampString = "490532020.786457"
+            filePath = "FetionCloudDemo/FetionCloudDemo/Login/LoginController.m"
+            timestampString = "490616921.118221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "-getUserinfo"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "-loginAction:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[LoginController loginAction:]"
+                  moduleName = "FetionCloudDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ZJ/Documents/RSC/FetionCloudDemo/FetionCloudDemo/Login/LoginController.m"
+                  timestampString = "490616921.131163"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "212"
+                  endingLineNumber = "212"
+                  offsetFromSymbolStart = "120">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__31-[LoginController loginAction:]_block_invoke"
+                  moduleName = "FetionCloudDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ZJ/Documents/RSC/FetionCloudDemo/FetionCloudDemo/Login/LoginController.m"
+                  timestampString = "490616921.131341"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "213"
+                  endingLineNumber = "213"
+                  offsetFromSymbolStart = "14">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

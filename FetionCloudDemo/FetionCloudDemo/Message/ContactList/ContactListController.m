@@ -57,6 +57,13 @@
 
 - (void) getUserinfo{
     
+    NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    
+    if (name)
+    {
+        [DBManager initDBWithUserId:name];
+    }
+   
     _buddyIDArray = [[NSMutableArray alloc]init];
     
     _buddyListArray = [[NSMutableArray alloc]init];
