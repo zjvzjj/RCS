@@ -207,8 +207,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "294"
             endingLineNumber = "294"
-            landmarkName = "-login"
-            landmarkType = "5">
+            landmarkName = "@implementation LoginController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
             endingLineNumber = "403"
-            landmarkName = "-firstLogin:"
+            landmarkName = "-login"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
-            landmarkName = "-getAppToken"
+            landmarkName = "-recvNetworkChangedNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -281,8 +281,8 @@
                   symbolName = "-[MessageController receiveMessageNTF:]"
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/feinno/Desktop/FetionCloudDemo/FetionCloudDemo/FetionCloudDemo/FetionCloudDemo/Message/MessageController.m"
-                  timestampString = "490515998.871286"
+                  urlString = "file:///Users/feinno/RCS/FetionCloudDemo/FetionCloudDemo/Message/MessageController.m"
+                  timestampString = "490593676.76914"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "276"
@@ -296,8 +296,8 @@
                   symbolName = "-[MessageController receiveMessageNTF:]"
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/feinno/Desktop/FetionCloudDemo/FetionCloudDemo/FetionCloudDemo/FetionCloudDemo/Message/MessageController.m"
-                  timestampString = "490515998.871447"
+                  urlString = "file:///Users/feinno/RCS/FetionCloudDemo/FetionCloudDemo/Message/MessageController.m"
+                  timestampString = "490593676.769295"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "276"
@@ -815,7 +815,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "248"
             endingLineNumber = "248"
-            landmarkName = "-getAppToken"
+            landmarkName = "-appLogout"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

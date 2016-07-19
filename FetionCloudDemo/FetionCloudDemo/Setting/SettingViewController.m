@@ -316,12 +316,21 @@
     [globalRcsApi logout:R callback:^(rcs_state *R, LogoutResult *s) {
         if (s->error_code == 200) {
             
+            
+            CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
+            //        [CurrentUserTable del:table];
+            table.password = @"";
+            [CurrentUserTable update:table];
+            
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+            
             dispatch_async(dispatch_get_main_queue(),^{
                 
-                [[[UIAlertView alloc] initWithTitle:@"" message:@"注销成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                
+                //[[[UIAlertView alloc] initWithTitle:@"" message:@"注销成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+                [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
             });
-            [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
+            
         }else{
             
             dispatch_async(dispatch_get_main_queue(),^{
