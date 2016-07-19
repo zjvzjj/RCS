@@ -99,8 +99,8 @@
                         {
                             
                             NSLog(@"%s",s->file_path);
+//                            ContactDataTable *table = [ContactDataTable getWithUserId:user.userId];
                             table.portrait = [NSString stringWithUTF8String:s->file_path];
-                            
                             [ContactDataTable update:table];
                             
                             dispatch_async(dispatch_get_main_queue(),^{
@@ -112,7 +112,8 @@
                             
                         }else
                         {
-                            
+//                            ContactDataTable *table = [ContactDataTable getWithUserId:user.userId];
+//                            
                             table.portrait = @"";
                             [ContactDataTable update:table];
                             
