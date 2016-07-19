@@ -66,7 +66,7 @@
     //按钮和输入框的基本配置
     [self baseConfriguration];
     
-    _localNum = @"+8615901435217";
+//    _localNum = @"+8615510471106";
     
     _password = @"Vae5S1CAXBfc";
     
@@ -131,14 +131,22 @@
 }
 
 #pragma mark - event response
-
+- (NSURL *)applicationDocumentsDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                   inDomains:NSUserDomainMask] lastObject];
+}
 
 
 //获取验证码
 - (IBAction)getsmscode:(id)sender {
    
-//    NSString * str1 = @"+86";
-//    _localNum = [str1 stringByAppendingString:_nameText.text];
+    NSString * str1 = @"+86";
+    _localNum = [str1 stringByAppendingString:_nameText.text];
+    
+    NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"/"];
+    NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];
+    
+       R =[globalRcsApi newState:_localNum appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
     
     [globalRcsApi getsmscode:R number:_localNum callback:^(rcs_state* R, GetSmsResult *s) {
         if(s->error_code == 200)

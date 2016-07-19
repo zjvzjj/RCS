@@ -79,7 +79,7 @@ rcs_state* R = NULL;
     
 /***************************************** RCSSDK *******************************************************/
  
-    _localNum = @"+8615901435217";
+//    _localNum = @"+8615901435217";
     
     [FNUserInfo ShareStaticConst].localNum = _localNum;
     
@@ -90,13 +90,12 @@ rcs_state* R = NULL;
     NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];
     
     globalRcsApi = [RcsApi shareInstance];
-    R =[globalRcsApi newState:@"+8615901435217" appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
+    R =[globalRcsApi newState:@"" appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
     
     
     milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     printf("%lld \r\n", milliseconds);
     
-    [self registerListeners];
     
 //    [DBManager initDBWithUserId:_localNum];
 //
@@ -125,12 +124,18 @@ rcs_state* R = NULL;
     
     if (password.length > 0)
     {
+        
+        
+           R =[globalRcsApi newState:name appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
+        
+        
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopToken"];
         NSString *bopId = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopId"];
         [FNConfig setAppToken:token userId:bopId];
         
         FNTabBarController *tabBar = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"tabbarController"];
         self.window.rootViewController = tabBar;
+        
         
         [globalRcsApi login:R username:_localNum password:password callback:^(rcs_state* R, LoginResult *s) {
             if (s->error_code == 200) {
@@ -147,7 +152,8 @@ rcs_state* R = NULL;
         //        }
     }
     
-    
+    [self registerListeners];
+
     return YES;
 }
 

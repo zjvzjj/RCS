@@ -1983,6 +1983,7 @@
 				TargetAttributes = {
 					6BFC10ED1C21190500D18548 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = LXUKVKZ63Y;
 					};
 					6BFC11061C21190500D18548 = {
 						CreatedOnToolsVersion = 7.1;
@@ -2545,7 +2546,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = com.feinno1.www.FetionCloudDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = zhao1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2581,7 +2582,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = com.feinno1.www.FetionCloudDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = zhao1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
