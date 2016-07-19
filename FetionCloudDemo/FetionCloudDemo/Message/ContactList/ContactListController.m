@@ -58,7 +58,10 @@
 - (void) getUserinfo{
     
     _buddyIDArray = [[NSMutableArray alloc]init];
+    
     _buddyListArray = [[NSMutableArray alloc]init];
+    
+    [self.tableView reloadData];
     
     [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
     
@@ -93,33 +96,38 @@
                     
                     [_buddyListArray addObject:table];
                     
+                    dispatch_async(dispatch_get_main_queue(),^{
+                        if (_buddyListArray.count > 0) {
+                            [self.tableView reloadData];
+                        }
+                    });
+                    
                     //获取用户头像
                     [ globalRcsApi usergetportrait:R userId:[user.userId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
                         if(s->error_code == 200)
                         {
                             
                             NSLog(@"%s",s->file_path);
-//                            ContactDataTable *table = [ContactDataTable getWithUserId:user.userId];
                             table.portrait = [NSString stringWithUTF8String:s->file_path];
                             [ContactDataTable update:table];
                             
                             dispatch_async(dispatch_get_main_queue(),^{
-                                
-                                [self.tableView reloadData];
+                                if (_buddyListArray.count > 0) {
+                                    [self.tableView reloadData];
+                                }
                             });
                             
                             NSLog(@"user get portrait ok");
                             
                         }else
                         {
-//                            ContactDataTable *table = [ContactDataTable getWithUserId:user.userId];
-//                            
                             table.portrait = @"";
                             [ContactDataTable update:table];
                             
                             dispatch_async(dispatch_get_main_queue(),^{
-                                
-                                [self.tableView reloadData];
+                                if (_buddyListArray.count > 0) {
+                                    [self.tableView reloadData];
+                                }
                             });
                             
                             NSLog(@"user get portrait failed");
@@ -181,11 +189,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self getUserinfo];
-    
-    
-    //取消cell的选中状态
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-    //[self readData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -244,11 +247,13 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"contactListCell"];
     }
-    
+    if (_buddyListArray.count > 0) {
+        ContactDataTable *infos = _buddyListArray[indexPath.row];
+        cell.textLabel.text = infos.nickName;
+    }
     ContactDataTable *infos = _buddyListArray[indexPath.row];
-    cell.textLabel.text = infos.nickName;
-    
-    
+
+
     
     
     
