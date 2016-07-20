@@ -159,7 +159,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "401"
             endingLineNumber = "401"
-            landmarkName = "-registerMsgListener"
+            landmarkName = "-registerBuddyListListener"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
-            landmarkName = "-recvNetworkChangedNotification:"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -815,7 +815,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "248"
             endingLineNumber = "248"
-            landmarkName = "-appLogout"
+            landmarkName = "-recvNetworkChangedNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -831,7 +831,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "261"
             endingLineNumber = "261"
-            landmarkName = "-getAppToken"
+            landmarkName = "-appLogout"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
