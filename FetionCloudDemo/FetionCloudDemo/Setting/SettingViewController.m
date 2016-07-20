@@ -94,38 +94,24 @@
 //设置用户基本信息
 - (IBAction)saveProfile:(id)sender {
     
-     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
-    
-    [globalRcsApi logout:R callback:^(rcs_state *R, LogoutResult *s) {
-        
-        CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
-        table.password = @"";
-        [CurrentUserTable update:table];
-        dispatch_async(dispatch_get_main_queue(),^{
-    
-            [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
-      });
-    
+
+        [globalRcsApi usersetprofile:R nickname:_nickNameText.text impresa:_impresaText.text firstname:_firstNameText.text lastname:_lastNameText.text gender:2 email:_emailText.text birthday:_birthdayText.text callback:^(rcs_state* R, UserProfileResult *s) {
+        if(s->error_code == 200)
+        {
+            NSLog(@"user set profile ok");
+            
+            dispatch_async(dispatch_get_main_queue(),^{
+                
+                [[[UIAlertView alloc] initWithTitle:@"" message:@"保存成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+
+            });
+            
+        }else
+        {
+            [[[UIAlertView alloc] initWithTitle:@"" message:@"保存失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+            
+        }
     }];
-    
-    //    [globalRcsApi usersetprofile:R nickname:@"Jack" impresa:_impresaText.text firstname:_firstNameText.text lastname:_lastNameText.text gender:2 email:_emailText.text birthday:_birthdayText.text callback:^(rcs_state* R, UserProfileResult *s) {
-//        if(s->error_code == 200)
-//        {
-//            //[self AddLogC:"user set profile ok"];
-//            NSLog(@"user set profile ok");
-//            
-//            dispatch_async(dispatch_get_main_queue(),^{
-//                
-//                [[[UIAlertView alloc] initWithTitle:@"" message:@"保存成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-//
-//            });
-//            
-//        }else
-//        {
-//            [[[UIAlertView alloc] initWithTitle:@"" message:@"保存失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-//            
-//        }
-//    }];
     
 }
 
@@ -297,25 +283,10 @@
 //注销登录
 - (IBAction)logout:(id)sender
 {
-    [FNAccountLogic logout:^(FNLogoutResponse *rspArgs) {
-        NSLog(@"logout rsp: %d", rspArgs.statusCode);
-        
-        CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
-//        [CurrentUserTable del:table];
-        table.password = @"";
-        [CurrentUserTable update:table];
-        
-    }];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"bopToken"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"bopId"];
-    
     
     
     [globalRcsApi logout:R callback:^(rcs_state *R, LogoutResult *s) {
         if (s->error_code == 200) {
-            
             
             CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
             //        [CurrentUserTable del:table];
@@ -330,6 +301,20 @@
                 //[[[UIAlertView alloc] initWithTitle:@"" message:@"注销成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
             });
+            
+            //注销登录停止实例R
+            [globalRcsApi stop:R callback:^(rcs_state *R, ActionResult *s) {
+                
+                if (s->error_code == 200) {
+                    
+                    NSLog(@"succeed");
+                    
+                }else{
+                
+                    NSLog(@"failed");
+                
+                }
+            }];
             
         }else{
             

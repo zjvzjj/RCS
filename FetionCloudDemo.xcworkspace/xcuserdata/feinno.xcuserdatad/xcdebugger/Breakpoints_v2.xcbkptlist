@@ -207,8 +207,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "294"
             endingLineNumber = "294"
-            landmarkName = "@implementation LoginController"
-            landmarkType = "3">
+            landmarkName = "-loginAction:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -736,22 +736,6 @@
             startingLineNumber = "1683"
             endingLineNumber = "1683"
             landmarkName = "-sendVideoWithURL:andAsset:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/Setting/SettingViewController.m"
-            timestampString = "490248598.162578"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "-saveProfile:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
