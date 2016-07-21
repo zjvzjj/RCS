@@ -543,8 +543,10 @@
         [globalRcsApi buddydel:R userId:[info.userId intValue] callback:^(rcs_state* R, BuddyResult *s) {
             if (s->error_code == 200) {
                 
-                [_buddyListArray removeObject:info.userId];
+                [_buddyListArray removeObject:info];
                 
+                [ContactDataTable del:info.userId];
+   
                 dispatch_async(dispatch_get_main_queue(),^{
                     
                     [self.tableView reloadData];
