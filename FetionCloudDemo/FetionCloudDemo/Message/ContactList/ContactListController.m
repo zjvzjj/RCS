@@ -201,7 +201,7 @@
     
     NSLog(@"%@",notify.object);
     
-    [_addBuddyArray addObject:notify.object];
+    _addBuddyArray = notify.object;
 
 }
 
@@ -304,8 +304,6 @@
 
 }
 
-
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
     
@@ -366,9 +364,10 @@
         }
         ContactDataTable *infos = _buddyListArray[indexPath.row];
     }else if (indexPath.section == 1){
-    
-        cell.textLabel.text = @"hahha";
         
+        ContactDataTable *infos = _addBuddyArray[indexPath.row];
+        cell.textLabel.text = infos.nickName;
+            
     }
     
     
@@ -494,13 +493,13 @@
 
     if (alertView.tag == 2002) {
         
-        //ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
+        ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
         
-        NSString *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
+        //NSString *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
         
         if (buttonIndex == 0) {
             
-            [globalRcsApi buddyhandle:R userId:[info intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
+            [globalRcsApi buddyhandle:R userId:[info.userId intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
                 if (s->error_code == 200) {
                     
                     [_buddyListArray addObject:info];

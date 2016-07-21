@@ -20,7 +20,7 @@
 
 
 @property (nonatomic) NSMutableArray *buddyIDArray;
-
+@property (nonatomic,strong)NSMutableArray *addBuddyArray;
 
 extern RcsApi *globalRcsApi;
 extern rcs_state* R;

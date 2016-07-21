@@ -338,8 +338,23 @@ rcs_state* R = NULL;
          _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
          NSLog(@"_buddyInbiterId================%s",s->from_user);
          
+         
+         UserInfo * u = s->user_info;
+         NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
+         
+         ContactDataTable *table = [ContactDataTable getWithUserId:str1];
+         table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+         table.nickName = [NSString stringWithUTF8String:u->nickname];
+         table.username = [NSString stringWithUTF8String:u->username];
+         
+         
+         _addBuddyArray = [[NSMutableArray alloc]init];
+         [_addBuddyArray addObject:table];
+         
+         //收到被添加请求，发送通知
          if (s->op == 6) {
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_buddyInviterId];
+             
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_addBuddyArray];
          }
          
      }];

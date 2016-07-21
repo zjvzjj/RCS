@@ -327,13 +327,6 @@
     
     //__block NSString *password = _passwordText.text;
     __block NSString *password = _password;
-
-    
-    
-    
-    
-    
-    
     
     
    // NSDictionary *parameter = @{@"uname":_nameText.text,@"pwd":_passwordText.text,@"appkey":APP_KEY};
