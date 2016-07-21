@@ -339,20 +339,19 @@ rcs_state* R = NULL;
          NSLog(@"_buddyInbiterId================%s",s->from_user);
          
          
-         UserInfo * u = s->user_info;
-         NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
-         
-         ContactDataTable *table = [ContactDataTable getWithUserId:str1];
-         table.userId = [NSString stringWithFormat:@"%d",u->user_id];
-         table.nickName = [NSString stringWithUTF8String:u->nickname];
-         table.username = [NSString stringWithUTF8String:u->username];
-         
-         
-         _addBuddyArray = [[NSMutableArray alloc]init];
-         [_addBuddyArray addObject:table];
-         
          //收到被添加请求，发送通知
          if (s->op == 6) {
+             
+             _addBuddyArray = [[NSMutableArray alloc]init];
+             UserInfo * u = s->user_info;
+             NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
+             
+             ContactDataTable *table = [ContactDataTable getWithUserId:str1];
+             table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+             table.nickName = [NSString stringWithUTF8String:u->nickname];
+             table.username = [NSString stringWithUTF8String:u->username];
+             
+             [_addBuddyArray addObject:table];
              
              [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_addBuddyArray];
          }
@@ -396,6 +395,14 @@ rcs_state* R = NULL;
              
              ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
              
+             if (p->action == 1) {
+                 NSLog(@"add");
+             }else if (p->action == 2){
+                 NSLog(@"dele");
+             }else if (p->action == 3){
+                 NSLog(@"update'");
+             }
+             
              if (!table.userId)
              {
                  ContactDataTable *table = [[ContactDataTable alloc] init];
@@ -411,21 +418,40 @@ rcs_state* R = NULL;
              if (p == NULL) {
                  break;
              }
+             
              _buddyRemoteId = p->user_id;
              
              NSNumber *number = [[NSNumber alloc]initWithInt:_buddyRemoteId];
+            
+             if (p->action == 2) {
+                 
+                 NSLog(@"hah");
+                 
+                 [_buddyIDArray removeObject:number];
+                 
+             }else if (p->action == 1){
              
-             [_buddyIDArray addObject:number];
+                 [_buddyIDArray addObject:number];
+             
+             }else if (p->action == 3){
+                 
+                 NSLog(@"do what");
+             
+             }
              
              [FNUserInfo ShareStaticConst].buddyIDArray = _buddyIDArray;
-             ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
              
-             if (!table.userId)
-             {
-                 ContactDataTable *table = [[ContactDataTable alloc] init];
-                 table.userId = [NSString stringWithFormat:@"%@",number];
-                 [ContactDataTable insert:table];
-             }
+             //ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
+             
+//             if (!table.userId)
+//             {
+//                 ContactDataTable *table = [[ContactDataTable alloc] init];
+//                 table.userId = [NSString stringWithFormat:@"%@",number];
+//                 [ContactDataTable insert:table];
+//             }
+             
+             NSLog(@"do what....");
+             
          }
      }];
     

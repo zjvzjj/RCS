@@ -358,21 +358,18 @@
     
     
     if (indexPath.section == 0) {
+        
         if (_buddyListArray.count > 0) {
             ContactDataTable *infos = _buddyListArray[indexPath.row];
             cell.textLabel.text = infos.nickName;
         }
-        ContactDataTable *infos = _buddyListArray[indexPath.row];
+        
     }else if (indexPath.section == 1){
         
         ContactDataTable *infos = _addBuddyArray[indexPath.row];
         cell.textLabel.text = infos.nickName;
             
     }
-    
-    
-
-
     
     
     //NSData *data = [NSData dataWithContentsOfFile:infos.portraitPath];
@@ -501,6 +498,8 @@
             
             [globalRcsApi buddyhandle:R userId:[info.userId intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
                 if (s->error_code == 200) {
+                    
+                    [ContactDataTable insert:info];
                     
                     [_buddyListArray addObject:info];
                     [_addBuddyArray removeObject:info];
