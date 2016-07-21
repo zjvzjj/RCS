@@ -463,10 +463,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0 || indexPath.row == 1)
-    {
-        return NO;
-    }
+//    if (indexPath.row == 0 || indexPath.row == 1)
+//    {
+//        return NO;
+//    }
     
     return YES;
 }
@@ -494,15 +494,17 @@
 
     if (alertView.tag == 2002) {
         
-        ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
+        //ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
+        
+        NSString *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
         
         if (buttonIndex == 0) {
             
-            [globalRcsApi buddyhandle:R userId:[info.userId intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
+            [globalRcsApi buddyhandle:R userId:[info intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
                 if (s->error_code == 200) {
                     
-                    [_buddyListArray addObject:info.userId];
-                    [_addBuddyArray removeObject:info.userId];
+                    [_buddyListArray addObject:info];
+                    [_addBuddyArray removeObject:info];
                     
                     dispatch_async(dispatch_get_main_queue(),^{
                         
@@ -537,7 +539,7 @@
         
         
         ContactDataTable *info = [_buddyListArray objectAtIndex:self.selectIndexPath.row];
-        [ContactDataTable del:info.userId];
+       // [ContactDataTable del:info.userId];
         
         //删除好友
         [globalRcsApi buddydel:R userId:[info.userId intValue] callback:^(rcs_state* R, BuddyResult *s) {

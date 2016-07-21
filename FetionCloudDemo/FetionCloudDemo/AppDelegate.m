@@ -334,15 +334,14 @@ rcs_state* R = NULL;
     //__weak typeof(self) weakSelf = self;
     [globalRcsApi setBuddyEventListener:^(rcs_state*R, BuddyEventSession* s)
      {
-         //[weakSelf AddLogC:BuddyOpsToString(s->op)];
+         
          _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
          NSLog(@"_buddyInbiterId================%s",s->from_user);
          
+         if (s->op == 6) {
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_buddyInviterId];
+         }
          
-         
-         //NSNumber * buddyID = [NSNumber numberWithInt:_buddyInviterId];
-         
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_buddyInviterId];
      }];
     
     
@@ -404,6 +403,14 @@ rcs_state* R = NULL;
              [_buddyIDArray addObject:number];
              
              [FNUserInfo ShareStaticConst].buddyIDArray = _buddyIDArray;
+             ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
+             
+             if (!table.userId)
+             {
+                 ContactDataTable *table = [[ContactDataTable alloc] init];
+                 table.userId = [NSString stringWithFormat:@"%@",number];
+                 [ContactDataTable insert:table];
+             }
          }
      }];
     
