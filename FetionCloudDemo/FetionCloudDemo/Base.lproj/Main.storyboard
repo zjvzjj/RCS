@@ -1096,6 +1096,7 @@
                         <outlet property="firstNameText" destination="PGs-sb-Xr7" id="X8P-fb-F7P"/>
                         <outlet property="genderText" destination="o0x-5r-9RT" id="s7c-Ps-VNN"/>
                         <outlet property="impresaText" destination="LhB-Cv-8Pf" id="cjp-4V-10F"/>
+                        <outlet property="inputView" destination="lIU-jl-8K7" id="fwn-aL-wLm"/>
                         <outlet property="lastNameText" destination="xQI-TU-ML2" id="Ha7-BV-weV"/>
                         <outlet property="nickNameText" destination="JRO-1t-YnC" id="zMO-1O-xzH"/>
                         <outlet property="portraitBtn" destination="WpB-Yr-10w" id="zqM-ap-PxW"/>

@@ -335,13 +335,17 @@ rcs_state* R = NULL;
     [globalRcsApi setBuddyEventListener:^(rcs_state*R, BuddyEventSession* s)
      {
          //[weakSelf AddLogC:BuddyOpsToString(s->op)];
-         _buddyInviterId = s->from_user;
+         _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
          NSLog(@"_buddyInbiterId================%s",s->from_user);
          
-         NSNumber * buddyID = [NSNumber numberWithInt:_buddyInviterId];
          
-         //[[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:buddyID];
+         
+         //NSNumber * buddyID = [NSNumber numberWithInt:_buddyInviterId];
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_buddyInviterId];
      }];
+    
+    
 }
 
 
@@ -393,7 +397,6 @@ rcs_state* R = NULL;
              if (p == NULL) {
                  break;
              }
-             
              _buddyRemoteId = p->user_id;
              
              NSNumber *number = [[NSNumber alloc]initWithInt:_buddyRemoteId];

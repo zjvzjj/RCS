@@ -61,6 +61,18 @@
 
 @property (nonatomic) UIImage *portraitImage;
 
+
+
+@property (weak, nonatomic) IBOutlet UIView *inputView;
+
+
+@property (weak, nonatomic) IBOutlet UIScrollView *inputScrolleView;
+
+
+
+
+
+
 @end
 
 @implementation SettingViewController
@@ -278,7 +290,82 @@
     [_lastNameText resignFirstResponder];
     [_birthdayText resignFirstResponder];
     [_emailText resignFirstResponder];
+    
 }
+
+
+
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+//
+//    if ([textField isEqual:_nickNameText]) {
+//        
+//        [_genderText becomeFirstResponder];
+//        
+//    }else if ([textField isEqual:_genderText]){
+//    
+//        [_impresaText becomeFirstResponder];
+//    }else{
+//    
+//    
+//        [_emailText resignFirstResponder];
+//    
+//    }
+//
+//    return YES;
+//
+//}
+
+
+
+//遮挡键盘
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+
+{
+    
+//    CGRect frame = textField.frame;
+//    
+//    int offset = frame.origin.y + 70 - (self.inputView.frame.size.height - 216.0);//iPhone键盘高度216，iPad的为352
+//    
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    
+//    [UIView setAnimationDuration:0.5f];
+//    
+//    //将视图的Y坐标向上移动offset个单位，以使下面腾出地方用于软键盘的显示
+//    
+//    if(offset > 0)
+//        
+//        self.inputView.frame = CGRectMake(0.0f, -offset, self.inputView.frame.size.width, self.view.frame.size.height);
+//    
+//    [UIView commitAnimations];
+    
+    
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@ "ResizeForKeyboard"  context:nil];
+    [UIView setAnimationDuration:animationDuration];
+
+    if ([textField isEqual:_birthdayText] || [textField isEqual:_emailText]) {
+        
+        //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
+        self.inputView.frame = CGRectMake(0.0f, -100.0f, self.inputView.frame.size.width, self.inputView.frame.size.height); //64-216
+        
+    }
+    
+    [UIView commitAnimations];
+
+}
+
+
+//输入框编辑完成以后，将视图恢复到原始状态
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+
+{
+    
+    self.inputView.frame =CGRectMake(0, 0, self.inputView.frame.size.width, self.inputView.frame.size.height);
+    
+}
+
+
 
 //注销登录
 - (IBAction)logout:(id)sender

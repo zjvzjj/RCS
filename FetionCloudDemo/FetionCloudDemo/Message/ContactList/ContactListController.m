@@ -51,6 +51,14 @@
     
     _buddyPortraitPath = [[NSMutableArray alloc]init];
     
+    _addBuddyArray = [[NSMutableArray alloc]init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(addBuddy:)
+                                                 name:@"addbuddy"
+                                               object:nil];
+    
+    
 }
 
 //获取好友概要信息
@@ -187,10 +195,15 @@
 
 
 
+- (void)addBuddy:(NSNotification *)notify{
 
+   // FNMsgTable *messageData = notify.object;
+    
+    NSLog(@"%@",notify.object);
+    
+    [_addBuddyArray addObject:notify.object];
 
-
-
+}
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -244,8 +257,98 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [_buddyListArray count];
+    switch (section) {
+        case 0:
+            return _buddyListArray.count;
+            break;
+            
+        case 1:
+            return _addBuddyArray.count;
+            break;
+            
+        default:
+            return _buddyListArray.count;
+            break;
+    }
+    
 }
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+
+    if (_addBuddyArray.count > 0) {
+        
+        return 2;
+    }
+    
+    return 1;
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    switch (section) {
+        case 0:
+            return 0;
+            break;
+            
+        case 1:
+            return 60;
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
+    
+
+}
+
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 60)];
+    titleLabel.text = @"#new friends";
+    titleLabel.textColor = [UIColor lightGrayColor];
+    titleLabel.font = [UIFont systemFontOfSize:15];
+    NSLog(@"%ld",section);
+    
+    switch (section) {
+        case 0:
+            return nil;
+            break;
+            
+        case 1:
+            return titleLabel;
+            break;
+            
+        default:
+            return nil;
+            break;
+    }
+    
+
+}
+
+
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+//
+//    NSString *str = @"new friends";
+//    if (section == 1) {
+//        
+//        return str;
+//    }
+//    
+//    return str;
+//
+//}
+
+
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactListCell" forIndexPath:indexPath];
@@ -254,32 +357,23 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"contactListCell"];
     }
-    if (_buddyListArray.count > 0) {
+    
+    
+    if (indexPath.section == 0) {
+        if (_buddyListArray.count > 0) {
+            ContactDataTable *infos = _buddyListArray[indexPath.row];
+            cell.textLabel.text = infos.nickName;
+        }
         ContactDataTable *infos = _buddyListArray[indexPath.row];
-        cell.textLabel.text = infos.nickName;
+    }else if (indexPath.section == 1){
+    
+        cell.textLabel.text = @"hahha";
+        
     }
-    ContactDataTable *infos = _buddyListArray[indexPath.row];
+    
+    
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     //NSData *data = [NSData dataWithContentsOfFile:infos.portraitPath];
@@ -350,9 +444,22 @@
     //        [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
     //    }
     
-    [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
+    if (indexPath.section == 0) {
+        
+        [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
+        
+    }else if (indexPath.section == 1){
+            
+        UIAlertView * alert =[[UIAlertView alloc] initWithTitle:@"" message:@"是否添加为好友" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+        
+        alert.tag = 2002;
+        
+        [alert show];
+    
+    }
     
 }
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -375,6 +482,7 @@
     {
         self.selectIndexPath = indexPath;
         UIAlertView *isDelete = [[UIAlertView alloc] initWithTitle:@"信息提示" message:@"是否删除" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+        isDelete.tag = 2003;
         [isDelete show];
     }
 }
@@ -382,20 +490,88 @@
 #pragma mark - UIAlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    
+
+    if (alertView.tag == 2002) {
+        
+        ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
+        
+        if (buttonIndex == 0) {
+            
+            [globalRcsApi buddyhandle:R userId:[info.userId intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
+                if (s->error_code == 200) {
+                    
+                    [_buddyListArray addObject:info.userId];
+                    [_addBuddyArray removeObject:info.userId];
+                    
+                    dispatch_async(dispatch_get_main_queue(),^{
+                        
+                            [self.tableView reloadData];
+                    });
+                    
+                   // [self.tableView reloadData];
+                    
+                    NSLog(@"add buddy ok");
+                    
+                }
+                else{
+                    
+                    NSLog(@"add buddy failed");
+                    
+                }
+            }];
+            
+        }else{
+        
+            NSLog(@"cancel");
+        }
+        
+    }else if (alertView.tag == 2003){
+    
     if (buttonIndex == 0)
     {
-        ContactDataTable *info = _tokenizers[self.selectIndexPath.row];
-        [ContactDataTable del:info.userId];
-        [FNRecentConversationTable delete:info.userId];
-        [FNMsgTable deleteByUserId:info.userId];
+//        ContactDataTable *info = _tokenizers[self.selectIndexPath.row];
+//        [ContactDataTable del:info.userId];
+//        [FNRecentConversationTable delete:info.userId];
+//        [FNMsgTable deleteByUserId:info.userId];
         
-        [self readData];
+        
+        ContactDataTable *info = [_buddyListArray objectAtIndex:self.selectIndexPath.row];
+        [ContactDataTable del:info.userId];
+        
+        //删除好友
+        [globalRcsApi buddydel:R userId:[info.userId intValue] callback:^(rcs_state* R, BuddyResult *s) {
+            if (s->error_code == 200) {
+                
+                [_buddyListArray removeObject:info.userId];
+                
+                dispatch_async(dispatch_get_main_queue(),^{
+                    
+                    [self.tableView reloadData];
+                });
+                
+                NSLog(@"delete buddy ok");
+            }
+            else{
+                
+                NSLog(@"delete buddy failed");
+                
+            }
+        }];
+        
+        
+        //[self readData];
     }
     else
     {
         [self.tableView setEditing:NO animated:YES];
     }
+        
+    }
 }
+
+
+
 
 #pragma mark - Navigation
 

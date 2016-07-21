@@ -12,9 +12,12 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic,assign) int buddyInviterId;
+@property (nonatomic,copy) NSString * buddyInviterId;
 @property (nonatomic,assign) int buddyRemoteId;
 @property (nonatomic) NSString* localNum;
+
+
+
 
 @property (nonatomic) NSMutableArray *buddyIDArray;
 

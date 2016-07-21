@@ -17,6 +17,7 @@
 
 @property (strong,nonatomic)NSMutableArray *buddyPortraitPath;
 
+@property (strong,nonatomic)NSMutableArray *addBuddyArray;
 
 @property (copy,nonatomic)NSString *imgPath;
 
