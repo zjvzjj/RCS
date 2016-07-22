@@ -159,6 +159,7 @@
                 //[[[UIAlertView alloc] initWithTitle:@"" message:@"获取验证码成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 
                    _smsCodeText.text = @"777777";
+                    _passwordText.text = _password;
                 
             });
             
@@ -191,9 +192,7 @@
             
             dispatch_async(dispatch_get_main_queue(),^{
                 
-                //[[[UIAlertView alloc] initWithTitle:@"" message:@"验证成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                
-                _passwordText.text = _password;
+                [[[UIAlertView alloc] initWithTitle:@"" message:@"验证成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 
             });
 

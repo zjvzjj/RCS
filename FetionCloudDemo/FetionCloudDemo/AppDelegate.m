@@ -81,6 +81,9 @@ rcs_state* R = NULL;
  
 //    _localNum = @"+8615901435217";
     
+    
+    //_addBuddyArray = [[NSMutableArray alloc]init];
+
     [FNUserInfo ShareStaticConst].localNum = _localNum;
     
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
@@ -96,6 +99,7 @@ rcs_state* R = NULL;
     milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     printf("%lld \r\n", milliseconds);
     
+
     
 //    [DBManager initDBWithUserId:_localNum];
 //
@@ -332,32 +336,47 @@ rcs_state* R = NULL;
 - (void)registerBuddyEventListener
 {
     //__weak typeof(self) weakSelf = self;
-    [globalRcsApi setBuddyEventListener:^(rcs_state*R, BuddyEventSession* s)
-     {
+    [globalRcsApi setBuddyEventListener:^(rcs_state*R, BuddyEventSession* s){
          
          _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
          NSLog(@"_buddyInbiterId================%s",s->from_user);
-         
-         
+        
+        
+        
          //收到被添加请求，发送通知
-         if (s->op == 6) {
-             
-             _addBuddyArray = [[NSMutableArray alloc]init];
-             UserInfo * u = s->user_info;
-             NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
-             
-             ContactDataTable *table = [ContactDataTable getWithUserId:str1];
-             table.userId = [NSString stringWithFormat:@"%d",u->user_id];
-             table.nickName = [NSString stringWithUTF8String:u->nickname];
-             table.username = [NSString stringWithUTF8String:u->username];
-             
-             [_addBuddyArray addObject:table];
-             
+        if (s->op == 6) {
+          
+            //if (!_addBuddyArray) {
+                _addBuddyArray = [[NSMutableArray alloc]init];
+
+            //}
+
+            UserInfo * u = s->user_info;
+            
+            NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
+            ContactDataTable *table = [ContactDataTable getWithUserId:str1];
+            table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+            table.nickName = [NSString stringWithUTF8String:u->nickname];
+            table.username = [NSString stringWithUTF8String:u->username];
+            
+            [_addBuddyArray addObject:table];
+           
+//            //去除重复的信息
+//            NSMutableArray *listAry = [[NSMutableArray alloc]init];
+//            
+//            for (ContactDataTable *t in _addBuddyArray) {
+//                
+//                if (![listAry containsObject:t]) {
+//                    
+//                    [listAry addObject:t];
+//                }  
+//            }
+            
              [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_addBuddyArray];
+             
          }
          
      }];
-    
     
 }
 

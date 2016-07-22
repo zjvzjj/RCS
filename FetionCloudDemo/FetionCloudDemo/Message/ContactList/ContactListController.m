@@ -49,15 +49,17 @@
     
     _tokenizers = [[NSMutableArray alloc] init];
     
-    _buddyPortraitPath = [[NSMutableArray alloc]init];
+    //_buddyPortraitPath = [[NSMutableArray alloc]init];
     
-    _addBuddyArray = [[NSMutableArray alloc]init];
+    
+//    if (_addBuddyArray.count > 0) {
+//        NSLog(@"hah");
+//    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(addBuddy:)
                                                  name:@"addbuddy"
                                                object:nil];
-    
     
 }
 
@@ -134,8 +136,8 @@
                             
                             NSLog(@"user get portrait ok");
                             
-                        }else
-                        {
+                        }else{
+                            
                             table.portrait = @"";
                             [ContactDataTable update:table];
                             
@@ -201,14 +203,33 @@
     
     NSLog(@"%@",notify.object);
     
+    
     _addBuddyArray = notify.object;
+    
+    dispatch_async(dispatch_get_main_queue(),^{
+        
+        [self.tableView reloadData];
+    });
 
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+//    if (!_addBuddyArray.count) {
+//        
+//        _addBuddyArray = [[NSMutableArray alloc]init];
+//        
+//    }
+    
+    
+    
     [self getUserinfo];
+    
+    NSLog(@"%lu",(unsigned long)_buddyIDArray.count);
+    
+   // [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -285,33 +306,32 @@
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    switch (section) {
-        case 0:
-            return 0;
-            break;
-            
-        case 1:
-            return 60;
-            break;
-            
-        default:
-            return 0;
-            break;
-    }
-    
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    
+//    switch (section) {
+//        case 0:
+//            return 0;
+//            break;
+//            
+//        case 1:
+//            return 30;
+//            break;
+//            
+//        default:
+//            return 0;
+//            break;
+//    }
+//    
+//
+//}
 
-}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
 
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 60)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 15, 300, 30)];
     titleLabel.text = @"#new friends";
     titleLabel.textColor = [UIColor lightGrayColor];
     titleLabel.font = [UIFont systemFontOfSize:15];
-    NSLog(@"%ld",section);
     
     switch (section) {
         case 0:
@@ -319,7 +339,7 @@
             break;
             
         case 1:
-            return titleLabel;
+            return titleLabel.text;
             break;
             
         default:
@@ -327,8 +347,36 @@
             break;
     }
     
-
+    
+    
 }
+
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+//
+//    
+//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 15, 300, 30)];
+//    titleLabel.text = @"#new friends";
+//    titleLabel.textColor = [UIColor blackColor];
+//    titleLabel.font = [UIFont systemFontOfSize:15];
+//    NSLog(@"%ld",section);
+//    
+//    switch (section) {
+//        case 0:
+//            return nil;
+//            break;
+//            
+//        case 1:
+//            return titleLabel;
+//            break;
+//            
+//        default:
+//            return nil;
+//            break;
+//    }
+//    
+//
+//}
 
 
 
@@ -343,9 +391,6 @@
 //    return str;
 //
 //}
-
-
-
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -385,16 +430,10 @@
     //    NSData *data = [NSData dataWithContentsOfFile:imagePath];
     //    cell.imageView.image = [UIImage imageWithData:data];
     
-    
-    
-    
     //NSLog(@"%@",infos.portraitPath);
     //    NSString *imgPath = infos.portraitPath;
     //    NSData *data = [NSData dataWithContentsOfFile:imgPath];
     //    cell.imageView.image = [UIImage imageWithData:data];
-    
-    
-    
     
     
     //    NSString *str = [FNUserInfo ShareStaticConst].imgpath;
@@ -499,7 +538,7 @@
             [globalRcsApi buddyhandle:R userId:[info.userId intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
                 if (s->error_code == 200) {
                     
-                    [ContactDataTable insert:info];
+                    //[ContactDataTable insert:info];
                     
                     [_buddyListArray addObject:info];
                     [_addBuddyArray removeObject:info];
@@ -516,12 +555,17 @@
                 }
                 else{
                     
+                    
+                                        
                     NSLog(@"add buddy failed");
                     
                 }
             }];
             
         }else{
+            
+            
+            //[_addBuddyArray addObject:info];
         
             NSLog(@"cancel");
         }
@@ -545,7 +589,10 @@
                 
                 [_buddyListArray removeObject:info];
                 
+                
                 [ContactDataTable del:info.userId];
+                
+                //_buddyIDArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
    
                 dispatch_async(dispatch_get_main_queue(),^{
                     
@@ -603,13 +650,6 @@
 }
 
 @end
-
-
-
-
-
-
-
 
 
 
