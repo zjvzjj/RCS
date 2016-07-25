@@ -88,7 +88,7 @@
 
 + (BOOL)del:(NSString *)userId
 {
-    userId = [self formatWithUserId:userId];
+//    userId = [self formatWithUserId:userId];
     __block BOOL result = NO;
     BOPFMDatabaseQueue *queue = [DBManager sharedDatabaseQueue];
     [queue inDatabase:^(BOPFMDatabase *db) {
