@@ -28,6 +28,8 @@
 #import "FNUserInfo.h"
 
 #import "ContactDataTable.h"
+#import "ContactRequestTable.h"
+
 #import "DBManager.h"
 @interface ContactListController ()
 {
@@ -84,6 +86,8 @@
     
     _buddyIDArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
     
+    _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
+
     for (int i=0; i<[_buddyIDArray count]; i++) {
         
         ContactDataTable *user = _buddyIDArray[i];
@@ -204,8 +208,9 @@
     NSLog(@"%@",notify.object);
     
     
-    _addBuddyArray = notify.object;
-    
+//    _addBuddyArray = notify.object;
+    _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
+
     dispatch_async(dispatch_get_main_queue(),^{
         
         [self.tableView reloadData];
@@ -542,6 +547,8 @@
                     
                     [_buddyListArray addObject:info];
                     [_addBuddyArray removeObject:info];
+                    
+                    [ContactRequestTable del:info.userId];
                     
                     dispatch_async(dispatch_get_main_queue(),^{
                         

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		62C8E9C31D465C98000EDD93 /* ContactRequestTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C8E9C21D465C98000EDD93 /* ContactRequestTable.m */; };
 		6B04F2DE1C3E0E3D0045E5FE /* ContactList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B04F2DD1C3E0E3D0045E5FE /* ContactList.plist */; };
 		6B04F2E21C3E7C3F0045E5FE /* group_128.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B04F2E11C3E7C3F0045E5FE /* group_128.png */; };
 		6B04F2E41C3E7C490045E5FE /* cIcon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B04F2E31C3E7C490045E5FE /* cIcon1.png */; };
@@ -366,6 +367,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		62C8E9C11D465C98000EDD93 /* ContactRequestTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactRequestTable.h; sourceTree = "<group>"; };
+		62C8E9C21D465C98000EDD93 /* ContactRequestTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactRequestTable.m; sourceTree = "<group>"; };
 		6B04F2DD1C3E0E3D0045E5FE /* ContactList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ContactList.plist; sourceTree = "<group>"; };
 		6B04F2E11C3E7C3F0045E5FE /* group_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group_128.png; sourceTree = "<group>"; };
 		6B04F2E31C3E7C490045E5FE /* cIcon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cIcon1.png; sourceTree = "<group>"; };
@@ -1319,6 +1322,8 @@
 				BA69DD6C1C8EB35400D892A7 /* ContactDataTable+Extension.m */,
 				BA922E821C86BCFE001B6115 /* UnReadTable.h */,
 				BA922E831C86BCFE001B6115 /* UnReadTable.m */,
+				62C8E9C11D465C98000EDD93 /* ContactRequestTable.h */,
+				62C8E9C21D465C98000EDD93 /* ContactRequestTable.m */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -1988,7 +1993,7 @@
 				TargetAttributes = {
 					6BFC10ED1C21190500D18548 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = RBM4WR5YGD;
+						DevelopmentTeam = KB2UR45D3W;
 					};
 					6BFC11061C21190500D18548 = {
 						CreatedOnToolsVersion = 7.1;
@@ -2304,6 +2309,7 @@
 				EFAF1B2F1C3A70B400C89669 /* FNMessagesTypingIndicatorFooterView.m in Sources */,
 				B53D494B1C882AE200D310CB /* MessageTableCell.m in Sources */,
 				EF066ECB1C3E5CCA000FAA9F /* FNSounds.m in Sources */,
+				62C8E9C31D465C98000EDD93 /* ContactRequestTable.m in Sources */,
 				6BFC10F61C21190500D18548 /* AppDelegate.m in Sources */,
 				CF18F7E61C3B6A7B00019BA5 /* ZLPhotoPickerAssetsViewController.m in Sources */,
 				CF18F7DE1C3B6A7B00019BA5 /* ZLPhotoPickerBrowserPhotoImageView.m in Sources */,
@@ -2552,7 +2558,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = Feinno12;
+				PRODUCT_BUNDLE_IDENTIFIER = zhao111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2588,7 +2594,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = Feinno12;
+				PRODUCT_BUNDLE_IDENTIFIER = zhao111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

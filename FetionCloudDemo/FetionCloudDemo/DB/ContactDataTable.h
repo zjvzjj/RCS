@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DBManager.h"
+#import "BOPFMDB.h"
 
 @interface ContactDataTable : NSObject
 

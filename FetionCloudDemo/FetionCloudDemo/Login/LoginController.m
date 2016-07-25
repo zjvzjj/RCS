@@ -66,7 +66,7 @@
     //按钮和输入框的基本配置
     [self baseConfriguration];
     
-//    _localNum = @"+8615510471106";
+    _localNum = @"+8615901435217";
     
     _password = @"Vae5S1CAXBfc";
     
@@ -141,7 +141,7 @@
 - (IBAction)getsmscode:(id)sender {
    
     NSString * str1 = @"+86";
-    _localNum = [str1 stringByAppendingString:_nameText.text];
+//    _localNum = [str1 stringByAppendingString:_nameText.text];
     
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"/"];
     NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];

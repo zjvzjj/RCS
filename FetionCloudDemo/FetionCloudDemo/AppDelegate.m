@@ -33,6 +33,7 @@
 #import "FNSystemConfig.h"
 
 #import "ContactDataTable.h"
+#import "ContactRequestTable.h"
 @interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (nonatomic, retain)BOPReachability *reachability;
@@ -123,6 +124,8 @@ rcs_state* R = NULL;
     {
         [DBManager initDBWithUserId:name];
     }
+    
+    [FNUserInfo ShareStaticConst].localNum = name;
     
     NSString *password = [[CurrentUserTable getLastUser] password];
     
@@ -354,13 +357,18 @@ rcs_state* R = NULL;
             UserInfo * u = s->user_info;
             
             NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
-            ContactDataTable *table = [ContactDataTable getWithUserId:str1];
+            ContactRequestTable *table = [ContactRequestTable getWithUserId:str1];
             table.userId = [NSString stringWithFormat:@"%d",u->user_id];
             table.nickName = [NSString stringWithUTF8String:u->nickname];
             table.username = [NSString stringWithUTF8String:u->username];
             
-            [_addBuddyArray addObject:table];
+            [ContactRequestTable insert:table];
+            
+//            [_addBuddyArray addObject:table];
            
+            
+            
+            
 //            //去除重复的信息
 //            NSMutableArray *listAry = [[NSMutableArray alloc]init];
 //            
@@ -447,10 +455,23 @@ rcs_state* R = NULL;
                  NSLog(@"hah");
                  
                  [_buddyIDArray removeObject:number];
+             
                  
+                 [ContactDataTable del:[NSString stringWithFormat:@"%@",number]];
              }else if (p->action == 1){
              
                  [_buddyIDArray addObject:number];
+                 
+                 ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
+    
+                 if (!table.userId)
+                 {
+                     ContactDataTable *table = [[ContactDataTable alloc] init];
+                     table.userId = [NSString stringWithFormat:@"%@",number];
+                     [ContactDataTable insert:table];
+                 }
+                 
+                 
              
              }else if (p->action == 3){
                  

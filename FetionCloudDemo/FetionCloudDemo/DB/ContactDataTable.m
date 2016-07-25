@@ -7,9 +7,8 @@
 //
 
 #import "ContactDataTable.h"
-#import "DBManager.h"
-#import "BOPFMDB.h"
 #import "ContactDataTable+Extension.h"
+
 
 @implementation ContactDataTable
 
