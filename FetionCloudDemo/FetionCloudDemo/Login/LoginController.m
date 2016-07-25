@@ -23,7 +23,7 @@
 #import "DBManager.h"
 
 #import "AppDelegate.h"
-
+#import "FNUserInfo.h"
 
 
 
@@ -251,6 +251,7 @@
                 
             }
             
+            [FNUserInfo ShareStaticConst].localNum = _localNum;
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
             

@@ -344,7 +344,8 @@ rcs_state* R = NULL;
          _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
          NSLog(@"_buddyInbiterId================%s",s->from_user);
         
-        
+        [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
+
         
          //收到被添加请求，发送通知
         if (s->op == 6) {
@@ -354,6 +355,7 @@ rcs_state* R = NULL;
 
             //}
 
+            
             UserInfo * u = s->user_info;
             
             NSString *str1 = [NSString  stringWithFormat:@"%d",u->user_id];
@@ -470,8 +472,7 @@ rcs_state* R = NULL;
                      table.userId = [NSString stringWithFormat:@"%@",number];
                      [ContactDataTable insert:table];
                  }
-                 
-                 
+                
              
              }else if (p->action == 3){
                  

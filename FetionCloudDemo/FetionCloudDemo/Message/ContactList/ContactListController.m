@@ -489,7 +489,8 @@
         [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
         
     }else if (indexPath.section == 1){
-            
+        self.selectIndexPath = indexPath;
+
         UIAlertView * alert =[[UIAlertView alloc] initWithTitle:@"" message:@"是否添加为好友" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
         
         alert.tag = 2002;
