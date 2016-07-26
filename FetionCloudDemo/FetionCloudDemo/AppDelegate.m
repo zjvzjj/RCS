@@ -366,6 +366,10 @@ rcs_state* R = NULL;
             
             [ContactRequestTable insert:table];
             
+            _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
+            
+//            NSLog(@"请求的好友数量%d----%d",_addBuddyArray.count,s->op);
+//                  NSLog(@"请求的好友名字----%@----%@",table.nickName,table.username);
 //            [_addBuddyArray addObject:table];
            
             
@@ -420,7 +424,7 @@ rcs_state* R = NULL;
              
              [FNUserInfo ShareStaticConst].buddyIDArray = _buddyIDArray;
              
-             [DBManager initDBWithUserId:_localNum];
+             [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
              
              ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
              
