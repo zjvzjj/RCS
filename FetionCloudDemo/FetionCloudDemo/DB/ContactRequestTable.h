@@ -11,4 +11,5 @@
 
 @interface ContactRequestTable : ContactDataTable
 + (ContactRequestTable *)getWithUserId:(NSString *)userId;
++ (BOOL)insert:(ContactDataTable *)user;
 @end

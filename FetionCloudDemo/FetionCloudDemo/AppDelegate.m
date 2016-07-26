@@ -350,11 +350,8 @@ rcs_state* R = NULL;
          //收到被添加请求，发送通知
         if (s->op == 6) {
           
-            //if (!_addBuddyArray) {
-                _addBuddyArray = [[NSMutableArray alloc]init];
-
-            //}
-
+            
+            _addBuddyArray = [[NSMutableArray alloc]init];
             
             UserInfo * u = s->user_info;
             
@@ -363,30 +360,13 @@ rcs_state* R = NULL;
             table.userId = [NSString stringWithFormat:@"%d",u->user_id];
             table.nickName = [NSString stringWithUTF8String:u->nickname];
             table.username = [NSString stringWithUTF8String:u->username];
-            
-            [ContactRequestTable insert:table];
-            
-            _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
-            
+
 //            NSLog(@"请求的好友数量%d----%d",_addBuddyArray.count,s->op);
 //                  NSLog(@"请求的好友名字----%@----%@",table.nickName,table.username);
 //            [_addBuddyArray addObject:table];
            
             
-            
-            
-//            //去除重复的信息
-//            NSMutableArray *listAry = [[NSMutableArray alloc]init];
-//            
-//            for (ContactDataTable *t in _addBuddyArray) {
-//                
-//                if (![listAry containsObject:t]) {
-//                    
-//                    [listAry addObject:t];
-//                }  
-//            }
-            
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:_addBuddyArray];
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:table];
              
          }
          
