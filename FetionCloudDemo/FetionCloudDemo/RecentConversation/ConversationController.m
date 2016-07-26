@@ -70,6 +70,7 @@
 #import "AppDelegate.h"
 #import "MessageEntity.h"
 #import "FNUserInfo.h"
+#import "DBManager.h"
 
 
 NSString *_groupID;
@@ -2306,7 +2307,7 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
             textMsgReq.msgAttribute = @"buring";
             textMsgReq.msgId = [FNMsgBasicLogic generateUUID];
             textMsgReq.pushDesc = message.text;
-            
+            textMsgReq.name = self.toDisplayName;
             
 //------------------------------RCSSDK --------------------------------------------------------
  
@@ -2370,8 +2371,10 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
 //            
 //            if ([source isEqualToString:@"private"])
 //            {
-//                //[FNMsgLogic sendTextMsg:textMsgReq callback:sendTextMsgCallback];
-//                //                [self sendSimpleMsg:textMsgReq.content];
+            [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
+
+                [FNMsgLogic sendTextMsg:textMsgReq callback:nil];
+//                                [self sendSimpleMsg:textMsgReq.content];
 //            }
 //            else if ([source isEqualToString:@"group"])
 //            {

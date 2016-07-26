@@ -34,6 +34,8 @@
 
 #import "ContactDataTable.h"
 #import "ContactRequestTable.h"
+#import "FNDBManager.h"
+#import "FNUserConfig.h"
 @interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (nonatomic, retain)BOPReachability *reachability;
@@ -126,7 +128,10 @@ rcs_state* R = NULL;
     }
     
     [FNUserInfo ShareStaticConst].localNum = name;
-    
+    [FNUserConfig initWithUserid:@"500015"];
+
+    [FNDBManager initDB:@"500015"];
+
     NSString *password = [[CurrentUserTable getLastUser] password];
     
     if (password.length > 0)

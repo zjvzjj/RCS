@@ -304,7 +304,7 @@
                 
                 if(!model.sendNickName)
                 {
-                    model.sendNickName = [Utility userIdWithoutAppKey:msgTable.targetId];
+                    model.sendNickName = [Utility userIdWithoutAppKey:msgTable.targetName];
                 }
             }//昵称
             

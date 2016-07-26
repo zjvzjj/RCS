@@ -30,6 +30,9 @@
 #import "NSData+DataEncrypt.h"
 #import "FNMsgBasicLogic.h"
 
+
+
+
 @implementation FNMsgLogic
 
 
@@ -212,6 +215,7 @@
 + (void)sendTextMsg:(FNSendTextMsgRequest *)textMsgReq
            callback:(void (^)(FNSendMsgResponse *))callback
 {
+
     if ([NSString isNullString:textMsgReq.content])
     {
         NSLog(@"msgcontent is null");
@@ -241,7 +245,7 @@
     info.eventType = EventTypePrivate;
     info.msgType = message.msgType;
     info.targetId = [Utility userIdWithoutAppKey:textMsgReq.peerID];
-    info.targetName = textMsgReq.senderNickname;
+    info.targetName = textMsgReq.name;
     info.targetProtraitUrl = textMsgReq.sendPortraitUrl;
     info.senderNickname = textMsgReq.senderNickname;
     info.content = message.content ;

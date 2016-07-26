@@ -115,6 +115,9 @@
 // 发送消息时，消息接收者的ID
 @property (nonatomic, copy) NSString *peerID;
 
+// 发送消息时，消息接收者的Name
+@property (nonatomic, copy) NSString *name;
+
 // 发送消息的文本内容
 @property (nonatomic, copy) NSString *content;
 
