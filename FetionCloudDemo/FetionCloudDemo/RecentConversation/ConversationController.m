@@ -1934,6 +1934,14 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         msgEntity.senderNickname = self.senderDisplayName;
         msgEntity.sendPortraitUrl = @"hahahhhhhhhhtest";
         msgEntity.pushDesc = @"发了一段音频";
+        msgEntity.receiveNickname = self.toDisplayName;
+        
+        FNSendRichTextMsgRequest *imageReq = [[FNSendRichTextMsgRequest alloc] init];
+        imageReq.msgEntity = msgEntity;
+        imageReq.msgContent = msgContent;
+        
+        
+        [FNMsgLogic saveRichTextMessage:imageReq];
         
 //----------------------------RCSSDK--------------------------------------------------
         
@@ -1962,15 +1970,17 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         //        NSString * msgId = [NSString stringWithFormat:@"%lld", recordTime];
         //        NSLog(@"----------%llu,-----------%@",recordTime,msgId);
         
-        
-        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:item.fileURL.path contentType:ContentTypeAUDIO fileName:item.fileURL.path.lastPathComponent needReport:YES start:0 thumbnail:item.fileURL.path.lastPathComponent isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+        NSString * thumbnailPath = [[NSBundle mainBundle]pathForResource:@"yinpin" ofType:@"png"];
+        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:item.fileURL.path contentType:ContentTypeAUDIO fileName:item.fileURL.path.lastPathComponent needReport:YES start:0 thumbnail:thumbnailPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
             if (s) {
                 if (s->error_code == 200) {
                     
                     NSLog(@"send audio ok");
                     message.sendingFlag = NO;
                     message.sendFailureFlag =  NO;
-                    [self finishSendingMessage];
+//                    [self finishSendingMessage];
+                    
+                    [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
                     
                     dispatch_async(dispatch_get_main_queue(),^{
                         

@@ -81,6 +81,9 @@
 // 可选，消息发送者的用户昵称
 @property (nonatomic, copy) NSString *senderNickname;
 
+// 可选，消息发送者的用户昵称
+@property (nonatomic, copy) NSString *receiveNickname;
+
 //可选，消息发送者的用户昵称
 @property (nonatomic, copy) NSString *sendPortraitUrl;
 

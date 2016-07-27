@@ -440,7 +440,7 @@
     info.eventType = EventTypePrivate;
     info.msgType = message.msgType;
     info.targetId = [Utility userIdWithoutAppKey:richTextMsgReq.msgEntity.peerID];
-    info.targetName = richTextMsgReq.msgEntity.senderNickname;
+    info.targetName = richTextMsgReq.msgEntity.receiveNickname;
     info.targetProtraitUrl = richTextMsgReq.msgEntity.sendPortraitUrl;
     info.senderNickname = richTextMsgReq.msgEntity.senderNickname;
     info.content = message.content;

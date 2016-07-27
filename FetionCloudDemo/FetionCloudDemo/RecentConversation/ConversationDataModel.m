@@ -191,7 +191,11 @@
                     
                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                     NSString *rootCachePath = [paths firstObject];
-                    NSString *audioPath = [NSString  stringWithFormat:@"%@/%@.amr",rootCachePath,data.fileName];
+                    NSString *audioPath = [NSString  stringWithFormat:@"%@/%@.amr",rootCachePath,data.msgId];
+                    
+                    //rsc Path
+                      NSString *fileName = [NSString stringWithFormat:@"%@.amr",data.msgId];
+                        NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     
                     if (data.savePath && [data.savePath length] > 0)
                     {
@@ -201,7 +205,7 @@
                     FNAudioMediaItem *audioItem = [[FNAudioMediaItem alloc] initWithMaskAsOutgoing:isOutgoing];
                     if(data.savePath != nil)
                     {
-                    audioItem.fileURL = [NSURL fileURLWithPath:audioPath];
+                    audioItem.fileURL = [NSURL fileURLWithPath:fullPath];
                     }
                     audioItem.duration = (double)data.playTime;
                     
@@ -285,6 +289,10 @@
                     if([type isEqualToString:FNMsgTypePic])
                     {
                         msg.messageType = FNMessageTypePicture;
+                    }
+                    if([type isEqualToString:FNMsgTypeAudio])
+                    {
+                        msg.messageType = FNMessageTypeAudio;
                     }
                     if(data.sendStatus == 1)
                     {

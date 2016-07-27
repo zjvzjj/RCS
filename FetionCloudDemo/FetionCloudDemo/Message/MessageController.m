@@ -459,49 +459,57 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"conversation"])
-    {
-        NSIndexPath *index = sender;
-        
-        ConversationController *conversationController = segue.destinationViewController;
-        MessageTableModel *messageTableModel = (MessageTableModel *)self.msgDataSource[index.row];
-        
-        if(messageTableModel.eventType == 1)
-        {
-            conversationController.source = @"private";
-            conversationController.toUserid = messageTableModel.tid;
-            ContactDataTable *contact = [ContactDataTable getWithUserId:[Utility userIdWithAppKey: messageTableModel.tid]];
-            if (contact.nickName)
-            {
-                conversationController.toDisplayName = contact.nickName;
-            }
-            else
-            {
-                conversationController.toDisplayName = contact.account;
-                if(! conversationController.toDisplayName)
-                {
-                     conversationController.toDisplayName = [Utility userIdWithoutAppKey:messageTableModel.tid];
-                }
-            }
-            
-        }else if (messageTableModel.eventType == 2)
-        {
-            conversationController.source = @"group";
-            NSMutableArray *groups = [FNGroupTable get:messageTableModel.tid];
-            if (groups.count != 0)
-            {
-                FNGroupTable *group = (FNGroupTable *)groups[0];
-                conversationController.toDisplayName = group.groupName;
-                
-            }
-            if(!conversationController.toDisplayName )
-            {
-                conversationController.toDisplayName = messageTableModel.tid;
-            }
-            conversationController.toUserid = messageTableModel.tid;
-        }
-        [FNRecentConversationTable updateUnReadCount:messageTableModel.tid];
-    }
+    NSIndexPath *index = (NSIndexPath *)sender;
+    MessageTableModel *infos = self.msgDataSource[index.row];
+    ConversationController *conversationVC = segue.destinationViewController;
+    conversationVC.toDisplayName = infos.sendNickName;
+    //conversationVC.toUserid = [Utility userIdWithAppKey:infos.userId];
+    conversationVC.toUserid = infos.tid;
+    conversationVC.source = @"private";
+    
+//    if ([segue.identifier isEqualToString:@"conversation"])
+//    {
+//        NSIndexPath *index = sender;
+//        
+//        ConversationController *conversationController = segue.destinationViewController;
+//        MessageTableModel *messageTableModel = (MessageTableModel *)self.msgDataSource[index.row];
+//        
+//        if(messageTableModel.eventType == 1)
+//        {
+//            conversationController.source = @"private";
+//            conversationController.toUserid = messageTableModel.tid;
+//            ContactDataTable *contact = [ContactDataTable getWithUserId:[Utility userIdWithAppKey: messageTableModel.tid]];
+//            if (contact.nickName)
+//            {
+//                conversationController.toDisplayName = contact.nickName;
+//            }
+//            else
+//            {
+//                conversationController.toDisplayName = contact.account;
+//                if(! conversationController.toDisplayName)
+//                {
+//                     conversationController.toDisplayName = [Utility userIdWithoutAppKey:messageTableModel.tid];
+//                }
+//            }
+//            
+//        }else if (messageTableModel.eventType == 2)
+//        {
+//            conversationController.source = @"group";
+//            NSMutableArray *groups = [FNGroupTable get:messageTableModel.tid];
+//            if (groups.count != 0)
+//            {
+//                FNGroupTable *group = (FNGroupTable *)groups[0];
+//                conversationController.toDisplayName = group.groupName;
+//                
+//            }
+//            if(!conversationController.toDisplayName )
+//            {
+//                conversationController.toDisplayName = messageTableModel.tid;
+//            }
+//            conversationController.toUserid = messageTableModel.tid;
+//        }
+//        [FNRecentConversationTable updateUnReadCount:messageTableModel.tid];
+//    }
 }
 
 
