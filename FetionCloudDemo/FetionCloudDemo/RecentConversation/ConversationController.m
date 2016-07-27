@@ -2297,6 +2297,8 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
             
         case FNMessageTypePlainText:
         {
+            NSString * tempMsgId = [FNMsgBasicLogic generateUUID];
+            
             FNSendTextMsgRequest *textMsgReq = [[FNSendTextMsgRequest alloc] init];
             textMsgReq.peerID = toUserid;//toUserid;
             textMsgReq.content = message.text;
@@ -2305,19 +2307,21 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
             textMsgReq.sendPortraitUrl = @"hahahhhhhhhhtest";
             textMsgReq.contentType = @"String";
             textMsgReq.msgAttribute = @"buring";
-            textMsgReq.msgId = [FNMsgBasicLogic generateUUID];
+            textMsgReq.msgId = tempMsgId;
             textMsgReq.pushDesc = message.text;
             textMsgReq.name = self.toDisplayName;
             
 //------------------------------RCSSDK --------------------------------------------------------
  
-        [globalRcsApi msgsendtext:R number:toUserid messageId:[FNMsgBasicLogic generateUUID] content:message.text needReport:YES isBurn:YES directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+        [globalRcsApi msgsendtext:R number:toUserid messageId:tempMsgId content:message.text needReport:YES isBurn:YES directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
                     if (s->error_code == 200) {
             
                         NSLog(@"send text ok");
                         message.sendingFlag = NO;
                         message.sendFailureFlag = NO;
                         
+                        [FNMsgTable updateSendMsgStatus:tempMsgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+       
                         dispatch_async(dispatch_get_main_queue(),^{
                             
                             [self.collectionView reloadData];

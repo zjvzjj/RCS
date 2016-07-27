@@ -516,7 +516,7 @@ rcs_state* R = NULL;
          message.senderId = [NSString stringWithFormat:@"%s",s->from];
          
          message.senderProtraitUrl =@"path";
-         message.sendStatus = MsgSending;
+         message.sendStatus = MsgSendSuccess;
          message.readStatus = MsgAlreadyRead;
          message.flag = MsgReceiveFlag;
          message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
