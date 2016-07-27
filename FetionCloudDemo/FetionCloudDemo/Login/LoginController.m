@@ -221,7 +221,7 @@
             
             NSLog(@"userid=============%d,%s,%d",R->last_id,R->number,R->started);
             
-            [FNUserConfig initWithUserid:_localNum];
+//            [FNUserConfig initWithUserid:_localNum];
             
      //-----------------------------------start--------------------------------------
             
