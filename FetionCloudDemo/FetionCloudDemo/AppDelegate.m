@@ -40,6 +40,8 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 
+#import "FNListener.h"
+
 @interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (nonatomic, retain)BOPReachability *reachability;
@@ -89,6 +91,8 @@ rcs_state* R = NULL;
     //    _localNum = @"+8615901435217";
     
     [FNUserInfo ShareStaticConst].localNum = _localNum;
+    
+    [FNListener ShareStaticConst].localNum = _localNum;
     
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     printf("--------%lld \r\n", milliseconds);
@@ -758,10 +762,16 @@ rcs_state* R = NULL;
 - (void)registerListeners
 {
     
-    [self registerMsgListener];
-    [self registerAvListener];
-    [self registerBuddyEventListener];
-    [self registerBuddyListListener];
+//    [self registerMsgListener];
+//    [self registerAvListener];
+//    [self registerBuddyEventListener];
+//    [self registerBuddyListListener];
+    
+    
+    [[FNListener ShareStaticConst] registerMsgListener];
+    [[FNListener ShareStaticConst] registerBuddyEventListener];
+    [[FNListener ShareStaticConst] registerBuddyListListener];
+    
 }
 
 

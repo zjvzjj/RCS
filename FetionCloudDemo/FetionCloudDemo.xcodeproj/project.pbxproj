@@ -283,6 +283,7 @@
 		EF066ECB1C3E5CCA000FAA9F /* FNSounds.m in Sources */ = {isa = PBXBuildFile; fileRef = EF066ECA1C3E5CCA000FAA9F /* FNSounds.m */; };
 		EF0C256D1D3F44A6008F8C1C /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0C256C1D3F44A6008F8C1C /* BaseView.m */; };
 		EF7BDE311C44E56B006F8938 /* BOPReachability+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BDE301C44E56B006F8938 /* BOPReachability+Extension.m */; };
+		EF83924F1D4A0D430009CBF8 /* FNListener.m in Sources */ = {isa = PBXBuildFile; fileRef = EF83924E1D4A0D430009CBF8 /* FNListener.m */; };
 		EFAC84FF1C292A580030DC3F /* XMCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAC84FA1C292A580030DC3F /* XMCircleView.m */; };
 		EFAC85001C292A580030DC3F /* XMEmotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAC84FC1C292A580030DC3F /* XMEmotionView.m */; };
 		EFAC85011C292A580030DC3F /* XMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAC84FE1C292A580030DC3F /* XMPageControl.m */; };
@@ -763,6 +764,8 @@
 		EF0C256C1D3F44A6008F8C1C /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
 		EF7BDE2F1C44E56B006F8938 /* BOPReachability+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BOPReachability+Extension.h"; sourceTree = "<group>"; };
 		EF7BDE301C44E56B006F8938 /* BOPReachability+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BOPReachability+Extension.m"; sourceTree = "<group>"; };
+		EF83924D1D4A0D430009CBF8 /* FNListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNListener.h; sourceTree = "<group>"; };
+		EF83924E1D4A0D430009CBF8 /* FNListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNListener.m; sourceTree = "<group>"; };
 		EFAC84F91C292A580030DC3F /* XMCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMCircleView.h; sourceTree = "<group>"; };
 		EFAC84FA1C292A580030DC3F /* XMCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMCircleView.m; sourceTree = "<group>"; };
 		EFAC84FB1C292A580030DC3F /* XMEmotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMEmotionView.h; sourceTree = "<group>"; };
@@ -1874,6 +1877,8 @@
 				6B0931151C96CE3F00FC90F3 /* FNNetworkHandle.m */,
 				EFC31BFF1D24EDB300EBF8D3 /* FNUserInfo.h */,
 				EFC31C001D24EDB300EBF8D3 /* FNUserInfo.m */,
+				EF83924D1D4A0D430009CBF8 /* FNListener.h */,
+				EF83924E1D4A0D430009CBF8 /* FNListener.m */,
 				EF0C256B1D3F44A6008F8C1C /* BaseView.h */,
 				EF0C256C1D3F44A6008F8C1C /* BaseView.m */,
 			);
@@ -2254,6 +2259,7 @@
 				EFAC85651C292A780030DC3F /* RegexKitLite.m in Sources */,
 				EF04B5991C294CC000501CDF /* ConversationController.m in Sources */,
 				6BFD75E01C32E2AA00F36445 /* UIView+Toast.m in Sources */,
+				EF83924F1D4A0D430009CBF8 /* FNListener.m in Sources */,
 				CF6F50551C49F80B00BBCAA2 /* SNSVideoPlayer.m in Sources */,
 				EF066EC81C3E5B47000FAA9F /* FNImage.m in Sources */,
 				CF18F8191C3B730A00019BA5 /* SDWebImageDecoder.m in Sources */,

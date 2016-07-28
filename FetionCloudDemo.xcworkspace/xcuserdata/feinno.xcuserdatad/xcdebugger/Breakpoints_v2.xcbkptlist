@@ -26,7 +26,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
-                  timestampString = "491382983.942991"
+                  timestampString = "491406398.424353"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1103"
@@ -41,7 +41,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
-                  timestampString = "491382983.943208"
+                  timestampString = "491406398.424636"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1103"
@@ -80,22 +80,6 @@
             startingLineNumber = "2125"
             endingLineNumber = "2125"
             landmarkName = "-sendAudioWithNSString:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/AppDelegate.m"
-            timestampString = "491382770.167569"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
-            landmarkName = "-registerMsgListener"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -218,7 +202,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/Login/LoginController.m"
-                  timestampString = "491382983.950049"
+                  timestampString = "491406398.429847"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "396"
@@ -233,7 +217,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/Login/LoginController.m"
-                  timestampString = "491382983.950206"
+                  timestampString = "491406398.430004"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "396"
@@ -255,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
             endingLineNumber = "232"
-            landmarkName = "-onKickOff"
+            landmarkName = "-UserNetworkError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -377,22 +361,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/AppDelegate.m"
-            timestampString = "491382770.167569"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527"
-            landmarkName = "-registerMsgListener"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
             timestampString = "489980737.351356"
             startingColumnNumber = "9223372036854775807"
@@ -442,7 +410,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
-                  timestampString = "491382983.954838"
+                  timestampString = "491406398.432888"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1495"
@@ -457,7 +425,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
-                  timestampString = "491382983.954989"
+                  timestampString = "491406398.433082"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1496"
@@ -490,7 +458,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
-                  timestampString = "491382983.955859"
+                  timestampString = "491406398.433944"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1131"
@@ -505,7 +473,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/RecentConversation/ConversationController.m"
-                  timestampString = "491382983.956033"
+                  timestampString = "491406398.434094"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1131"
@@ -765,38 +733,6 @@
             timestampString = "491382770.167569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "604"
-            endingLineNumber = "604"
-            landmarkName = "-registerMsgListener"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/AppDelegate.m"
-            timestampString = "491384250.280499"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "617"
-            endingLineNumber = "617"
-            landmarkName = "-registerMsgListener"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/AppDelegate.m"
-            timestampString = "491382770.167569"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
             endingLineNumber = "249"
             landmarkName = "-alertView:clickedButtonAtIndex:"
@@ -842,7 +778,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/Message/ContactList/ContactListController.m"
-                  timestampString = "491382983.969511"
+                  timestampString = "491406398.441711"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "567"
@@ -857,7 +793,7 @@
                   moduleName = "FetionCloudDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feinno/Desktop/RCS/FetionCloudDemo/FetionCloudDemo/Message/ContactList/ContactListController.m"
-                  timestampString = "491382983.969653"
+                  timestampString = "491406398.441853"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "567"
@@ -1006,38 +942,6 @@
             startingLineNumber = "252"
             endingLineNumber = "252"
             landmarkName = "-viewWillAppear:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/AppDelegate.m"
-            timestampString = "491384250.280499"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "663"
-            endingLineNumber = "663"
-            landmarkName = "-registerMsgListener"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FetionCloudDemo/FetionCloudDemo/AppDelegate.m"
-            timestampString = "491384250.280499"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "667"
-            endingLineNumber = "667"
-            landmarkName = "-registerMsgListener"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
