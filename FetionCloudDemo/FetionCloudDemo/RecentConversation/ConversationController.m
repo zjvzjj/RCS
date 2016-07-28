@@ -194,7 +194,9 @@ ConversationDataModelSource
     // NSLog(@"%@",[CurrentUserTable getWithUserId:self.senderId]);
     //NSLog(@"id======%@ name========%@",self.senderId,self.senderDisplayName);
     
-    self.senderId = @"500015";
+    
+    self.senderId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+
     self.senderDisplayName = @"Jack";
     
     UIImage *detaiItemImage = nil;
