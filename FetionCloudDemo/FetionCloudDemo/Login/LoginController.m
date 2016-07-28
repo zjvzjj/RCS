@@ -24,7 +24,7 @@
 
 #import "AppDelegate.h"
 #import "FNUserInfo.h"
-
+#import "FNDBManager.h"
 
 
 @interface LoginController ()<UITextFieldDelegate>
@@ -139,14 +139,14 @@
 
 //获取验证码
 - (IBAction)getsmscode:(id)sender {
-   
+    
     NSString * str1 = @"+86";
-//    _localNum = [str1 stringByAppendingString:_nameText.text];
+    //    _localNum = [str1 stringByAppendingString:_nameText.text];
     
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"/"];
     NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];
     
-       R =[globalRcsApi newState:_localNum appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
+    R =[globalRcsApi newState:_localNum appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
     
     [globalRcsApi getsmscode:R number:_localNum callback:^(rcs_state* R, GetSmsResult *s) {
         if(s->error_code == 200)
@@ -158,8 +158,8 @@
                 
                 //[[[UIAlertView alloc] initWithTitle:@"" message:@"获取验证码成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 
-                   _smsCodeText.text = @"777777";
-                    _passwordText.text = _password;
+                _smsCodeText.text = @"777777";
+                _passwordText.text = _password;
                 
             });
             
@@ -172,7 +172,7 @@
                 
             });
             NSLog(@"获取验证码失败");
-
+            
         }
     }];
     
@@ -185,7 +185,7 @@
     
     [globalRcsApi provisionotp:R smscode:@"777777" username:_localNum otp:_password sessid:_provsid callback:^(rcs_state* R, ProvisionResult *s) {
         if (s->error_code == 200) {
-           // [self AddLogC:"provision ok"];
+            // [self AddLogC:"provision ok"];
             NSLog(@"验证成功");
             
             _userId = [NSString stringWithFormat:@"%d",s->user_id];
@@ -195,7 +195,7 @@
                 [[[UIAlertView alloc] initWithTitle:@"" message:@"验证成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 
             });
-
+            
         }else{
             
             dispatch_async(dispatch_get_main_queue(),^{
@@ -221,9 +221,9 @@
             
             NSLog(@"userid=============%d,%s,%d",R->last_id,R->number,R->started);
             
-//            [FNUserConfig initWithUserid:_localNum];
+            //            [FNUserConfig initWithUserid:_localNum];
             
-     //-----------------------------------start--------------------------------------
+            //-----------------------------------start--------------------------------------
             
             
             [DBManager initDBWithUserId:_localNum];
@@ -255,8 +255,17 @@
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] setObject:_userId forKey:@"userId"];
-
-    //--------------------------------------end----------------------------------------
+            
+            [DBManager initDBWithUserId:_localNum];
+            
+            [FNUserInfo ShareStaticConst].localNum = _localNum;
+            [FNUserConfig initWithUserid:_userId];
+            
+            [FNDBManager initDB:_userId];
+            
+            
+            
+            //--------------------------------------end----------------------------------------
             
             
             //切换VC
@@ -264,12 +273,12 @@
                 
                 [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"tabbarController"];
                 
-               // [[[UIAlertView alloc] initWithTitle:@"" message:@"登录成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                                
+                // [[[UIAlertView alloc] initWithTitle:@"" message:@"登录成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+                
             });
             
         }else{
-
+            
             dispatch_async(dispatch_get_main_queue(),^{
                 
                 [[[UIAlertView alloc] initWithTitle:@"" message:@"登录失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
@@ -280,20 +289,20 @@
         }
     }];
     
-//    if (![NSString isEligible:self.nameText.text])
-//    {
-//        [self.view makeToast:@"账号格式不正确，请重新输入"];
-//        [self clearText:self.nameText];
-//        return;
-//    }
-//    else if (![NSString isEligible:self.passwordText.text])
-//    {
-//        [self.view makeToast:@"密码格式不正确，请重新输入"];
-//        [self clearText:self.passwordText];
-//        return;
-//    }
-//    
-//    [self login];
+    //    if (![NSString isEligible:self.nameText.text])
+    //    {
+    //        [self.view makeToast:@"账号格式不正确，请重新输入"];
+    //        [self clearText:self.nameText];
+    //        return;
+    //    }
+    //    else if (![NSString isEligible:self.passwordText.text])
+    //    {
+    //        [self.view makeToast:@"密码格式不正确，请重新输入"];
+    //        [self clearText:self.passwordText];
+    //        return;
+    //    }
+    //
+    //    [self login];
     
     
 }
@@ -323,14 +332,14 @@
     //11111
     [self activityShow:YES];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-  // NSString *url = @"http://192.168.0.102:8080/as/user/login";
+    // NSString *url = @"http://192.168.0.102:8080/as/user/login";
     NSString *url = @"http://221.176.28.117:8080/as/user/login";
     
     //__block NSString *password = _passwordText.text;
     __block NSString *password = _password;
     
     
-   // NSDictionary *parameter = @{@"uname":_nameText.text,@"pwd":_passwordText.text,@"appkey":APP_KEY};
+    // NSDictionary *parameter = @{@"uname":_nameText.text,@"pwd":_passwordText.text,@"appkey":APP_KEY};
     
     NSDictionary *parameter = @{@"uname":_localNum,@"pwd":password,@"appkey":APP_KEY};
     NSString * encodingString = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -367,7 +376,7 @@
                 t.password = password;
                 //t.account = _nameText.text;
                 t.account = _localNum;
-                 t.account = _localNum;
+                t.account = _localNum;
                 [CurrentUserTable insert:t];
                 
             }
@@ -380,13 +389,13 @@
             //设置
             [FNConfig setAppToken:responseObject[@"cnt"][@"token"] userId:responseObject[@"cnt"][@"bopId"]];
             //切换vc
-           // [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"tabbarController"];
+            // [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"tabbarController"];
             
             //切换VC
             dispatch_async(dispatch_get_main_queue(),^{
-            
-            [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"tabbarController"];
-            
+                
+                [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"tabbarController"];
+                
             });
             
             if (![[CurrentUserTable getLastUser] nickName])
@@ -490,14 +499,14 @@
     [self loginButtonValid:NO];
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(void)AddLogNs:(NSString*) log
 {

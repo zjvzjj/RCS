@@ -224,7 +224,7 @@
          FNMsgTable *message = [[FNMsgTable alloc] init];
          message.syncId = [FNUserTable getSyncId:EventTypePrivate];
          message.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
-         message.tid = [NSString stringWithFormat:@"%s",s->to];
+         message.tid = [NSString stringWithFormat:@"%s",s->from];
          message.msgType = FNMsgTypePlain;
          message.msgAttribute = [NSString stringWithFormat:@"%d",s->is_burn];
          message.contentType = FNMsgTypePlain;
@@ -235,7 +235,19 @@
          message.senderProtraitUrl =@"path";
          message.sendStatus = MsgSendSuccess;
          message.readStatus = MsgAlreadyRead;
-         message.flag = MsgReceiveFlag;
+         
+         NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+         
+         if ([userId isEqualToString:message.senderId]) {
+             
+             message.flag = MsgSendFlag;
+             
+         }else{
+             
+             message.flag = MsgReceiveFlag;
+         }
+         
+         
          message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
          [FNMsgTable insert:message];
          
