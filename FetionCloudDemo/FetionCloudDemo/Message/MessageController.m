@@ -108,7 +108,7 @@
     
     if (isRegister)
     {
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNTF:) name:NOTIFY_HAS_NEW_MSG object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNTF:) name:NOTIFY_HAS_NEW_MSG object:nil];
         
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recemessage:) name:@"test" object:nil];
         
@@ -342,7 +342,10 @@
         
     }
     self.msgDataSource = arrM;
-    [self.tableView reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

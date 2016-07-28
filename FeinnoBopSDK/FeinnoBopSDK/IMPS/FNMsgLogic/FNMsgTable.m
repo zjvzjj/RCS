@@ -69,10 +69,12 @@
                 }
                 else
                 {
-                    sql = [NSString stringWithFormat:@"select * from RichTextMsg where syncId = ?"];
+                    sql = [NSString stringWithFormat:@"select * from RichTextMsg where msgId = ?"];
                 }
                 
-                BOPFMResultSet *sRs = [db executeQuery:sql, (mt.flag == MsgSendFlag ? mt.msgId : [NSNumber numberWithLongLong:mt.syncId])];
+              
+                
+                BOPFMResultSet *sRs = [db executeQuery:sql,mt.msgId];
                 while ([sRs next])
                 {
                     mt.fileId = [sRs stringForColumn:@"fileId"];

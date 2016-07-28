@@ -24,8 +24,9 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
-
-
+#import "FNRecentConversationTable.h"
+#import "FNMsgNotify.h"
+#import "FNGroupMsgNotify.h"
 @implementation FNListener
 
 
@@ -256,8 +257,27 @@
          // [[FNUserInfo ShareStaticConst].messageArray addObject:m];
          
          
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
          
+         //最近会话
+         FNRecentConversationTable *info = [[FNRecentConversationTable alloc] init];
+         info.eventType = EventTypePrivate;
+         info.msgType = message.msgType;
+         info.targetId = [NSString stringWithFormat:@"%s",s->from];
+         info.targetName = [NSString stringWithFormat:@"%s",s->from];
+         info.targetProtraitUrl = @"头像";
+         info.senderNickname = [NSString stringWithFormat:@"%s",s->from];
+         info.content = message.content;
+         //    [info setUnreadMsgCount];
+         info.syncId = [FNUserTable getSyncId:EventTypePrivate];
+         info.lastActiveDate = message.createDate;
+         info.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
+         info.sendStatus = MsgUploading;
+         [FNRecentConversationTable insert:info];
+         
+         
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
+         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:nil];
          // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:message];
          
          if(s->need_report)

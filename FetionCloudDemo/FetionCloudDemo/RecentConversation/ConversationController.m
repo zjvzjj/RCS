@@ -419,8 +419,8 @@ ConversationDataModelSource
                 }
                 
                 // self.showTypingIndicator = !self.showTypingIndicator;
-                [FNSystemSoundPlayer fn_playMessageReceivedSound];
-                [self finishReceivingMessage];
+//                [FNSystemSoundPlayer fn_playMessageReceivedSound];
+//                [self finishReceivingMessage];
             }
         }
     
