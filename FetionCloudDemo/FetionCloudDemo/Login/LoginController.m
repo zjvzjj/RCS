@@ -254,7 +254,8 @@
             [FNUserInfo ShareStaticConst].localNum = _localNum;
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
-            
+            [[NSUserDefaults standardUserDefaults] setObject:_userId forKey:@"userId"];
+
     //--------------------------------------end----------------------------------------
             
             

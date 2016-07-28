@@ -167,9 +167,13 @@
                         
                         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                         NSString *rootCachePath = [paths firstObject];
-                        NSString *imagePath = [NSString  stringWithFormat:@"%@/%@.jpg",rootCachePath,data.fileName];
+                        NSString *imagePath = [NSString  stringWithFormat:@"%@/%@.jpg",rootCachePath,data.msgId];
                         
-                        NSFileHandle *hanlde = [NSFileHandle fileHandleForReadingAtPath:imagePath];
+                        //rsc Path
+                        NSString *fileName = [NSString stringWithFormat:@"%@.jpg",data.msgId];
+                        NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        
+                        NSFileHandle *hanlde = [NSFileHandle fileHandleForReadingAtPath:fullPath];
                         picData = [hanlde readDataToEndOfFile];
                     }
                     else if ( data.thumbPath && [data.thumbPath length] > 0)
@@ -228,13 +232,17 @@
                     
                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                     NSString *rootCachePath = [paths firstObject];
-                    NSString *videoPath = [NSString  stringWithFormat:@"%@/%@.mp4",rootCachePath,data.fileName];
+                    NSString *videoPath = [NSString  stringWithFormat:@"%@/%@.mp4",rootCachePath,data.msgId];
+                    
+                    //rsc Path
+                    NSString *fileName = [NSString stringWithFormat:@"%@.mp4",data.msgId];
+                    NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     
                 
                     if(data.savePath != nil)
                     {
                         //videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:data.savePath] isReadyToPlay:isOutgoing || data.savePath];
-                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:videoPath] isReadyToPlay:isOutgoing || videoPath];
+                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:fullPath] isReadyToPlay:isOutgoing || videoPath];
                         
                         
                     }else

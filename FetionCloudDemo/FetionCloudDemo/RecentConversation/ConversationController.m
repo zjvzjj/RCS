@@ -1435,9 +1435,9 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         msgEntity.msgContent = [msgContent toJString];
         msgEntity.msgId = msgId;
         msgEntity.pushDesc = @"给你发了一张图片";
+        msgEntity.receiveNickname = self.toDisplayName;
         
-        
-        __block FNSendRichTextMsgRequest *imageReq = [[FNSendRichTextMsgRequest alloc] init];
+        FNSendRichTextMsgRequest *imageReq = [[FNSendRichTextMsgRequest alloc] init];
         imageReq.msgEntity = msgEntity;
         imageReq.msgContent = msgContent;
         
@@ -1500,9 +1500,11 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
                     message.sendingFlag = NO;
                     message.sendFailureFlag =  NO;
                     
+                    [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+                    
                     dispatch_async(dispatch_get_main_queue(),^{
                         
-                        [self.collectionView reloadData];
+                       [self finishSendingMessage];
                         
                     });
                 }
@@ -1677,6 +1679,13 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         msgEntity.msgId = msgId;
         msgEntity.sendPortraitUrl = @"llllllllllllllllllllll";
         msgEntity.pushDesc = @"给你发了一段视频";
+        msgEntity.receiveNickname = self.toDisplayName;
+        
+        FNSendRichTextMsgRequest *imageReq = [[FNSendRichTextMsgRequest alloc] init];
+        imageReq.msgEntity = msgEntity;
+        imageReq.msgContent = msgContent;
+    
+        [FNMsgLogic saveRichTextMessage:imageReq];
         
   //------------------------------------RCSSDK-----------------------------------------
         
@@ -1709,11 +1718,13 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
                     NSLog(@"send file ok");
                     message.sendingFlag = NO;
                     message.sendFailureFlag =  NO;
-                    [self finishSendingMessage];
+                   // [self finishSendingMessage];
+                    
+                    [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
                     
                     dispatch_async(dispatch_get_main_queue(),^{
                         
-                        [self.collectionView reloadData];
+                        [self finishSendingMessage];
                         
                     });
                 }
@@ -1984,7 +1995,7 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
                     
                     dispatch_async(dispatch_get_main_queue(),^{
                         
-                        [self.collectionView reloadData];
+                        [self finishSendingMessage];
                         
                     });
                     
@@ -2334,7 +2345,7 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
        
                         dispatch_async(dispatch_get_main_queue(),^{
                             
-                            [self.collectionView reloadData];
+                            [self finishSendingMessage];
                             
                         });
             

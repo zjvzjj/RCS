@@ -88,9 +88,6 @@ rcs_state* R = NULL;
     
     //    _localNum = @"+8615901435217";
     
-    
-    //_addBuddyArray = [[NSMutableArray alloc]init];
-    
     [FNUserInfo ShareStaticConst].localNum = _localNum;
     
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
@@ -125,16 +122,16 @@ rcs_state* R = NULL;
     //    }
     
     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
-    
+    NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
     if (name)
     {
         [DBManager initDBWithUserId:name];
     }
     
     [FNUserInfo ShareStaticConst].localNum = name;
-    [FNUserConfig initWithUserid:@"500015"];
+    [FNUserConfig initWithUserid:userId];
     
-    [FNDBManager initDB:@"500015"];
+    [FNDBManager initDB:userId];
     
     NSString *password = [[CurrentUserTable getLastUser] password];
     
@@ -617,7 +614,6 @@ rcs_state* R = NULL;
              message.senderProtraitUrl =@"path";
              
              
-             
              if (s->content_type == 2) {
                  
                  message.msgType = FNMsgTypePic;
@@ -633,9 +629,6 @@ rcs_state* R = NULL;
                  message.msgType = FNMsgTypeAudio;
                  message.contentType = FNMsgTypeAudio;
                  newfilePath = [newfilePath stringByAppendingString:@".amr"];
-                 //message.playTime = 6;
-                 // message.bitrate = 2;
-                 
                  
                  
              }else if (s->content_type == 8){
@@ -643,9 +636,7 @@ rcs_state* R = NULL;
                  message.msgType = FNMsgTypeVideo;
                  message.contentType = FNMsgTypeVideo;
                  newfilePath = [newfilePath stringByAppendingString:@".mp4"];
-                 //message.playTime = 6;
-                 // message.bitrate = 2;
-                 
+            
                  
              }else{
                  
@@ -661,16 +652,24 @@ rcs_state* R = NULL;
              message.savePath = fullPath;
              message.thumbPath = fullPath;
              
-             //message.playTime = 6;
-             // message.bitrate = 2;
-             
              message.sendStatus = MsgSendSuccess;
              message.readStatus = MsgAlreadyRead;
-             message.flag = MsgSendFlag;
+             
+             
+             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+             
+             if ([userId isEqualToString:message.senderId]) {
+                 
+                 message.flag = MsgSendFlag;
+                 
+             }else{
+             
+                 message.flag = MsgReceiveFlag;
+             }
+             
              message.receiveStatus = MsgReceiveSuccess;
              message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
              
-        
              //下载富文本文件
              [globalRcsApi msgfetchfile:R number:weakSelf.localNum
                               messageId:messageId
@@ -684,6 +683,7 @@ rcs_state* R = NULL;
                                    hash:@""
                                  isBurn:s->is_burn
                                callback:^(rcs_state* R, MessageResult *s) {
+                                   
                                    if (s->error_code == 200) {
                                        NSURL *url = [NSURL fileURLWithPath:fullPath];
                                        AVURLAsset *audioAsset = [AVURLAsset URLAssetWithURL:url options:nil];
