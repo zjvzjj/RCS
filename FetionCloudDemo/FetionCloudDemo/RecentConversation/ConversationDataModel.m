@@ -209,7 +209,7 @@
                     FNAudioMediaItem *audioItem = [[FNAudioMediaItem alloc] initWithMaskAsOutgoing:isOutgoing];
                     if(data.savePath != nil)
                     {
-                    audioItem.fileURL = [NSURL fileURLWithPath:fullPath];
+                    audioItem.fileURL = [NSURL fileURLWithPath:data.savePath];
                     }
                     audioItem.duration = (double)data.playTime;
                     
