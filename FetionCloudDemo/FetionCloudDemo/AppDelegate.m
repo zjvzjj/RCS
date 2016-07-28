@@ -36,6 +36,10 @@
 #import "ContactRequestTable.h"
 #import "FNDBManager.h"
 #import "FNUserConfig.h"
+
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVFoundation.h>
+
 @interface AppDelegate ()<UIAlertViewDelegate>
 
 @property (nonatomic, retain)BOPReachability *reachability;
@@ -62,7 +66,7 @@ rcs_state* R = NULL;
     
     [FNBundle bundleWithName:@"FNBundle"];
     [FNNetworkHandle sharedInstance];
-
+    
     //SDK初始化
     [FNConfig initWithAppKey:APP_KEY
                        AppId:@"com.feinno.www.FetionCloudDemo"
@@ -77,16 +81,16 @@ rcs_state* R = NULL;
                                                  name:_kBOPReachabilityChangedNotification
                                                object:nil];
     
-  
     
     
-/***************************************** RCSSDK *******************************************************/
- 
-//    _localNum = @"+8615901435217";
+    
+    /***************************************** RCSSDK *******************************************************/
+    
+    //    _localNum = @"+8615901435217";
     
     
     //_addBuddyArray = [[NSMutableArray alloc]init];
-
+    
     [FNUserInfo ShareStaticConst].localNum = _localNum;
     
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
@@ -102,24 +106,24 @@ rcs_state* R = NULL;
     milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     printf("%lld \r\n", milliseconds);
     
-
     
-//    [DBManager initDBWithUserId:_localNum];
-//
-//    ContactDataTable *table = [ContactDataTable getWithUserId:@"882224"];
-//    if (!table.userId) {
-//        table.userId = [NSString stringWithFormat:@"%@",@"882224"];
-////        table.nickName = @"啦啦";
-////        table.username = @"42424242";
-//        [ContactDataTable insert:table];
-//        
-//    }else{
-//        table.userId = [NSString stringWithFormat:@"%@",@"88222451"];
-//        table.nickName = @"啦啦12";
-//        table.username = @"424242421";
-//        [ContactDataTable insert:table];
-//    }
-
+    
+    //    [DBManager initDBWithUserId:_localNum];
+    //
+    //    ContactDataTable *table = [ContactDataTable getWithUserId:@"882224"];
+    //    if (!table.userId) {
+    //        table.userId = [NSString stringWithFormat:@"%@",@"882224"];
+    ////        table.nickName = @"啦啦";
+    ////        table.username = @"42424242";
+    //        [ContactDataTable insert:table];
+    //
+    //    }else{
+    //        table.userId = [NSString stringWithFormat:@"%@",@"88222451"];
+    //        table.nickName = @"啦啦12";
+    //        table.username = @"424242421";
+    //        [ContactDataTable insert:table];
+    //    }
+    
     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     
     if (name)
@@ -129,16 +133,16 @@ rcs_state* R = NULL;
     
     [FNUserInfo ShareStaticConst].localNum = name;
     [FNUserConfig initWithUserid:@"500015"];
-
+    
     [FNDBManager initDB:@"500015"];
-
+    
     NSString *password = [[CurrentUserTable getLastUser] password];
     
     if (password.length > 0)
     {
         
         
-           R =[globalRcsApi newState:name appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
+        R =[globalRcsApi newState:name appId:@"0" clientVendor:@"1" clientVersion:@"2" storagePath:path sysPath:spath ];
         
         
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"bopToken"];
@@ -152,7 +156,7 @@ rcs_state* R = NULL;
         [globalRcsApi login:R username:_localNum password:password callback:^(rcs_state* R, LoginResult *s) {
             if (s->error_code == 200) {
                 
-            
+                
             }
             
         }];
@@ -165,7 +169,7 @@ rcs_state* R = NULL;
     }
     
     [self registerListeners];
-
+    
     return YES;
 }
 
@@ -203,7 +207,7 @@ rcs_state* R = NULL;
                                              selector:@selector(getAppToken)
                                                  name:TOKEN_ERROR
                                                object:nil];
-    //Token失效  
+    //Token失效
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(getAppToken)
                                                  name:TOKEN_INVALID
@@ -223,7 +227,7 @@ rcs_state* R = NULL;
 - (void)UserNetworkError:(NSNotification *)errorNotify
 {
     [self getAppToken];
-
+    
     NSLog(@"errorNotify statue %@",errorNotify);
 }
 
@@ -267,7 +271,7 @@ rcs_state* R = NULL;
     [FNAccountLogic logout:^(FNLogoutResponse *rspArgs) {
         NSLog(@"logout rsp: %d", rspArgs.statusCode);
     }];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+    //    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"bopToken"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"bopId"];
@@ -284,10 +288,10 @@ rcs_state* R = NULL;
     if (name && password && ![password isEqualToString:@""])
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    // NSString *url = @"http://192.168.0.102:8080/as/user/login";
-       NSString *url = @"http://221.176.28.117:8080/as/user/login";
+        // NSString *url = @"http://192.168.0.102:8080/as/user/login";
+        NSString *url = @"http://221.176.28.117:8080/as/user/login";
         NSDictionary *parameter = @{@"uname":name,@"pwd":password,@"appkey":APP_KEY};
-
+        
         NSString * encodingString = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [manager POST:encodingString parameters:parameter success:^(AFHTTPRequestOperation *operation, id responseObject){
             
@@ -345,16 +349,16 @@ rcs_state* R = NULL;
 {
     //__weak typeof(self) weakSelf = self;
     [globalRcsApi setBuddyEventListener:^(rcs_state*R, BuddyEventSession* s){
-         
-         _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
-         NSLog(@"_buddyInbiterId================%s",s->from_user);
+        
+        _buddyInviterId = [NSString stringWithUTF8String:s->from_user];
+        NSLog(@"_buddyInbiterId================%s",s->from_user);
         
         [DBManager initDBWithUserId:[FNUserInfo ShareStaticConst].localNum];
-
         
-         //收到被添加请求，发送通知
+        
+        //收到被添加请求，发送通知
         if (s->op == 6) {
-          
+            
             
             _addBuddyArray = [[NSMutableArray alloc]init];
             
@@ -365,17 +369,17 @@ rcs_state* R = NULL;
             table.userId = [NSString stringWithFormat:@"%d",u->user_id];
             table.nickName = [NSString stringWithUTF8String:u->nickname];
             table.username = [NSString stringWithUTF8String:u->username];
-
-//            NSLog(@"请求的好友数量%d----%d",_addBuddyArray.count,s->op);
-//                  NSLog(@"请求的好友名字----%@----%@",table.nickName,table.username);
-//            [_addBuddyArray addObject:table];
-           
             
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:table];
-             
-         }
-         
-     }];
+            //            NSLog(@"请求的好友数量%d----%d",_addBuddyArray.count,s->op);
+            //                  NSLog(@"请求的好友名字----%@----%@",table.nickName,table.username);
+            //            [_addBuddyArray addObject:table];
+            
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"addbuddy" object:table];
+            
+        }
+        
+    }];
     
 }
 
@@ -383,7 +387,7 @@ rcs_state* R = NULL;
 //服务端推送好友列表事件监听器
 - (void)registerBuddyListListener
 {
-   // __weak typeof(self) weakSelf = self;
+    // __weak typeof(self) weakSelf = self;
     
     if (!_buddyIDArray) {
         
@@ -428,7 +432,7 @@ rcs_state* R = NULL;
                  [ContactDataTable insert:table];
              }
          }
-
+         
          i = 0;
          while (1 && s->partial)
          {
@@ -440,45 +444,45 @@ rcs_state* R = NULL;
              _buddyRemoteId = p->user_id;
              
              NSNumber *number = [[NSNumber alloc]initWithInt:_buddyRemoteId];
-            
+             
              if (p->action == 2) {
                  
                  NSLog(@"hah");
                  
                  [_buddyIDArray removeObject:number];
-             
+                 
                  
                  [ContactDataTable del:[NSString stringWithFormat:@"%@",number]];
              }else if (p->action == 1){
-             
+                 
                  [_buddyIDArray addObject:number];
                  
                  ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
-    
+                 
                  if (!table.userId)
                  {
                      ContactDataTable *table = [[ContactDataTable alloc] init];
                      table.userId = [NSString stringWithFormat:@"%@",number];
                      [ContactDataTable insert:table];
                  }
-                
-             
+                 
+                 
              }else if (p->action == 3){
                  
                  NSLog(@"do what");
-             
+                 
              }
              
              [FNUserInfo ShareStaticConst].buddyIDArray = _buddyIDArray;
              
              //ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%@",number]];
              
-//             if (!table.userId)
-//             {
-//                 ContactDataTable *table = [[ContactDataTable alloc] init];
-//                 table.userId = [NSString stringWithFormat:@"%@",number];
-//                 [ContactDataTable insert:table];
-//             }
+             //             if (!table.userId)
+             //             {
+             //                 ContactDataTable *table = [[ContactDataTable alloc] init];
+             //                 table.userId = [NSString stringWithFormat:@"%@",number];
+             //                 [ContactDataTable insert:table];
+             //             }
              
              NSLog(@"do what....");
              
@@ -500,9 +504,9 @@ rcs_state* R = NULL;
          NSLog(@"content=======%s",s->content);
          
          
-        // MessageEntity * m = [MessageEntity new];
-        // m.imdn_id = [NSString stringWithFormat:@"%@",s->imdn_id];
- //----------------------------------------------------------------------------------
+         // MessageEntity * m = [MessageEntity new];
+         // m.imdn_id = [NSString stringWithFormat:@"%@",s->imdn_id];
+         //----------------------------------------------------------------------------------
          
          FNMsgTable *message = [[FNMsgTable alloc] init];
          message.syncId = [FNUserTable getSyncId:EventTypePrivate];
@@ -522,15 +526,15 @@ rcs_state* R = NULL;
          message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
          [FNMsgTable insert:message];
          
- //------------------------------------------------------------------------------
+         //------------------------------------------------------------------------------
          
-        // [[FNUserInfo ShareStaticConst].messageArray addObject:m];
-
+         // [[FNUserInfo ShareStaticConst].messageArray addObject:m];
          
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
-    
-        // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:message];
-                  
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
+         
+         // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:message];
+         
          if(s->need_report)
          {
              NSString* from = [NSString stringWithUTF8String:s->from];
@@ -548,7 +552,7 @@ rcs_state* R = NULL;
              }];
          }
      }];
-
+    
     /*    服务端推送BURN(已焚)、DELIVERED(已送达)、FILE_PROGRESS(文件上传/下载进度)、GROUP_DELIVERED(群组消息已送达)、
      *   GROUP_READ(群组消息已读)、GROUP_WITH_DRAW(群组消息撤销)、READ(已读)、TYPING(正在输入)、UPDATE_MSG_ID(更新消息 ID)、
      *    WITH_DRAW(撤回)、消息报告事件监听器
@@ -577,7 +581,7 @@ rcs_state* R = NULL;
     // 服务端推送自定义消息,SDK直接透传不处理事件监听器
     [globalRcsApi setMsgCustomListener:^(rcs_state*R, MessageCustomSession* s)
      {
-        // [weakSelf AddLogNs:[NSString stringWithFormat:@"receive custom msg, data:%s, data_id:%s, data_type:%d", s->data, s->data_id, s->data_type]];
+         // [weakSelf AddLogNs:[NSString stringWithFormat:@"receive custom msg, data:%s, data_id:%s, data_type:%d", s->data, s->data_id, s->data_type]];
          NSLog(@"receive custom msg, data:%s, data_id:%s, data_type:%d", s->data, s->data_id, s->data_type);
      }];
     
@@ -618,7 +622,7 @@ rcs_state* R = NULL;
                  
                  message.msgType = FNMsgTypePic;
                  message.contentType = FNMsgTypePic;
-                newfilePath = [newfilePath stringByAppendingString:@".jpg"];
+                 newfilePath = [newfilePath stringByAppendingString:@".jpg"];
                  NSData *data = [NSData dataWithContentsOfFile:newfilePath];
                  message.fileWidth =[UIImage imageWithData:data].size.width;
                  message.fileHeight = [UIImage imageWithData:data].size.height;
@@ -633,7 +637,7 @@ rcs_state* R = NULL;
                  // message.bitrate = 2;
                  
                  
-             
+                 
              }else if (s->content_type == 8){
                  
                  message.msgType = FNMsgTypeVideo;
@@ -641,35 +645,37 @@ rcs_state* R = NULL;
                  newfilePath = [newfilePath stringByAppendingString:@".mp4"];
                  //message.playTime = 6;
                  // message.bitrate = 2;
-
-             
+                 
+                 
              }else{
-             
+                 
                  NSLog(@"other");
-             
+                 
              }
+             
+             NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%s",s->file_name]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
              
              message.fileId =@"";
              message.fileName = filename;
              message.fileSize = s->file_size;
-             message.savePath = newfilePath;
-             message.thumbPath = newfilePath;
+             message.savePath = fullPath;
+             message.thumbPath = fullPath;
              
              //message.playTime = 6;
-            // message.bitrate = 2;
+             // message.bitrate = 2;
              
-             message.sendStatus = MsgSending;
+             message.sendStatus = MsgSendSuccess;
              message.readStatus = MsgAlreadyRead;
-             message.flag = MsgReceiveFlag;
+             message.flag = MsgSendFlag;
              message.receiveStatus = MsgReceiveSuccess;
              message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
-             [FNMsgTable insert:message];
+             
         
              //下载富文本文件
              [globalRcsApi msgfetchfile:R number:weakSelf.localNum
                               messageId:messageId
                                chatType:s->chat_type
-                               filePath:newfilePath
+                               filePath:fullPath
                             contentType:s->content_type
                                fileName:@""
                              transferId:transferId
@@ -679,10 +685,15 @@ rcs_state* R = NULL;
                                  isBurn:s->is_burn
                                callback:^(rcs_state* R, MessageResult *s) {
                                    if (s->error_code == 200) {
-                                       
+                                       NSURL *url = [NSURL fileURLWithPath:fullPath];
+                                       AVURLAsset *audioAsset = [AVURLAsset URLAssetWithURL:url options:nil];
+                                       CMTime time = audioAsset.duration;
+                                       NSTimeInterval seconds = CMTimeGetSeconds(time);
                                        NSLog(@"fetch file ok");
+                                       message.playTime = seconds;
+                                       [FNMsgTable insert:message];
                                        
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];   
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
                                        
                                    }
                                    else
@@ -726,7 +737,7 @@ rcs_state* R = NULL;
 //描述的事件都是与当前用户有关的信息
 - (void)registerGroupEventListener
 {
-   // __weak typeof(self) weakSelf = self;
+    // __weak typeof(self) weakSelf = self;
     [globalRcsApi setGroupEventListener:^(rcs_state*R, GroupEventSession* s)
      {
          //[weakSelf AddLogC:"call GroupEventListener"];
