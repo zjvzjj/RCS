@@ -66,7 +66,7 @@
     //按钮和输入框的基本配置
     [self baseConfriguration];
     
-    _localNum = @"+8615901435217";
+    _localNum = @"+8617900010110";
     
     _password = @"Vae5S1CAXBfc";
     

@@ -334,7 +334,7 @@
              FNMsgTable *message = [[FNMsgTable alloc] init];
              message.syncId = [FNUserTable getSyncId:EventTypePrivate];
              message.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
-             message.tid = [NSString stringWithFormat:@"%s",s->to];
+             message.tid = [NSString stringWithFormat:@"%s",s->from];
              message.msgAttribute = [NSString stringWithFormat:@"%d",s->is_burn];
              //message.content = [NSString stringWithUTF8String:s->content];
              message.senderNickname = @"嘿";
