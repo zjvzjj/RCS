@@ -277,7 +277,7 @@
          
          
          [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
-         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:nil];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"listNewMessage" object:nil];
          // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:message];
          
          if(s->need_report)
