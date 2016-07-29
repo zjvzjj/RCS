@@ -60,8 +60,6 @@
     [self registerObserver:YES];
   //  [self receiveMessageNTF:nil];
     
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddBuddy:) name:@"addbuddy" object:nil];
-    
     
 }
 
@@ -134,34 +132,6 @@
     }
     
 }
-
-
-- (void)AddBuddy:(NSNotification *)notify{
-    
-    NSLog(@"%@",notify.object);
-    
-    
-    
-
-    [globalRcsApi buddyhandle:R userId:872967 accept:1 reason:@"I'm JACK" callback:^(rcs_state* R, BuddyResult *s) {
-        if (s->error_code == 200) {
-            
-            NSLog(@"============");
-            
-        }
-        else{
-            
-            NSLog(@"============");
-            
-        }
-    }];
-
-}
-
-
-
-
-
 
 
 

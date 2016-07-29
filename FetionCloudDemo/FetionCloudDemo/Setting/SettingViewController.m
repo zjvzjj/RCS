@@ -407,7 +407,7 @@
             
             dispatch_async(dispatch_get_main_queue(),^{
                 
-                [[[UIAlertView alloc] initWithTitle:@"" message:@"注销成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"" message:@"注销失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 
             });
         }

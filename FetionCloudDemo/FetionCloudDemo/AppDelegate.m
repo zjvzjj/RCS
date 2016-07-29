@@ -92,8 +92,6 @@ rcs_state* R = NULL;
     
     [FNUserInfo ShareStaticConst].localNum = _localNum;
     
-    [FNListener ShareStaticConst].localNum = _localNum;
-    
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     printf("--------%lld \r\n", milliseconds);
     

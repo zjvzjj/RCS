@@ -115,69 +115,72 @@
         if (src == EventTypePrivate)
         {
             FNMsgTable *data = (FNMsgTable *)[messageData objectAtIndex:i];
-            if (MsgSendFlag == data.flag)
-            {
+            if (MsgSendFlag == data.flag){
+                
                 isOutgoing = YES;
                 senderId = self.userID;
-            }
-            else if (MsgReceiveFlag == data.flag)
-            {
+                
+            }else if (MsgReceiveFlag == data.flag){
+                
                 senderId = data.senderId;
             }
             senderNickname = (data.senderNickname.length ? data.senderNickname : senderId);
-            if (0 == senderNickname.length)
-            {
+            
+            if (0 == senderNickname.length){
+                
                 senderNickname = senderId;
             }
             content = data.content;
             type = data.msgType;
             msgId = data.msgId;
             
-            if ([type isEqualToString:FNMsgTypePlain])
-            {
+            if ([type isEqualToString:FNMsgTypePlain]){
+                
                 msg = [[FNMessage alloc] initWithSenderId:senderId
                                         senderDisplayName:senderNickname
                                                      date:(data.createDate.length ? [FNSystemConfig stringToDate:data.createDate] : [FNSystemConfig getLocalDate])
                                                      text:content
                                                     msgId:msgId];
                 
-                if(data.sendStatus == 1)
-                {
+                if(data.sendStatus == 1){
+                    
                     msg.sendingFlag = NO;
                     msg.sendFailureFlag = NO;
-                }else if (data.sendStatus ==2 ||data.sendStatus ==5)
-                {
+                    
+                }else if (data.sendStatus ==2 ||data.sendStatus ==5){
+                    
                     msg.sendingFlag = NO;
                     msg.sendFailureFlag = YES;
-                }else
-                {
+                    
+                }else{
+                    
                     msg.sendingFlag = YES;
+                    
                 }
                 
-            }
-            else
-            {
+            }else{
+                
                 id<FNMessageMediaData> newMediaData = nil;
                 /* 图片 */
-                if ([type isEqualToString:FNMsgTypePic])
-                {
+                if ([type isEqualToString:FNMsgTypePic]){
+                    
                     NSData *picData = nil;
-                    if (data.savePath && [data.savePath length] > 0)
-                    {
+                    if (data.savePath && [data.savePath length] > 0){
                         
-                        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                        NSString *rootCachePath = [paths firstObject];
-                        NSString *imagePath = [NSString  stringWithFormat:@"%@/%@.jpg",rootCachePath,data.msgId];
+//                        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//                        NSString *rootCachePath = [paths firstObject];
+//                        NSString *imagePath = [NSString  stringWithFormat:@"%@/%@.jpg",rootCachePath,data.msgId];
+//                        
+//                        //rsc Path
+//                        NSString *fileName = [NSString stringWithFormat:@"%@.jpg",data.msgId];
+//                        NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//                        
                         
-                        //rsc Path
-                        NSString *fileName = [NSString stringWithFormat:@"%@.jpg",data.msgId];
-                        NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                        
-                        NSFileHandle *hanlde = [NSFileHandle fileHandleForReadingAtPath:fullPath];
+                        NSFileHandle *hanlde = [NSFileHandle fileHandleForReadingAtPath:data.savePath];
                         picData = [hanlde readDataToEndOfFile];
-                    }
-                    else if ( data.thumbPath && [data.thumbPath length] > 0)
-                    {
+                        
+                    }else if ( data.thumbPath && [data.thumbPath length] > 0){
+                        
                         NSFileHandle *hanlde = [NSFileHandle fileHandleForReadingAtPath:data.thumbPath];
                         picData = [hanlde readDataToEndOfFile];
                     }
@@ -189,130 +192,122 @@
                     
                 }
                 /* 语音 */
-                else if ([type isEqualToString:FNMsgTypeAudio])
-                {
+                else if ([type isEqualToString:FNMsgTypeAudio]){
+                    
                     BOOL isFileExist = NO;
                     
-                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString *rootCachePath = [paths firstObject];
-                    NSString *audioPath = [NSString  stringWithFormat:@"%@/%@.amr",rootCachePath,data.msgId];
+//                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//                    NSString *rootCachePath = [paths firstObject];
+//                    NSString *audioPath = [NSString  stringWithFormat:@"%@/%@.amr",rootCachePath,data.msgId];
+//                    
+//                    //rsc Path
+//                      NSString *fileName = [NSString stringWithFormat:@"%@.amr",data.msgId];
+//                        NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     
-                    //rsc Path
-                      NSString *fileName = [NSString stringWithFormat:@"%@.amr",data.msgId];
-                        NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                    
-                    if (data.savePath && [data.savePath length] > 0)
-                    {
-                        isFileExist = [[NSFileManager defaultManager] fileExistsAtPath:audioPath];
+                    if (data.savePath && [data.savePath length] > 0){
+                        
+                        isFileExist = [[NSFileManager defaultManager] fileExistsAtPath:data.savePath];
                     }
                     
                     FNAudioMediaItem *audioItem = [[FNAudioMediaItem alloc] initWithMaskAsOutgoing:isOutgoing];
-                    if(data.savePath != nil)
-                    {
+                    
+                    if(data.savePath != nil){
+                        
                     audioItem.fileURL = [NSURL fileURLWithPath:data.savePath];
+                        
                     }
                     audioItem.duration = (double)data.playTime;
                     
                     audioItem.status = isFileExist ? kAudioStatusReadyForPL : kAudioStatusReadyForDL;
                     audioItem.appliesMediaViewMaskAsOutgoing = isOutgoing;
                     
-                    if (data.bitrate > 0)
-                    {
+                    if (data.bitrate > 0){
                         audioItem.bitrate = [NSString stringWithFormat:@"%ld", data.bitrate];
                     }
+                    
                     newMediaData = audioItem;
                 }
                 //视频
-                else if ([type isEqualToString:FNMsgTypeVideo])
-                {
+                else if ([type isEqualToString:FNMsgTypeVideo]){
                     FNVideoMediaItem *videoItemCopy = nil;
                     
-                    //                    if (data.savePath && [data.savePath length] > 0)
-                    //                    {
-                    
-                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString *rootCachePath = [paths firstObject];
-                    NSString *videoPath = [NSString  stringWithFormat:@"%@/%@.mp4",rootCachePath,data.msgId];
-                    
-                    //rsc Path
-                    NSString *fileName = [NSString stringWithFormat:@"%@.mp4",data.msgId];
-                    NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//                    NSString *rootCachePath = [paths firstObject];
+//                    NSString *videoPath = [NSString  stringWithFormat:@"%@/%@.mp4",rootCachePath,data.msgId];
+//                    
+//                    //rsc Path
+//                    NSString *fileName = [NSString stringWithFormat:@"%@.mp4",data.msgId];
+//                    NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     
                 
-                    if(data.savePath != nil)
-                    {
-                        //videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:data.savePath] isReadyToPlay:isOutgoing || data.savePath];
-                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:fullPath] isReadyToPlay:isOutgoing || videoPath];
+                    if(data.savePath != nil){
                         
+                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:data.savePath] isReadyToPlay:isOutgoing || data.savePath];
                         
-                    }else
-                    {
-                       // videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:@""] isReadyToPlay:isOutgoing || data.savePath];
-                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:@""] isReadyToPlay:isOutgoing || videoPath];
-                        
+                    }else{
+                       
+                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:@""] isReadyToPlay:isOutgoing || data.savePath];
                         
                     }
-                    //                    }
-                    //                    else
-                    //                    {
-                    //                        videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:@""] isReadyToPlay:isOutgoing || data.savePath];
-                    //                    }
-                    
-                    //                    FNVideoMediaItem *videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:data.savePath] isReadyToPlay:isOutgoing || data.savePath];
-                    //                    FNVideoMediaItem *videoItemCopy = [[FNVideoMediaItem alloc] initWithFileURL:[NSURL fileURLWithPath:data.savePath] isReadyToPlay:isOutgoing || data.savePath];
                     
                     videoItemCopy.appliesMediaViewMaskAsOutgoing = isOutgoing;
                     newMediaData = videoItemCopy;
                     
-                }
-                else if ([type isEqualToString:FNMsgTypeLocation]) {
+                }else if ([type isEqualToString:FNMsgTypeLocation]) {
+                    
                     FNLocationMediaItem *locationItemCopy = (FNLocationMediaItem *)mediaData;
                     locationItemCopy.appliesMediaViewMaskAsOutgoing = isOutgoing;
                     newMediaData = locationItemCopy;
+                    
                 } else {
+                    
                     NSLog(@"%s error: unrecognized media item", __PRETTY_FUNCTION__);
+                    
                 }
+               
                 
-                //                [self downloadWithMessage:data callback:^(FNMsgTable *table) {
-                //
-                //                    if ([self.dataSource respondsToSelector:@selector(conversationDataModel:message:)])
-                //                    {
-                //                        [self.dataSource conversationDataModel:self message:table];
-                //                    }
-                //                }];
-                //
-                if (newMediaData)
-                {
+                
+                
+                
+                if (newMediaData){
+                    
                     msg = [[FNMessage alloc] initWithSenderId:senderId
                                             senderDisplayName:senderNickname
                                                          date:[FNSystemConfig stringToDate:data.createDate]
                                                         media:newMediaData
                                                         msgId:msgId];
-                    if ([type isEqualToString:FNMsgTypeVideo])
-                    {
+                    
+                    if ([type isEqualToString:FNMsgTypeVideo]){
+                        
                         msg.messageType = FNMessageTypeVideo;
                         msg.timeLong = data.playTime;
                         msg.fileSize =[self getBytesFromDataLength:data.fileSize];
                     }
-                    if([type isEqualToString:FNMsgTypePic])
-                    {
+                    
+                    if([type isEqualToString:FNMsgTypePic]){
+                        
                         msg.messageType = FNMessageTypePicture;
                     }
-                    if([type isEqualToString:FNMsgTypeAudio])
-                    {
+                    
+                    if([type isEqualToString:FNMsgTypeAudio]){
+                        
                         msg.messageType = FNMessageTypeAudio;
                     }
-                    if(data.sendStatus == 1)
-                    {
+                    
+                    if(data.sendStatus == 1){
+                        
                         msg.sendingFlag = NO;
                         msg.sendFailureFlag = NO;
-                    }else if (data.sendStatus ==2 ||data.sendStatus ==5)
-                    {
+                        
+                    }else if (data.sendStatus ==2 ||data.sendStatus ==5){
+                        
                         msg.sendingFlag = NO;
                         msg.sendFailureFlag = YES;
-                    }else
-                    {
+                        
+                    }else{
+                        
                         msg.sendingFlag = YES;
+                        
                     }
                 }
                 
@@ -321,8 +316,8 @@
             
             [self setAvatarWithDefaultSenderID:senderId];
             
-            if (msg)
-            {
+            if (msg){
+                
                 [fnMsgs addObject:msg];
             }
         }

@@ -66,8 +66,8 @@
     //按钮和输入框的基本配置
     [self baseConfriguration];
     
-    _localNum = @"+8617900010110";
-    
+    //_localNum = @"+8615901435217";
+
     _password = @"Vae5S1CAXBfc";
     
 }
@@ -141,7 +141,7 @@
 - (IBAction)getsmscode:(id)sender {
     
     NSString * str1 = @"+86";
-    //    _localNum = [str1 stringByAppendingString:_nameText.text];
+    _localNum = [str1 stringByAppendingString:_nameText.text];
     
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"/"];
     NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];
@@ -182,11 +182,8 @@
 //验证
 - (IBAction)provisionop:(id)sender {
     
-    
     [globalRcsApi provisionotp:R smscode:@"777777" username:_localNum otp:_password sessid:_provsid callback:^(rcs_state* R, ProvisionResult *s) {
         if (s->error_code == 200) {
-            // [self AddLogC:"provision ok"];
-            NSLog(@"验证成功");
             
             _userId = [NSString stringWithFormat:@"%d",s->user_id];
             
@@ -208,9 +205,7 @@
             
         }
     }];
-    
-    [self AddLogNs:[NSString stringWithFormat:@"call _rcsApi provsion for:%@", _localNum]];
-    
+
 }
 
 //登录
@@ -256,17 +251,12 @@
             [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] setObject:_userId forKey:@"userId"];
             
-            [DBManager initDBWithUserId:_localNum];
             
+            [DBManager initDBWithUserId:_localNum];
             [FNUserInfo ShareStaticConst].localNum = _localNum;
             [FNUserConfig initWithUserid:_userId];
-            
             [FNDBManager initDB:_userId];
-            
-            
-            
-            //--------------------------------------end----------------------------------------
-            
+
             
             //切换VC
             dispatch_async(dispatch_get_main_queue(),^{
@@ -289,25 +279,7 @@
         }
     }];
     
-    //    if (![NSString isEligible:self.nameText.text])
-    //    {
-    //        [self.view makeToast:@"账号格式不正确，请重新输入"];
-    //        [self clearText:self.nameText];
-    //        return;
-    //    }
-    //    else if (![NSString isEligible:self.passwordText.text])
-    //    {
-    //        [self.view makeToast:@"密码格式不正确，请重新输入"];
-    //        [self clearText:self.passwordText];
-    //        return;
-    //    }
-    //
-    //    [self login];
-    
-    
 }
-
-
 
 //- (IBAction)userLogin:(UIButton *)sender
 //{

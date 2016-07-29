@@ -87,8 +87,6 @@
     
     _buddyIDArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
     
-    //_addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
-
     for (int i=0; i<[_buddyIDArray count]; i++) {
         
         ContactDataTable *user = _buddyIDArray[i];
@@ -203,35 +201,18 @@
 
 
 - (void)addBuddy:(NSNotification *)notify{
-
-   // FNMsgTable *messageData = notify.object;
     
     NSLog(@"%@",notify.object);
-    
     
     if (!_addBuddyArray) {
         _addBuddyArray = [[NSMutableArray alloc]init];
     }
     
-    
-    
-    //_addBuddyArray = notify.object;
-    
     ContactRequestTable *t = notify.object;
     
     [ContactRequestTable insert:t];
     
-    
-    //[ContactDataTable insert:table];
-    
-    // _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
-    
-    
-   // _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
-    
     [_addBuddyArray addObject:t];
-    
-    
 
     dispatch_async(dispatch_get_main_queue(),^{
         
@@ -244,11 +225,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     
-//    if (!_addBuddyArray.count) {
-//        
-//
-//        
-//    }
     if (_addBuddyArray.count == 0) {
         _addBuddyArray = [NSMutableArray arrayWithArray:[ContactRequestTable getAll]];
     }
@@ -257,7 +233,6 @@
     
     NSLog(@"%lu",(unsigned long)_buddyIDArray.count);
     
-   // [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -274,7 +249,6 @@
     NSMutableArray *personArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
     
     [_tokenizers removeAllObjects];
-    
     
     [_tokenizers addObjectsFromArray:personArray];
     
@@ -498,15 +472,11 @@
     if (alertView.tag == 2002) {
         
         ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
-        
-        //NSString *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
-        
+                
         if (buttonIndex == 0) {
             
             [globalRcsApi buddyhandle:R userId:[info.userId intValue] accept:1 reason:@"I'm Jack" callback:^(rcs_state* R, BuddyResult *s) {
                 if (s->error_code == 200) {
-                    
-                    //[ContactDataTable insert:info];
                     
                     [_buddyListArray addObject:info];
                     [_addBuddyArray removeObject:info];
@@ -518,15 +488,11 @@
                             [self.tableView reloadData];
                     });
                     
-                   // [self.tableView reloadData];
-                    
                     NSLog(@"add buddy ok");
                     
                 }
                 else{
                     
-                    
-                                        
                     NSLog(@"add buddy failed");
                     
                 }
@@ -534,9 +500,6 @@
             
         }else{
             
-            
-            //[_addBuddyArray addObject:info];
-        
             NSLog(@"cancel");
         }
         
@@ -544,26 +507,16 @@
     
     if (buttonIndex == 0)
     {
-//        ContactDataTable *info = _tokenizers[self.selectIndexPath.row];
-//        [ContactDataTable del:info.userId];
-//        [FNRecentConversationTable delete:info.userId];
-//        [FNMsgTable deleteByUserId:info.userId];
-        
         
         ContactDataTable *info = [_buddyListArray objectAtIndex:self.selectIndexPath.row];
-       // [ContactDataTable del:info.userId];
-        
         //删除好友
         [globalRcsApi buddydel:R userId:[info.userId intValue] callback:^(rcs_state* R, BuddyResult *s) {
             if (s->error_code == 200) {
                 
                 [_buddyListArray removeObject:info];
                 
-                
                 [ContactDataTable del:info.userId];
                 
-                //_buddyIDArray = [NSMutableArray arrayWithArray:[ContactDataTable getAll]];
-   
                 dispatch_async(dispatch_get_main_queue(),^{
                     
                     [self.tableView reloadData];
@@ -578,8 +531,6 @@
             }
         }];
         
-        
-        //[self readData];
     }
     else
     {
@@ -613,7 +564,6 @@
         //        conversationVC.toUserid = [Utility userIdWithoutAppKey:infos.userId];
         //       
         //        conversationVC.source = @"private";
-        
         
     }
     

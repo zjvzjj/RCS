@@ -175,10 +175,6 @@ ConversationDataModelSource
                                                object:nil];
     
     // 初始化消息通知
-//    SEL handler = @selector(recvMsgNTF:);
-//    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-//    [nc addObserver:self selector:handler name:NOTIFY_HAS_NEW_MSG object:nil];
-//    [nc addObserver:self selector:handler name:NOTIFY_HAS_NEW_GROUP_MSG object:nil];
     
     SEL handler = @selector(recemessage:);
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -188,8 +184,8 @@ ConversationDataModelSource
     [nc addObserver:self selector:handler name:NOTIFY_HAS_NEW_GROUP_MSG object:nil];
     
     self.title = toDisplayName;
-    //self.senderId = [FNUserConfig getInstance].userID;
-    //self.senderDisplayName = [CurrentUserTable getWithUserId:self.senderId].nickName;
+    self.senderId = [FNUserConfig getInstance].userID;
+    self.senderDisplayName = [CurrentUserTable getWithUserId:self.senderId].nickName;
     //CurrentUserTable *cut = [CurrentUserTable getWithUserId:self.senderId];
     // NSLog(@"%@",[CurrentUserTable getWithUserId:self.senderId]);
     //NSLog(@"id======%@ name========%@",self.senderId,self.senderDisplayName);
@@ -420,7 +416,7 @@ ConversationDataModelSource
                 
                 // self.showTypingIndicator = !self.showTypingIndicator;
 //                [FNSystemSoundPlayer fn_playMessageReceivedSound];
-//                [self finishReceivingMessage];
+                [self finishReceivingMessage];
             }
         }
     
@@ -699,6 +695,7 @@ ConversationDataModelSource
                         
                     }
                     else if ([mediaData isKindOfClass:[FNVideoMediaItem class]]) {
+                        
                         FNVideoMediaItem *avItemCopy = (FNVideoMediaItem *)mediaData;
                         avItemCopy.appliesMediaViewMaskAsOutgoing = NO;
                         avItemCopy.isReadyToPlay = YES;
@@ -1376,33 +1373,32 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
 // 发送图片
 - (void)sendImageWithImage:(UIImage *)image
 {
-    //大小图路径未处理
-    UIImage * image2 = [self scaleImage:image toScale:0.6];
-    image = [self scaleImage:image toScale:0.05];
+   
     NSString *msgId = [FNMsgBasicLogic generateUUID];
-    
-    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", msgId];
-   // NSString *fileName2 = [NSString stringWithFormat:@"thumb-%@.jpg",msgId];
-    
     NSLog(@"filepath=========%@",[FNUserConfig getInstance].filePath);
     NSLog(@"userID============%@",[FNUserConfig getInstance].userID);
     
+    //原图路径
+    UIImage * image2 = [self scaleImage:image toScale:0.6];
+    NSString *fileName2 = [NSString stringWithFormat:@"big_%@.jpg",msgId];
+    NSString *fullpath2 = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName2] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSData *imageData2 = UIImageJPEGRepresentation(image2,1);
+    [[NSFileManager defaultManager] createFileAtPath:fullpath2 contents:imageData2 attributes:nil];
+    
+    //小图路径
+    image = [self scaleImage:image toScale:0.05];
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", msgId];
     NSString *fullPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //NSString *thumbPath = [[[FNUserConfig getInstance].filePath stringByAppendingPathComponent:fileName2] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    
     NSData *imageData = UIImageJPEGRepresentation(image,1);
-   // NSData *imageData2 = UIImageJPEGRepresentation(image2,1);
     [[NSFileManager defaultManager] createFileAtPath:fullPath contents:imageData attributes:nil];
-    //[[NSFileManager defaultManager] createFileAtPath:thumbPath contents:imageData2 attributes:nil];
     
     
-    
-    FNMessage *message = [self.msgDataModel makePhotoMediaMessage:image2 sender:self.senderId name:self.senderDisplayName msgId:msgId imagePath:fullPath];
+    FNMessage *message = [self.msgDataModel makePhotoMediaMessage:image2 sender:self.senderId name:self.senderDisplayName msgId:msgId imagePath:fullpath2];
     message.messageType = FNMessageTypePicture;
     message.progress = 0 ;
     message.sendingFlag = YES;
     message.isOutgoing = YES;
+    
     // 先展示
     [self.msgDataModel.messages addObject:message];
     
@@ -1415,16 +1411,16 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
     if ([source isEqualToString:@"private"])
     {
         FNMsgContent *msgContent = [FNMsgContent msgContentWithType:ImageMsg];
-        [msgContent setFilePath:fullPath];
+        [msgContent setFilePath:fullpath2];
         [msgContent setContent:@"[图片]"];
         [msgContent setContentType:FNMsgTypePic];
-        [msgContent setFileName:fileName];
+        [msgContent setFileName:fileName2];
         [msgContent setFileThumbPath:fullPath];
         // [msgContent setFileDownloadUrl:serviceRsp.fileInfo.downloadURL];
         // [msgContent setFileSize:serviceRsp.fileInfo.fileSize];
         // [msgContent setFileId:serviceRsp.fileInfo.fileId];
-        [msgContent setFileWidth:image.size.width];
-        [msgContent setFileHeight:image.size.height];
+        [msgContent setFileWidth:image2.size.width];
+        [msgContent setFileHeight:image2.size.height];
         
         FNMsgEntity *msgEntity = [[FNMsgEntity alloc] init];
         msgEntity.event = eventType;
@@ -1494,7 +1490,7 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
 //----------------------------RCSSDK--------------------------------------------------
         
         
-        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:fullPath contentType:ContentTypePICTURE fileName:fileName needReport:YES start:0 thumbnail:fullPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:fullpath2 contentType:ContentTypePICTURE fileName:fileName2 needReport:YES start:0 thumbnail:fullPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
             if (s) {
                 if (s->error_code == 200) {
                     
