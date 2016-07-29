@@ -125,6 +125,8 @@ rcs_state* R = NULL;
     
     NSString *name = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    
     if (name)
     {
         [DBManager initDBWithUserId:name];
@@ -134,8 +136,6 @@ rcs_state* R = NULL;
     [FNUserConfig initWithUserid:userId];
     
     [FNDBManager initDB:userId];
-    
-    NSString *password = [[CurrentUserTable getLastUser] password];
     
     if (password.length > 0)
     {
