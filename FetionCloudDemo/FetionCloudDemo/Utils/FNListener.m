@@ -306,7 +306,8 @@
      {
          
          
-         ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%s",s->to]];
+         ContactDataTable *toInfo = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%s",s->to]];
+         ContactDataTable *fromInfo = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%s",s->from]];
          NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
          
          CurrentUserTable *userInfo = [CurrentUserTable getWithUserId:userId];
@@ -314,7 +315,9 @@
          FNMsgTable *message = [[FNMsgTable alloc] init];
          message.syncId = [FNUserTable getSyncId:EventTypePrivate];
          message.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
-         message.tid = [NSString stringWithFormat:@"%s",s->from];
+         
+         message.tid = [[NSString stringWithFormat:@"%s",s->from] isEqualToString:userId] ? [NSString stringWithFormat:@"%s",s->to] : [NSString stringWithFormat:@"%s",s->from];
+         
          message.msgType = FNMsgTypePlain;
          message.msgAttribute = [NSString stringWithFormat:@"%d",s->is_burn];
          message.contentType = FNMsgTypePlain;
@@ -326,7 +329,7 @@
          
          message.sendStatus = MsgSendSuccess;
          message.readStatus = MsgAlreadyRead;
-         message.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  table.nickName;
+         message.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  fromInfo.nickName;
          
          
          if ([userId isEqualToString:message.senderId]) {
@@ -348,10 +351,10 @@
          info.msgType = message.msgType;
          info.targetId = [NSString stringWithFormat:@"%s",s->to];
          //info.targetName = [NSString stringWithFormat:@"%s",s->from];
-         info.targetName =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->to]] ? userInfo.nickName :  table.nickName;
+         info.targetName =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->to]] ? userInfo.nickName :  toInfo.nickName;
          info.targetProtraitUrl = @"头像";
          //info.senderNickname = [NSString stringWithFormat:@"%s",s->from];
-         info.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  table.nickName;
+         info.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  fromInfo.nickName;
          info.content = message.content;
          //    [info setUnreadMsgCount];
          info.syncId = [FNUserTable getSyncId:EventTypePrivate];
@@ -359,6 +362,11 @@
          info.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
          info.sendStatus = MsgUploading;
          
+         [FNRecentConversationTable insert:info];
+
+         [FNRecentConversationTable updateContent:info.content tid:info.targetId];
+         [FNRecentConversationTable updateContent:info.content tid:[NSString stringWithFormat:@"%s",s->from]];
+
          //--------------------------------------------------------------------------------------------
          
          //         ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
@@ -486,7 +494,6 @@
          //
          //         }
          
-         [FNRecentConversationTable insert:info];
          
          
          //--------------------------------------------------------------------------------
@@ -560,6 +567,14 @@
          
          if(!s->is_report && s->file_size > 0)
          {
+             
+             ContactDataTable *toInfo = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%s",s->to]];
+             ContactDataTable *fromInfo = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%s",s->from]];
+             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+             
+             CurrentUserTable *userInfo = [CurrentUserTable getWithUserId:userId];
+             
+             
              NSString* messageId = [NSString stringWithUTF8String:s->imdn_id];
              NSString* transferId = [NSString stringWithUTF8String:s->transfer_id];
              
@@ -576,12 +591,21 @@
              FNMsgTable *message = [[FNMsgTable alloc] init];
              message.syncId = [FNUserTable getSyncId:EventTypePrivate];
              message.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
-             message.tid = [NSString stringWithFormat:@"%s",s->from];
+//             message.tid = [NSString stringWithFormat:@"%s",s->from];
              message.msgAttribute = [NSString stringWithFormat:@"%d",s->is_burn];
              // message.senderNickname = @"嘿";
              message.senderId = [NSString stringWithFormat:@"%s",s->from];
              //message.senderProtraitUrl =@"path";
+        
              
+             message.tid = [[NSString stringWithFormat:@"%s",s->from] isEqualToString:userId] ? [NSString stringWithFormat:@"%s",s->to] : [NSString stringWithFormat:@"%s",s->from];
+            
+      
+            
+             message.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  fromInfo.nickName;
+             
+             
+
              
              //             ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
              //             message.senderNickname = t.nickName;
@@ -628,8 +652,7 @@
              message.readStatus = MsgAlreadyRead;
              message.receiveStatus = MsgReceiveSuccess;
              message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
-             
-             NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+         
              
              if ([userId isEqualToString:message.senderId]) {
                  
@@ -644,20 +667,23 @@
              FNRecentConversationTable *info = [[FNRecentConversationTable alloc] init];
              info.eventType = EventTypePrivate;
              info.msgType = message.msgType;
-             info.targetId = [NSString stringWithFormat:@"%s",s->from];
+             info.targetId = [NSString stringWithFormat:@"%s",s->to];
              //info.targetName = [NSString stringWithFormat:@"%s",s->from];
+             info.targetName =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->to]] ? userInfo.nickName :  toInfo.nickName;
              info.targetProtraitUrl = @"头像";
              //info.senderNickname = [NSString stringWithFormat:@"%s",s->from];
-             
-             //             info.targetName = t.nickName;
-             //             info.senderNickname = t.nickName;
-             
+             info.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  fromInfo.nickName;
              info.content = message.content;
              //    [info setUnreadMsgCount];
              info.syncId = [FNUserTable getSyncId:EventTypePrivate];
              info.lastActiveDate = message.createDate;
              info.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
              info.sendStatus = MsgUploading;
+             
+             [FNRecentConversationTable insert:info];
+             
+             [FNRecentConversationTable updateContent:info.content tid:info.targetId];
+             [FNRecentConversationTable updateContent:info.content tid:[NSString stringWithFormat:@"%s",s->from]];
              
              //-------------------------------------------------------------------------------------------
              /*             ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
