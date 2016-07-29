@@ -358,7 +358,9 @@ ConversationDataModelSource
         
         [FNSystemSoundPlayer fn_playMessageReceivedSound];
         [self.msgDataModel.messages addObject:fnMsg];
-        [self finishReceivingMessage];
+        dispatch_async(dispatch_get_main_queue(),^{
+            [self finishReceivingMessage];
+        });
         
     }else{
     
@@ -381,12 +383,10 @@ ConversationDataModelSource
                     
                     FNPhotoMediaItem *photoItemCopy = (FNPhotoMediaItem *)mediaData;
                     photoItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-                    
                     dispatch_async(dispatch_get_main_queue(),^{
-                        
-                        [self.collectionView reloadData];
-                        
+                        [self finishReceivingMessage];
                     });
+                    
                     
                 }else if ([mediaData isKindOfClass:[FNVideoMediaItem class]]) {
                     
@@ -394,9 +394,7 @@ ConversationDataModelSource
                     avItemCopy.appliesMediaViewMaskAsOutgoing = NO;
                     avItemCopy.isReadyToPlay = YES;
                     dispatch_async(dispatch_get_main_queue(),^{
-                        
-                        [self.collectionView reloadData];
-                        
+                        [self finishReceivingMessage];
                     });
                     
                 }else if ([mediaData isKindOfClass:[FNAudioMediaItem class]]) {
@@ -405,10 +403,9 @@ ConversationDataModelSource
                     avItemCopy.appliesMediaViewMaskAsOutgoing = NO;
                     
                     dispatch_async(dispatch_get_main_queue(),^{
-                        
-                        [self.collectionView reloadData];
-                        
+                        [self finishReceivingMessage];
                     });
+                    
                 }
                 else {
                     NSLog(@"%s error: unrecognized media item", __PRETTY_FUNCTION__);
@@ -416,7 +413,7 @@ ConversationDataModelSource
                 
                 // self.showTypingIndicator = !self.showTypingIndicator;
 //                [FNSystemSoundPlayer fn_playMessageReceivedSound];
-                [self finishReceivingMessage];
+//                [self finishReceivingMessage];
             }
         }
     
