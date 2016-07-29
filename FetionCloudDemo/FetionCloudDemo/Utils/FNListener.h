@@ -20,5 +20,5 @@
 - (void)registerBuddyEventListener;
 - (void)registerBuddyListListener;
 - (void)registerMsgListener;
-
+- (void)getUserInfo;
 @end

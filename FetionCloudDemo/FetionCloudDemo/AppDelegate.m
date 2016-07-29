@@ -764,12 +764,12 @@ rcs_state* R = NULL;
 //    [self registerAvListener];
 //    [self registerBuddyEventListener];
 //    [self registerBuddyListListener];
-    
-    
-    [[FNListener ShareStaticConst] registerMsgListener];
-    [[FNListener ShareStaticConst] registerBuddyEventListener];
+    [[FNListener ShareStaticConst] getUserInfo];
+
     [[FNListener ShareStaticConst] registerBuddyListListener];
-    
+    [[FNListener ShareStaticConst] registerBuddyEventListener];
+    [[FNListener ShareStaticConst] registerMsgListener];
+
 }
 
 

@@ -38,7 +38,7 @@
     [queue inDatabase:^(BOPFMDatabase *db) {
         NSString *sql = [NSString stringWithFormat:@"select * from CurrentUserTable where userId=?"];
         BOPFMResultSet *rs = [db executeQuery:sql,
-                              [UserDefaults objectForKey:@"bopId"]];
+                              userId];
         if ([rs next]) {
             user.userId = [rs stringForColumn:@"userId"];
             user.account = [rs stringForColumn:@"account"];

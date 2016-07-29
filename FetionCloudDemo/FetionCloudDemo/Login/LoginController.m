@@ -26,6 +26,7 @@
 #import "FNUserInfo.h"
 #import "FNDBManager.h"
 
+#import "FNListener.h"
 
 @interface LoginController ()<UITextFieldDelegate>
 
@@ -66,7 +67,7 @@
     //按钮和输入框的基本配置
     [self baseConfriguration];
     
-    //_localNum = @"+8615901435217";
+    _localNum = @"+8615901435217";
 
     _password = @"Vae5S1CAXBfc";
     
@@ -140,8 +141,8 @@
 //获取验证码
 - (IBAction)getsmscode:(id)sender {
     
-    NSString * str1 = @"+86";
-    _localNum = [str1 stringByAppendingString:_nameText.text];
+//    NSString * str1 = @"+86";
+//    _localNum = [str1 stringByAppendingString:_nameText.text];
     
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"/"];
     NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];
@@ -221,37 +222,16 @@
             //-----------------------------------start--------------------------------------
             
             
-            [DBManager initDBWithUserId:_localNum];
-            
-            CurrentUserTable *table = [CurrentUserTable getWithUserId:_userId];
-            
-            if (table.account)
-            {
-                CurrentUserTable *t = [[CurrentUserTable alloc] init];
-                t.userId = _userId;
-                t.password = _password;
-                //t.account = _nameText.text;
-                t.account = _localNum;
-                t.nickName = table.nickName;
-                [CurrentUserTable update:t];
-                
-            }else{
-                
-                CurrentUserTable *t = [[CurrentUserTable alloc] init];
-                t.userId = _userId;
-                t.password = _password;
-                //t.account = _nameText.text;
-                t.account = _localNum;
-                [CurrentUserTable insert:t];
-                
-            }
-            
+//            [DBManager initDBWithUserId:_localNum];
+         
+
             [FNUserInfo ShareStaticConst].localNum = _localNum;
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] setObject:_userId forKey:@"userId"];
             
-            
+            [[FNListener ShareStaticConst] getUserInfo];
+
             [DBManager initDBWithUserId:_localNum];
             [FNUserInfo ShareStaticConst].localNum = _localNum;
             [FNUserConfig initWithUserid:_userId];
@@ -327,31 +307,36 @@
             
             [DBManager initDBWithUserId:_localNum];
             
-            CurrentUserTable *table = [CurrentUserTable getWithUserId:responseObject[@"cnt"][@"bopId"]];
+//            CurrentUserTable *table = [CurrentUserTable getWithUserId:responseObject[@"cnt"][@"bopId"]];
+//            
+//            if (table.account)
+//            {
+//                CurrentUserTable *t = [[CurrentUserTable alloc] init];
+//                t.userId = responseObject[@"cnt"][@"bopId"];
+//                t.password = password;
+//                
+//                //t.account = _nameText.text;
+//                t.account = _localNum;
+//                t.nickName = table.nickName;
+//                
+//                [CurrentUserTable update:t];
+//            }
+//            else
+//            {
+//                CurrentUserTable *t = [[CurrentUserTable alloc] init];
+//                t.userId = responseObject[@"cnt"][@"bopId"];
+//                t.password = password;
+//                //t.account = _nameText.text;
+//                t.account = _localNum;
+//                t.account = _localNum;
+//                [CurrentUserTable insert:t];
+//                
+//            }
             
-            if (table.account)
-            {
-                CurrentUserTable *t = [[CurrentUserTable alloc] init];
-                t.userId = responseObject[@"cnt"][@"bopId"];
-                t.password = password;
-                
-                //t.account = _nameText.text;
-                t.account = _localNum;
-                t.nickName = table.nickName;
-                
-                [CurrentUserTable update:t];
-            }
-            else
-            {
-                CurrentUserTable *t = [[CurrentUserTable alloc] init];
-                t.userId = responseObject[@"cnt"][@"bopId"];
-                t.password = password;
-                //t.account = _nameText.text;
-                t.account = _localNum;
-                t.account = _localNum;
-                [CurrentUserTable insert:t];
-                
-            }
+            
+            [[FNListener ShareStaticConst] getUserInfo];
+
+            
             
             //[[NSUserDefaults standardUserDefaults] setObject:_nameText.text forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];

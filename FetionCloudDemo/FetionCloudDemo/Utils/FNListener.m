@@ -21,7 +21,7 @@
 #import "FNSystemConfig.h"
 #import "ContactDataTable.h"
 #import "ContactRequestTable.h"
-
+#import "CurrentUserTable.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 #import "FNRecentConversationTable.h"
@@ -45,6 +45,43 @@
     
 }
 
+- (void)getUserInfo
+{
+    NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+
+    if (userId) {
+        [globalRcsApi usergetprofile:R user:userId callback:^(rcs_state *R, UserProfileResult *s) {
+            CurrentUserTable *table = [CurrentUserTable getWithUserId:userId];
+            
+            if (table.account)
+            {
+                CurrentUserTable *t = [[CurrentUserTable alloc] init];
+                t.userId = userId;
+//                t.password = _password;
+                //t.account = _nameText.text;
+                t.account = _localNum;
+                t.nickName = table.nickName;
+                t.nickName = [NSString stringWithUTF8String:s->nickname];
+
+                [CurrentUserTable update:t];
+                
+            }else{
+                
+                CurrentUserTable *t = [[CurrentUserTable alloc] init];
+                t.userId = userId;
+//                t.password = _password;
+                //t.account = _nameText.text;
+                t.account = _localNum;
+                t.nickName = [NSString stringWithUTF8String:s->nickname];
+                [CurrentUserTable insert:t];
+            
+            }
+
+        }];
+    }
+  
+    
+}
 
 - (void)registerAvListener
 {
@@ -141,7 +178,61 @@
              {
                  ContactDataTable *table = [[ContactDataTable alloc] init];
                  table.userId = buddyRemoteId;
-                 [ContactDataTable insert:table];
+           
+                 
+                 [globalRcsApi usergetinfo:R ids:buddyRemoteId callback:^(rcs_state* R, UserInfoResult *s) {
+                     if(s->error_code == 200)
+                     {
+                         
+                         int  j = 0;
+                         while (1 && s->user_infos) {
+                             
+                             UserInfo* u = s->user_infos[j++];
+                             if (u == NULL) {
+                                 break;
+                             }
+                             NSLog(@"username = %s",u->username);
+                             NSLog(@"nickname = %s",u->nickname);
+                             NSLog(@"user_id = %d",u->user_id);
+                             
+                             table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+                             table.nickName = [NSString stringWithUTF8String:u->nickname];
+                             table.username = [NSString stringWithUTF8String:u->username];
+                                   [ContactDataTable insert:table];
+//                             [ContactDataTable update:table];
+                             
+//                             info.senderNickname = table.nickName;
+//                             info.targetName = table.nickName;
+                         }
+                         
+                     }else{
+                         
+                         NSLog(@"failed");
+                     }
+                 }];
+                 
+                 
+                 //获取用户头像
+                 [ globalRcsApi usergetportrait:R userId:[buddyRemoteId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
+                     if(s->error_code == 200)
+                     {
+                         
+                         NSLog(@"%s",s->file_path);
+                         table.portrait = [NSString stringWithUTF8String:s->file_path];
+                         
+                         [ContactDataTable update:table];
+                         
+                         NSLog(@"user get portrait ok");
+                         
+                     }else{
+                         
+//                         table.portrait = @"";
+//                         [ContactDataTable update:table];
+                         NSLog(@"user get portrait failed");
+                         
+                     }
+                 }];
+
              }
          }
          
@@ -211,6 +302,12 @@
     [globalRcsApi setMsgTextListener:^(rcs_state*R, MessageTextSession* s)
      {
          
+         
+             ContactDataTable *table = [ContactDataTable getWithUserId:[NSString stringWithFormat:@"%s",s->to]];
+         NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+
+         CurrentUserTable *userInfo = [CurrentUserTable getWithUserId:userId];
+
          FNMsgTable *message = [[FNMsgTable alloc] init];
          message.syncId = [FNUserTable getSyncId:EventTypePrivate];
          message.msgId = [NSString stringWithFormat:@"%s",s->imdn_id];
@@ -219,22 +316,16 @@
          message.msgAttribute = [NSString stringWithFormat:@"%d",s->is_burn];
          message.contentType = FNMsgTypePlain;
          message.content = [NSString stringWithUTF8String:s->content];
-         //message.senderNickname = @"JACK";
+         
          message.senderId = [NSString stringWithFormat:@"%s",s->from];
          
          //message.senderProtraitUrl =@"path";
          
          message.sendStatus = MsgSendSuccess;
          message.readStatus = MsgAlreadyRead;
+           message.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  table.nickName;
          
-         
-       
-         
-         
-         
-        
-         NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
-         
+    
          if ([userId isEqualToString:message.senderId]) {
              
              message.flag = MsgSendFlag;
@@ -252,11 +343,12 @@
          FNRecentConversationTable *info = [[FNRecentConversationTable alloc] init];
          info.eventType = EventTypePrivate;
          info.msgType = message.msgType;
-         info.targetId = [NSString stringWithFormat:@"%s",s->from];
+         info.targetId = [NSString stringWithFormat:@"%s",s->to];
          //info.targetName = [NSString stringWithFormat:@"%s",s->from];
+          info.targetName =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->to]] ? userInfo.nickName :  table.nickName;
          info.targetProtraitUrl = @"头像";
          //info.senderNickname = [NSString stringWithFormat:@"%s",s->from];
-         
+          info.senderNickname =  [userId isEqualToString:[NSString stringWithFormat:@"%s",s->from]] ? userInfo.nickName :  table.nickName;
          info.content = message.content;
          //    [info setUnreadMsgCount];
          info.syncId = [FNUserTable getSyncId:EventTypePrivate];
@@ -266,130 +358,130 @@
          
 //--------------------------------------------------------------------------------------------
          
-         ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
-         if (t.userId)
-         {
-             ContactDataTable *table = [[ContactDataTable alloc] init];
-             //获取好友信息
-             [globalRcsApi usergetinfo:R ids:message.senderId callback:^(rcs_state* R, UserInfoResult *s) {
-                 if(s->error_code == 200)
-                 {
-                     
-                     int  j = 0;
-                     while (1 && s->user_infos) {
-                         
-                         UserInfo* u = s->user_infos[j++];
-                         if (u == NULL) {
-                             break;
-                         }
-                         NSLog(@"username = %s",u->username);
-                         NSLog(@"nickname = %s",u->nickname);
-                         NSLog(@"user_id = %d",u->user_id);
-                         
-                         table.userId = [NSString stringWithFormat:@"%d",u->user_id];
-                         table.nickName = [NSString stringWithUTF8String:u->nickname];
-                         table.username = [NSString stringWithUTF8String:u->username];
-                         
-                         [ContactDataTable update:table];
-                         
-                         info.senderNickname = table.nickName;
-                         info.targetName = table.nickName;
-                     }
-                     
-                 }else{
-                     
-                     NSLog(@"failed");
-                 }
-             }];
-             
-             
-             //获取用户头像
-             [ globalRcsApi usergetportrait:R userId:[message.senderId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
-                 if(s->error_code == 200)
-                 {
-                     
-                     NSLog(@"%s",s->file_path);
-                     table.portrait = [NSString stringWithUTF8String:s->file_path];
-                     
-                     [ContactDataTable insert:table];
-                     
-                     NSLog(@"user get portrait ok");
-                     
-                 }else{
-                     
-                     table.portrait = @"";
-                     [ContactDataTable update:table];
-                     NSLog(@"user get portrait failed");
-                     
-                 }
-             }];
-             
-//             [ContactDataTable update:table];
+//         ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
+//         if (t.userId)
+//         {
+//             ContactDataTable *table = [[ContactDataTable alloc] init];
+//             //获取好友信息
+//             [globalRcsApi usergetinfo:R ids:message.senderId callback:^(rcs_state* R, UserInfoResult *s) {
+//                 if(s->error_code == 200)
+//                 {
+//                     
+//                     int  j = 0;
+//                     while (1 && s->user_infos) {
+//                         
+//                         UserInfo* u = s->user_infos[j++];
+//                         if (u == NULL) {
+//                             break;
+//                         }
+//                         NSLog(@"username = %s",u->username);
+//                         NSLog(@"nickname = %s",u->nickname);
+//                         NSLog(@"user_id = %d",u->user_id);
+//                         
+//                         table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+//                         table.nickName = [NSString stringWithUTF8String:u->nickname];
+//                         table.username = [NSString stringWithUTF8String:u->username];
+//                         
+//                         [ContactDataTable update:table];
+//                         
+//                         info.senderNickname = table.nickName;
+//                         info.targetName = table.nickName;
+//                     }
+//                     
+//                 }else{
+//                     
+//                     NSLog(@"failed");
+//                 }
+//             }];
 //             
-//             info.senderNickname = table.nickName;
-//             info.targetName = table.nickName;
-             
-         }else{
-             
-             ContactDataTable *table = [[ContactDataTable alloc] init];
-             //获取好友信息
-             [globalRcsApi usergetinfo:R ids:message.senderId callback:^(rcs_state* R, UserInfoResult *s) {
-                 if(s->error_code == 200)
-                 {
-                     
-                     int  j = 0;
-                     while (1 && s->user_infos) {
-                         
-                         UserInfo* u = s->user_infos[j++];
-                         if (u == NULL) {
-                             break;
-                         }
-                         NSLog(@"username = %s",u->username);
-                         NSLog(@"nickname = %s",u->nickname);
-                         NSLog(@"user_id = %d",u->user_id);
-                         
-                         table.userId = [NSString stringWithFormat:@"%d",u->user_id];
-                         table.nickName = [NSString stringWithUTF8String:u->nickname];
-                         table.username = [NSString stringWithUTF8String:u->username];
-                         [ContactDataTable insert:table];
-                         
-                         info.senderNickname = table.nickName;
-                         info.targetName = table.nickName;
-                     }
-                     
-                 }else{
-                     
-                     NSLog(@"failed");
-                 }
-             }];
-             
-             //获取用户头像
-             [ globalRcsApi usergetportrait:R userId:[message.senderId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
-                 if(s->error_code == 200)
-                 {
-                     
-                     NSLog(@"%s",s->file_path);
-                     table.portrait = [NSString stringWithUTF8String:s->file_path];
-                     [ContactDataTable update:table];
-
-                     NSLog(@"user get portrait ok");
-                     
-                 }else{
-                     
-                     table.portrait = @"";
-                     [ContactDataTable update:table];
-                     NSLog(@"user get portrait failed");
-                     
-                 }
-             }];
-             
-//             [ContactDataTable insert:table];
 //             
-//             info.senderNickname = table.nickName;
-//             info.targetName = table.nickName;
-             //info.senderProtraitUrl = table.portrait;
-             
-         }
+//             //获取用户头像
+//             [ globalRcsApi usergetportrait:R userId:[message.senderId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
+//                 if(s->error_code == 200)
+//                 {
+//                     
+//                     NSLog(@"%s",s->file_path);
+//                     table.portrait = [NSString stringWithUTF8String:s->file_path];
+//                     
+//                     [ContactDataTable insert:table];
+//                     
+//                     NSLog(@"user get portrait ok");
+//                     
+//                 }else{
+//                     
+//                     table.portrait = @"";
+//                     [ContactDataTable update:table];
+//                     NSLog(@"user get portrait failed");
+//                     
+//                 }
+//             }];
+//             
+////             [ContactDataTable update:table];
+////             
+////             info.senderNickname = table.nickName;
+////             info.targetName = table.nickName;
+//             
+//         }else{
+//             
+//             ContactDataTable *table = [[ContactDataTable alloc] init];
+//             //获取好友信息
+//             [globalRcsApi usergetinfo:R ids:message.senderId callback:^(rcs_state* R, UserInfoResult *s) {
+//                 if(s->error_code == 200)
+//                 {
+//                     
+//                     int  j = 0;
+//                     while (1 && s->user_infos) {
+//                         
+//                         UserInfo* u = s->user_infos[j++];
+//                         if (u == NULL) {
+//                             break;
+//                         }
+//                         NSLog(@"username = %s",u->username);
+//                         NSLog(@"nickname = %s",u->nickname);
+//                         NSLog(@"user_id = %d",u->user_id);
+//                         
+//                         table.userId = [NSString stringWithFormat:@"%d",u->user_id];
+//                         table.nickName = [NSString stringWithUTF8String:u->nickname];
+//                         table.username = [NSString stringWithUTF8String:u->username];
+//                         [ContactDataTable insert:table];
+//                         
+//                         info.senderNickname = table.nickName;
+//                         info.targetName = table.nickName;
+//                     }
+//                     
+//                 }else{
+//                     
+//                     NSLog(@"failed");
+//                 }
+//             }];
+//             
+//             //获取用户头像
+//             [ globalRcsApi usergetportrait:R userId:[message.senderId intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
+//                 if(s->error_code == 200)
+//                 {
+//                     
+//                     NSLog(@"%s",s->file_path);
+//                     table.portrait = [NSString stringWithUTF8String:s->file_path];
+//                     [ContactDataTable update:table];
+//
+//                     NSLog(@"user get portrait ok");
+//                     
+//                 }else{
+//                     
+//                     table.portrait = @"";
+//                     [ContactDataTable update:table];
+//                     NSLog(@"user get portrait failed");
+//                     
+//                 }
+//             }];
+//             
+////             [ContactDataTable insert:table];
+////             
+////             info.senderNickname = table.nickName;
+////             info.targetName = table.nickName;
+//             //info.senderProtraitUrl = table.portrait;
+//             
+//         }
          
          [FNRecentConversationTable insert:info];
  
@@ -565,8 +657,7 @@
              info.sendStatus = MsgUploading;
              
 //-------------------------------------------------------------------------------------------
-             
-             ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
+/*             ContactDataTable * t = [ContactDataTable getWithUserId:message.senderId];
              if (t.userId)
              {
                  ContactDataTable *table = [[ContactDataTable alloc] init];
@@ -682,6 +773,7 @@
                                   //info.senderProtraitUrl = table.portrait;
                  
              }
+ */
              
              [FNRecentConversationTable insert:info];
              
