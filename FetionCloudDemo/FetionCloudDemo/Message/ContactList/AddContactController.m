@@ -50,9 +50,6 @@ NSString *ContactAddGroupMsg = nil;
     
     //_remoteNum = @"+8616010100122";
     
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,13 +60,11 @@ NSString *ContactAddGroupMsg = nil;
 - (IBAction)ensureAction:(id)sender
 {
     
-    
     NSString * str = @"+86";
     
     _remoteNum = [str stringByAppendingString:_accountLabel.text];
     
-
-    [globalRcsApi buddyadd:R user:_remoteNum reason:@"我是ccttcc" callback:^(rcs_state* R, BuddyResult *s) {
+    [globalRcsApi buddyadd:R user:_remoteNum reason:@"Hello" callback:^(rcs_state* R, BuddyResult *s) {
         if (s->error_code == 200) {
             
             NSLog(@"add buddy ok");
@@ -78,9 +73,9 @@ NSString *ContactAddGroupMsg = nil;
                 [[[UIAlertView alloc] initWithTitle:@"" message:@"添加好友" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
                 
             });
-        }
-        else
-        {
+            
+        }else{
+            
             NSLog(@"add buddy failed");
             dispatch_async(dispatch_get_main_queue(),^{
                 

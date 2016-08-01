@@ -108,19 +108,12 @@
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNTF:) name:@"listNewMessage" object:nil];
         
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recemessage:) name:@"test" object:nil];
-        
-        
-        
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessageNTF:) name:NOTIFY_HAS_NEW_GROUP_MSG object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notifyGroupListChanged)
                                                      name:NOTIFY_GROUP_LIST_CHANGED
                                                    object:nil];
-
-        
 
     }
     else

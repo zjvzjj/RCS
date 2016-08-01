@@ -51,14 +51,6 @@
     
     _tokenizers = [[NSMutableArray alloc] init];
     
-    //_buddyPortraitPath = [[NSMutableArray alloc]init];
-    
-    
-    
-//    if (_addBuddyArray.count > 0) {
-//        NSLog(@"hah");
-//    }
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(addBuddy:)
                                                  name:@"addbuddy"
@@ -94,7 +86,6 @@
         [globalRcsApi usergetinfo:R ids:user.userId callback:^(rcs_state* R, UserInfoResult *s) {
             if(s->error_code == 200)
             {
-                //[self AddLogC:"user get info ok"];
                 
                 int  j = 0;
                 while (1 && s->user_infos) {
@@ -167,39 +158,7 @@
     
 }
 
-//获取用户头像
-//- (void) getUserPortrait{
-//
-//    for (int i=0; i<[_buddyIDArray count]; i++) {
-//
-//        NSNumber *number = [_buddyIDArray objectAtIndex:i];
-//
-//        [globalRcsApi usergetportrait:R userId:[number intValue] isSmall:YES callback:^(rcs_state* R, UserPortraitResult *s) {
-//            if(s->error_code == 200)
-//            {
-//
-//                NSLog(@"%s",s->file_path);
-//                [_buddyPortraitPath addObject:[NSString stringWithFormat:@"%s",s->file_path]];
-//
-//                dispatch_async(dispatch_get_main_queue(),^{
-//
-//                    [self.tableView reloadData];
-//                });
-//
-//                NSLog(@"user get portrait ok");
-//
-//            }else
-//            {
-//
-//                NSLog(@"user get portrait failed");
-//
-//            }
-//        }];
-//    }
-//}
-
-
-
+//添加好友通知
 - (void)addBuddy:(NSNotification *)notify{
     
     NSLog(@"%@",notify.object);
@@ -407,24 +366,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    if (indexPath.row == 0)
-    //    {
-    //        [self performSegueWithIdentifier:@"group" sender:nil];
-    //    }
-    //    else if (indexPath.row == 1)
-    //    {
-    //        [self performSegueWithIdentifier:@"discussionGroup" sender:nil];
-    //    }
-    //    else
-    //    {
-    //        [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
-    //    }
-    
     if (indexPath.section == 0) {
         
         [self performSegueWithIdentifier:@"contactConversation" sender:indexPath];
         
     }else if (indexPath.section == 1){
+        
         self.selectIndexPath = indexPath;
 
         UIAlertView * alert =[[UIAlertView alloc] initWithTitle:@"" message:@"是否添加为好友" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
@@ -440,10 +387,6 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row == 0 || indexPath.row == 1)
-//    {
-//        return NO;
-//    }
     
     return YES;
 }
@@ -468,7 +411,6 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-
     if (alertView.tag == 2002) {
         
         ContactDataTable *info = [_addBuddyArray objectAtIndex:self.selectIndexPath.row];
@@ -490,8 +432,7 @@
                     
                     NSLog(@"add buddy ok");
                     
-                }
-                else{
+                }else{
                     
                     NSLog(@"add buddy failed");
                     
@@ -523,17 +464,16 @@
                 });
                 
                 NSLog(@"delete buddy ok");
-            }
-            else{
+                
+            }else{
                 
                 NSLog(@"delete buddy failed");
                 
             }
         }];
         
-    }
-    else
-    {
+    }else{
+        
         [self.tableView setEditing:NO animated:YES];
     }
         
@@ -541,11 +481,10 @@
 }
 
 
-
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     if ([segue.identifier isEqualToString:@"contactConversation"]) {
         
         NSIndexPath *index = (NSIndexPath *)sender;
@@ -555,42 +494,9 @@
         //conversationVC.toUserid = [Utility userIdWithAppKey:infos.userId];
         conversationVC.toUserid = infos.userId;
         conversationVC.source = @"private";
-        
-        //        NSIndexPath *index = (NSIndexPath *)sender;
-        //        ContactDataTable *infos = _tokenizers[index.row];
-        //        ConversationController *conversationVC = segue.destinationViewController;
-        //        conversationVC.toDisplayName = infos.nickName;
-        //        
-        //        conversationVC.toUserid = [Utility userIdWithoutAppKey:infos.userId];
-        //       
-        //        conversationVC.source = @"private";
-        
     }
     
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

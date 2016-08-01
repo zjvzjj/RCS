@@ -67,7 +67,7 @@
     //按钮和输入框的基本配置
     [self baseConfriguration];
     
-    _localNum = @"+8615901435217";
+   // _localNum = @"+8617900010110";
 
     _password = @"Vae5S1CAXBfc";
     
@@ -78,7 +78,7 @@
 {
     self.ensureButton.userInteractionEnabled = NO;
     self.eyeButton.hidden = YES;
-    self.nameText.text =  [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    //self.nameText.text =  [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
     [self.nameText addTarget:self action:@selector(textFieldOnEditing:) forControlEvents:UIControlEventEditingChanged];
     [self.passwordText addTarget:self action:@selector(textFieldOnEditing:) forControlEvents:UIControlEventEditingChanged];
     self.nameText.delegate = self;
@@ -141,8 +141,8 @@
 //获取验证码
 - (IBAction)getsmscode:(id)sender {
     
-//    NSString * str1 = @"+86";
-//    _localNum = [str1 stringByAppendingString:_nameText.text];
+    NSString * str1 = @"+86";
+    _localNum = [str1 stringByAppendingString:_nameText.text];
     
     NSString *path = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"/"];
     NSString *spath = [[self applicationDocumentsDirectory].path stringByAppendingPathComponent:@"spconfig"];
@@ -217,14 +217,6 @@
             
             NSLog(@"userid=============%d,%s,%d",R->last_id,R->number,R->started);
             
-            //            [FNUserConfig initWithUserid:_localNum];
-            
-            //-----------------------------------start--------------------------------------
-            
-            
-//            [DBManager initDBWithUserId:_localNum];
-         
-
             [FNUserInfo ShareStaticConst].localNum = _localNum;
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"password"];
@@ -237,7 +229,6 @@
             [FNUserConfig initWithUserid:_userId];
             [FNDBManager initDB:_userId];
 
-            
             //切换VC
             dispatch_async(dispatch_get_main_queue(),^{
                 
@@ -336,17 +327,13 @@
             
             [[FNListener ShareStaticConst] getUserInfo];
 
-            
-            
-            //[[NSUserDefaults standardUserDefaults] setObject:_nameText.text forKey:@"name"];
+
             [[NSUserDefaults standardUserDefaults] setObject:_localNum forKey:@"name"];
             [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
             [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"cnt"][@"token"] forKey:@"bopToken"];
             [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"cnt"][@"bopId"] forKey:@"bopId"];
             //设置
             [FNConfig setAppToken:responseObject[@"cnt"][@"token"] userId:responseObject[@"cnt"][@"bopId"]];
-            //切换vc
-            // [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"tabbarController"];
             
             //切换VC
             dispatch_async(dispatch_get_main_queue(),^{
@@ -359,9 +346,8 @@
             {
                 [self performSelector:@selector(setNick) withObject:nil afterDelay:1];
             }
-        }
-        else
-        {
+        }else{
+            
             [self.view makeToast:responseObject[@"cnt"]];
         }
         

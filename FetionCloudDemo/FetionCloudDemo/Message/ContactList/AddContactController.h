@@ -19,5 +19,4 @@ extern NSString *ContactAddGroupMsg;
 @property (nonatomic,copy) NSString* remoteNum;
 
 
-
 @end

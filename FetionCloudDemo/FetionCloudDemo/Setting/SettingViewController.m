@@ -40,11 +40,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *impresaText;//个人签名
 
-
-
 @property (nonatomic) NSString* picturePath;//头像路径
 @property (nonatomic,copy) NSString *imageName;//头像图片名称
-
 
 @property (weak, nonatomic) IBOutlet UIButton *portraitBtn;//头像
 
@@ -54,23 +51,16 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *lastNameText;//名
 
-
 @property (weak, nonatomic) IBOutlet UITextField *birthdayText;//生日
 
 @property (weak, nonatomic) IBOutlet UITextField *emailText;//邮箱
 
 @property (nonatomic) UIImage *portraitImage;
 
-
-
 @property (weak, nonatomic) IBOutlet UIView *inputView;
 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *inputScrolleView;
-
-
-
-
 
 
 @end
@@ -106,8 +96,21 @@
 //设置用户基本信息
 - (IBAction)saveProfile:(id)sender {
     
+    int gender;
+    
+    if ([_genderText.text isEqualToString:@"男"]) {
+        gender = 2;
+        
+    }else if ([_genderText.text isEqualToString:@"女"]){
+        gender = 1;
+        
+    }else{
+    
+        [[[UIAlertView alloc] initWithTitle:@"" message:@"请输入正确的性别" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+        
+    }
 
-        [globalRcsApi usersetprofile:R nickname:_nickNameText.text impresa:_impresaText.text firstname:_firstNameText.text lastname:_lastNameText.text gender:2 email:_emailText.text birthday:_birthdayText.text callback:^(rcs_state* R, UserProfileResult *s) {
+        [globalRcsApi usersetprofile:R nickname:_nickNameText.text impresa:_impresaText.text firstname:_firstNameText.text lastname:_lastNameText.text gender:gender email:_emailText.text birthday:_birthdayText.text callback:^(rcs_state* R, UserProfileResult *s) {
         if(s->error_code == 200)
         {
             NSLog(@"user set profile ok");
@@ -118,8 +121,8 @@
 
             });
             
-        }else
-        {
+        }else{
+            
             [[[UIAlertView alloc] initWithTitle:@"" message:@"保存失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
             
         }
@@ -140,8 +143,7 @@
                 
             });
             
-        }else
-        {
+        }else{
             
             dispatch_async(dispatch_get_main_queue(),^{
                 
@@ -293,30 +295,6 @@
     
 }
 
-
-
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-//
-//    if ([textField isEqual:_nickNameText]) {
-//        
-//        [_genderText becomeFirstResponder];
-//        
-//    }else if ([textField isEqual:_genderText]){
-//    
-//        [_impresaText becomeFirstResponder];
-//    }else{
-//    
-//    
-//        [_emailText resignFirstResponder];
-//    
-//    }
-//
-//    return YES;
-//
-//}
-
-
-
 //遮挡键盘
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 
@@ -365,8 +343,6 @@
     
 }
 
-
-
 //注销登录
 - (IBAction)logout:(id)sender
 {
@@ -376,7 +352,6 @@
         if (s->error_code == 200) {
             
             CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
-            //        [CurrentUserTable del:table];
             table.password = @"";
             [CurrentUserTable update:table];
             
