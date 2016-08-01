@@ -886,11 +886,6 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-iO-OBn">
-                                                        <rect key="frame" x="104" y="161" width="203" height="30"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ov6-e8-Kqe">
                                                         <rect key="frame" x="104" y="202" width="259" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -972,6 +967,16 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxq-fr-bnc">
+                                                        <rect key="frame" x="104" y="157" width="203" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <state key="normal" title="请选择日期">
+                                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="chooseDate:" destination="eT2-zT-J54" eventType="touchUpInside" id="34r-Pw-Zky"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -1091,7 +1096,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="我的" id="HQr-xj-Xfe"/>
                     <connections>
-                        <outlet property="birthdayText" destination="qeh-iO-OBn" id="n9i-LH-uOE"/>
+                        <outlet property="chooseDateBtn" destination="Xxq-fr-bnc" id="LHD-Kx-gX4"/>
                         <outlet property="emailText" destination="ov6-e8-Kqe" id="I1S-4F-w6w"/>
                         <outlet property="firstNameText" destination="PGs-sb-Xr7" id="X8P-fb-F7P"/>
                         <outlet property="genderText" destination="o0x-5r-9RT" id="s7c-Ps-VNN"/>

@@ -548,7 +548,7 @@
              
              [FNRecentConversationTable insert:info];
              
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
+             //[[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
              [[NSNotificationCenter defaultCenter] postNotificationName:@"listNewMessage" object:nil];
              
              weakSelf.localNum =[[NSUserDefaults standardUserDefaults] objectForKey:@"name"];

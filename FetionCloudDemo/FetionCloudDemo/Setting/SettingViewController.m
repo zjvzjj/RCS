@@ -25,7 +25,7 @@
 #import <AssetsLibrary/ALAssetRepresentation.h>
 
 #import "FNUserInfo.h"
-
+#import "BirthSelectSheet.h"
 
 #define     PATH_DOCUMENT                   [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
 #define     PATH_CHATREC_IMAGE              [PATH_DOCUMENT stringByAppendingPathComponent:@"ChatRec/Images"]
@@ -60,7 +60,9 @@
 @property (weak, nonatomic) IBOutlet UIView *inputView;
 
 
-@property (weak, nonatomic) IBOutlet UIScrollView *inputScrolleView;
+@property (weak, nonatomic) IBOutlet UIButton *chooseDateBtn;
+
+@property (nonatomic, strong) NSString *timeStr; // 时间字符串
 
 
 @end
@@ -88,7 +90,6 @@
     _genderText.delegate =self;
     _firstNameText.delegate = self;
     _lastNameText.delegate = self;
-    _birthdayText.delegate = self;
     _emailText.delegate = self;
 }
 
@@ -110,7 +111,7 @@
         
     }
 
-        [globalRcsApi usersetprofile:R nickname:_nickNameText.text impresa:_impresaText.text firstname:_firstNameText.text lastname:_lastNameText.text gender:gender email:_emailText.text birthday:_birthdayText.text callback:^(rcs_state* R, UserProfileResult *s) {
+        [globalRcsApi usersetprofile:R nickname:_nickNameText.text impresa:_impresaText.text firstname:_firstNameText.text lastname:_lastNameText.text gender:gender email:_emailText.text birthday:_timeStr callback:^(rcs_state* R, UserProfileResult *s) {
         if(s->error_code == 200)
         {
             NSLog(@"user set profile ok");
@@ -390,6 +391,24 @@
     
     
 }
+
+
+//选择生日
+
+- (IBAction)chooseDate:(id)sender {
+    
+    BirthSelectSheet *datesheet = [[BirthSelectSheet alloc] initWithFrame:self.view.bounds];
+    _timeStr = @"1990-8-20";
+    datesheet.selectDate = _timeStr;
+    datesheet.GetSelectDate = ^(NSString *dateStr) {
+        _timeStr = dateStr;
+        [_chooseDateBtn setTitle:_timeStr forState:UIControlStateNormal];
+        
+    };
+    [self.view addSubview:datesheet];
+    
+}
+
 
 /*
 #pragma mark - Navigation
