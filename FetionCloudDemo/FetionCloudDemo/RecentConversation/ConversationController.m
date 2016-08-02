@@ -1439,55 +1439,10 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         [FNMsgLogic saveRichTextMessage:imageReq];
         
         
-//        [FNMsgLogic uploadRichTextFilePath:fullPath msgId:msgEntity.msgId fileType:FNMsgTypePic tid:self.toUserid callBack:^(FNFileUploadResponse *serviceRsp){
-//            
-//            int32_t statusCode = serviceRsp.statusCode;
-//            imageReq.msgContent.fileDownloadUrl = serviceRsp.fileInfo.downloadURL ;
-//            imageReq.msgContent.fileId = serviceRsp.fileInfo.fileId;
-//            imageReq.msgContent.fileSize = serviceRsp.fileInfo.fileSize;
-//            
-//            [FNMsgLogic updateLocalData:serviceRsp.fileInfo.downloadURL msgId:msgEntity.msgId fileId:serviceRsp.fileInfo.fileId fileName:serviceRsp.fileInfo.fileName fileSize:serviceRsp.fileInfo.fileSize fileWidth:serviceRsp.fileInfo.fileWidth fileHeight:serviceRsp.fileInfo.fileHeight sendStatus:statusCode] ;
-//            
-//            if(statusCode == 200)
-//            {
-//                void(^sendRichMsgCallback)(FNSendRichTextMsgResponse *rspArgs) = ^(FNSendRichTextMsgResponse *rspArgs) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        if (200 == rspArgs.msgRsp.statusCode) {
-//                            NSLog(@"send rich msg success!");
-//                             message.sendingFlag = NO;
-//                            message.sendFailureFlag =  NO;
-//                            [self.collectionView reloadData];
-//
-//                        } else {
-//                            NSLog(@"发送失败");
-//                             message.sendingFlag = NO;
-//                            message.sendFailureFlag = YES;
-//                            [self.collectionView reloadData];
-//
-//                        }
-//                        [FNSystemSoundPlayer fn_playMessageSentSound];
-//                        [self finishSendingMessage];
-//                        
-//                    });
-//                };
-//                [FNMsgLogic bopSendRichTextMsg:imageReq callback:sendRichMsgCallback];
-//                
-//            }
-//            else
-//            {
-//                 message.sendingFlag = NO;
-//                message.sendFailureFlag = YES;
-//                NSLog(@"上传失败");
-//                [self finishSendingMessage];
-//                [self.collectionView reloadData];
-//            }
-//        }];
-        
-        
 //----------------------------RCSSDK--------------------------------------------------
         
-        
-        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:fullpath2 contentType:ContentTypePICTURE fileName:fileName2 needReport:YES start:0 thumbnail:fullPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+        // 新增extension 扩展字段（由客户端自定义,服务端透传
+        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:fullpath2 contentType:ContentTypePICTURE fileName:fileName2 needReport:YES start:0 thumbnail:fullPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO extension:@"" callback:^(rcs_state *R, MessageResult *s) {
             if (s) {
                 if (s->error_code == 200) {
                     
@@ -1499,7 +1454,7 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
                     
                     dispatch_async(dispatch_get_main_queue(),^{
                         
-                       [self finishSendingMessage];
+                        [self finishSendingMessage];
                         
                     });
                 }
@@ -1510,6 +1465,31 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
                 }
             }
         }];
+        
+        
+//        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:fullpath2 contentType:ContentTypePICTURE fileName:fileName2 needReport:YES start:0 thumbnail:fullPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+//            if (s) {
+//                if (s->error_code == 200) {
+//                    
+//                    NSLog(@"seng picture ok");
+//                    message.sendingFlag = NO;
+//                    message.sendFailureFlag =  NO;
+//                    
+//                    [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+//                    
+//                    dispatch_async(dispatch_get_main_queue(),^{
+//                        
+//                       [self finishSendingMessage];
+//                        
+//                    });
+//                }
+//                else
+//                {
+//                    NSLog(@"send picture failed");
+//                    
+//                }
+//            }
+//        }];
  
 
         
@@ -1706,14 +1686,14 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         
         
         //发送视频
-        [globalRcsApi msgsendfile:R number:toUserid messageId:msgId filePath:fullPath contentType:ContentTypeVIDEO fileName:fileName needReport:YES start:0 thumbnail:savedImagePath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+        
+        [globalRcsApi msgsendfile:R number:toUserid messageId:msgId filePath:fullPath contentType:ContentTypeVIDEO fileName:fileName needReport:YES start:0 thumbnail:savedImagePath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO extension:@"" callback:^(rcs_state *R, MessageResult *s) {
             if (s) {
                 if (s->error_code == 200) {
                     
                     NSLog(@"send file ok");
                     message.sendingFlag = NO;
                     message.sendFailureFlag =  NO;
-                   // [self finishSendingMessage];
                     
                     [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
                     
@@ -1734,56 +1714,38 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
             }
         }];
         
- //-----------------------------------end------------------------------------------------
         
-//        __block FNSendRichTextMsgRequest *imageReq = [[FNSendRichTextMsgRequest alloc] init];
-//        imageReq.msgEntity = msgEntity;
-//        imageReq.msgContent = msgContent;
-//        
-//        [FNMsgLogic saveRichTextMessage:imageReq];
-//        [FNMsgLogic uploadRichTextFilePath:fullPath msgId:msgEntity.msgId fileType:FNMsgTypePic tid:self.toUserid callBack:^(FNFileUploadResponse *serviceRsp){
-//            int32_t statusCode = serviceRsp.statusCode;
-//            imageReq.msgContent.fileDownloadUrl = serviceRsp.fileInfo.downloadURL ;
-//            imageReq.msgContent.fileId = serviceRsp.fileInfo.fileId;
-//            imageReq.msgContent.fileSize = serviceRsp.fileInfo.fileSize;
-//            imageReq.msgContent.fileWidth = serviceRsp.fileInfo.fileWidth;
-//            imageReq.msgContent.fileHeight = serviceRsp.fileInfo.fileHeight;
-//            [FNMsgLogic updateLocalData:serviceRsp.fileInfo.downloadURL msgId:msgEntity.msgId fileId:serviceRsp.fileInfo.fileId fileName:serviceRsp.fileInfo.fileName fileSize:serviceRsp.fileInfo.fileSize fileWidth:serviceRsp.fileInfo.fileWidth fileHeight:serviceRsp.fileInfo.fileHeight sendStatus:statusCode];
-//            if(statusCode ==200)
-//            {
-//                void(^sendRichMsgCallback)(FNSendRichTextMsgResponse *rspArgs) = ^(FNSendRichTextMsgResponse *rspArgs) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        if (200 == rspArgs.msgRsp.statusCode) {
-//                            NSLog(@"send rich msg success!");
-//                             message.sendingFlag = NO;
-//                            message.sendFailureFlag =  NO;
-//                             [self finishSendingMessage];
-//                            [self.collectionView reloadData];
-//
-//                        } else {
-//                            NSLog(@"发送失败");
-//                             message.sendingFlag = NO;
-//                            message.sendFailureFlag = YES;
-//                             [self finishSendingMessage];
-//                            [self.collectionView reloadData];
-//
-//                        }
-//                        
-//                        [FNSystemSoundPlayer fn_playMessageSentSound];
+//        [globalRcsApi msgsendfile:R number:toUserid messageId:msgId filePath:fullPath contentType:ContentTypeVIDEO fileName:fileName needReport:YES start:0 thumbnail:savedImagePath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+//            if (s) {
+//                if (s->error_code == 200) {
+//                    
+//                    NSLog(@"send file ok");
+//                    message.sendingFlag = NO;
+//                    message.sendFailureFlag =  NO;
+//                   // [self finishSendingMessage];
+//                    
+//                    [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+//                    
+//                    dispatch_async(dispatch_get_main_queue(),^{
 //                        
 //                        [self finishSendingMessage];
+//                        
 //                    });
-//                };
-//                [FNMsgLogic bopSendRichTextMsg:imageReq callback:sendRichMsgCallback];}
-//            else
-//            {
-//                NSLog(@"上传视频失败");
-//                 message.sendingFlag = NO;
-//                message.sendingFlag = YES;
-//                [self finishSendingMessage];
-//                [self.collectionView reloadData];
+//                }
+//                else
+//                {
+//                    NSLog(@"send file failed");
+//                    message.sendingFlag = NO;
+//                    message.sendFailureFlag = YES;
+//                    [self finishSendingMessage];
+//                    [self.collectionView reloadData];
+//                }
 //            }
 //        }];
+        
+ //-----------------------------------end------------------------------------------------
+        
+
         
     }
     else if ([source isEqualToString:@"group"]){
@@ -1952,40 +1914,16 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
 //----------------------------RCSSDK--------------------------------------------------
         
         
-//        AVURLAsset *asset = [[AVURLAsset alloc]initWithURL:[NSURL fileURLWithPath:needPath] options:nil];
-//        AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc]initWithAsset:asset];
-//        gen.appliesPreferredTrackTransform = YES;
-//        NSError *error = nil;
-//        CMTime actualTime;
-//        CGImageRef image = [gen copyCGImageAtTime:CMTimeMakeWithSeconds(1, 60) actualTime:&actualTime error:&error];
-//        UIImage *thumbImage = [[UIImage alloc]initWithCGImage:image];
-//        
-//        UIImage * image2 = [self scaleImage:thumbImage toScale:0.2];
-//        
-//        NSData *imageData1 = UIImageJPEGRepresentation(image2,1);
-//        
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-//        NSString *documentsDirectory = [paths objectAtIndex:0];
-//        
-//        NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:@"video.png"];
-//        
-//        [imageData1 writeToFile:savedImagePath atomically:YES];
-        
-        //获取时间戳作为imdnId
-        //        UInt64 recordTime = [[NSDate date] timeIntervalSince1970]*1000;
-        //        NSString * msgId = [NSString stringWithFormat:@"%lld", recordTime];
-        //        NSLog(@"----------%llu,-----------%@",recordTime,msgId);
         
         NSString * thumbnailPath = [[NSBundle mainBundle]pathForResource:@"yinpin" ofType:@"png"];
-        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:item.fileURL.path contentType:ContentTypeAUDIO fileName:item.fileURL.path.lastPathComponent needReport:YES start:0 thumbnail:thumbnailPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+        
+        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:item.fileURL.path contentType:ContentTypeAUDIO fileName:item.fileURL.path.lastPathComponent needReport:YES start:0 thumbnail:thumbnailPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO extension:@"" callback:^(rcs_state *R, MessageResult *s) {
             if (s) {
                 if (s->error_code == 200) {
                     
                     NSLog(@"send audio ok");
                     message.sendingFlag = NO;
                     message.sendFailureFlag =  NO;
-//                    [self finishSendingMessage];
-                    
                     [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
                     
                     dispatch_async(dispatch_get_main_queue(),^{
@@ -2008,62 +1946,41 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
         }];
         
         
-        
-//------------------------------------end---------------------------------------------------
-        
-//        FNSendRichTextMsgRequest *imageReq = [[FNSendRichTextMsgRequest alloc] init];
-//        imageReq.msgEntity = msgEntity;
-//        imageReq.msgContent = msgContent;
-//        
-//        
-//        [FNMsgLogic saveRichTextMessage:imageReq];
-//        
-//        [FNMsgLogic uploadRichTextFilePath:fullPath msgId:msgEntity.msgId fileType:FNMsgTypePic tid:self.toUserid callBack:^(FNFileUploadResponse *serviceRsp){
-//            int32_t statusCode = serviceRsp.statusCode;
-//            if(statusCode ==200)
-//            {
-//                imageReq.msgContent.fileDownloadUrl = serviceRsp.fileInfo.downloadURL ;
-//                imageReq.msgContent.fileId = serviceRsp.fileInfo.fileId;
-//                imageReq.msgContent.fileSize = serviceRsp.fileInfo.fileSize;
-//                imageReq.msgContent.fileWidth = serviceRsp.fileInfo.fileWidth;
-//                imageReq.msgContent.fileHeight = serviceRsp.fileInfo.fileHeight;
-//                [FNMsgLogic updateLocalData:serviceRsp.fileInfo.downloadURL msgId:msgEntity.msgId fileId:serviceRsp.fileInfo.fileId fileName:serviceRsp.fileInfo.fileName fileSize:serviceRsp.fileInfo.fileSize fileWidth:serviceRsp.fileInfo.fileWidth fileHeight:serviceRsp.fileInfo.fileHeight sendStatus:statusCode];
-//                void(^sendRichMsgCallback)(FNSendRichTextMsgResponse *rspArgs) = ^(FNSendRichTextMsgResponse *rspArgs) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        if (200 == rspArgs.msgRsp.statusCode) {
-//                            NSLog(@"send rich msg success!");
-//                             message.sendingFlag = NO;
-//                            message.sendFailureFlag =  NO;
-//                             [self finishSendingMessage];
-//                            [self.collectionView reloadData];
-//                        } else {
-//                            NSLog(@"发送失败");
-//                             message.sendingFlag = NO;
-//                            message.sendFailureFlag = YES;
-//                             [self finishSendingMessage];
-//                            [self.collectionView reloadData];
-//
-//                        }
+//        [globalRcsApi msgsendfile:R number:toUserid messageId:msgEntity.msgId filePath:item.fileURL.path contentType:ContentTypeAUDIO fileName:item.fileURL.path.lastPathComponent needReport:YES start:0 thumbnail:thumbnailPath isBurn:NO directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+//            if (s) {
+//                if (s->error_code == 200) {
+//                    
+//                    NSLog(@"send audio ok");
+//                    message.sendingFlag = NO;
+//                    message.sendFailureFlag =  NO;
+////                    [self finishSendingMessage];
+//                    
+//                    [FNMsgTable updateSendMsgStatus:msgEntity.msgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+//                    
+//                    dispatch_async(dispatch_get_main_queue(),^{
 //                        
-//                        [FNSystemSoundPlayer fn_playMessageSentSound];
-//    
 //                        [self finishSendingMessage];
+//                        
 //                    });
-//                };
-//                [FNMsgLogic bopSendRichTextMsg:imageReq callback:sendRichMsgCallback];}
-//            else
-//            {
-//                NSLog(@"上传音频失败");
-//                 message.sendingFlag = NO;
-//                message.sendFailureFlag = YES;
-//                 [self finishSendingMessage];
-//                [self.collectionView reloadData];
-//                
+//                    
+//                }
+//                else
+//                {
+//                    NSLog(@"send audio failed");
+//                    message.sendingFlag = NO;
+//                    message.sendFailureFlag = YES;
+//                    [self finishSendingMessage];
+//                    [self.collectionView reloadData];
+//                    
+//                }
 //            }
 //        }];
 //        
         
         
+//------------------------------------end---------------------------------------------------
+        
+       
     } else if ([source isEqualToString:@"group"])
     {
         FNMsgContent *msgContent = [FNMsgContent msgContentWithType:AudioMsg];
@@ -2329,38 +2246,67 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
             
 //------------------------------RCSSDK --------------------------------------------------------
  
-        [globalRcsApi msgsendtext:R number:toUserid messageId:tempMsgId content:message.text needReport:YES isBurn:YES directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
-                    if (s->error_code == 200) {
             
-                        NSLog(@"send text ok");
-                        message.sendingFlag = NO;
-                        message.sendFailureFlag = NO;
-                        
-                        [FNMsgTable updateSendMsgStatus:tempMsgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
-       
-                        dispatch_async(dispatch_get_main_queue(),^{
-                            
-                            [self finishSendingMessage];
-                            
-                        });
-            
-                    }
-                    else
-                    {
-                        message.sendingFlag = NO;
-                        message.sendFailureFlag = YES;
-                        [self.collectionView reloadData];
-                        NSLog(@"send text failed");
-                        
-                    }
+            [globalRcsApi msgsendtext:R number:toUserid messageId:tempMsgId content:message.text needReport:YES isBurn:YES directedType:DirectedTypeNONE needReadReport:NO extension:@"" callback:^(rcs_state *R, MessageResult *s) {
+                if (s->error_code == 200) {
                     
-//                    @synchronized(sync){
-//                        [self finishSendingMessage];
-//                        [FNSystemSoundPlayer fn_playMessageSentSound];
+                    NSLog(@"send text ok");
+                    message.sendingFlag = NO;
+                    message.sendFailureFlag = NO;
+                    
+                    [FNMsgTable updateSendMsgStatus:tempMsgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+                    
+                    dispatch_async(dispatch_get_main_queue(),^{
+                        
+                        [self finishSendingMessage];
+                        
+                    });
+                    
+                }
+                else
+                {
+                    message.sendingFlag = NO;
+                    message.sendFailureFlag = YES;
+                    [self.collectionView reloadData];
+                    NSLog(@"send text failed");
+                    
+                }
+            }];
+            
+            
+            
+//        [globalRcsApi msgsendtext:R number:toUserid messageId:tempMsgId content:message.text needReport:YES isBurn:YES directedType:DirectedTypeNONE needReadReport:NO callback:^(rcs_state* R, MessageResult *s) {
+//                    if (s->error_code == 200) {
+//            
+//                        NSLog(@"send text ok");
+//                        message.sendingFlag = NO;
+//                        message.sendFailureFlag = NO;
+//                        
+//                        [FNMsgTable updateSendMsgStatus:tempMsgId syncId:0 sendStatus:MsgSendSuccess sendTime:[FNSystemConfig dateToString:[FNSystemConfig getLocalDate]]];
+//       
+//                        dispatch_async(dispatch_get_main_queue(),^{
+//                            
+//                            [self finishSendingMessage];
+//                            
+//                        });
+//            
 //                    }
-            
-                }];
-            
+//                    else
+//                    {
+//                        message.sendingFlag = NO;
+//                        message.sendFailureFlag = YES;
+//                        [self.collectionView reloadData];
+//                        NSLog(@"send text failed");
+//                        
+//                    }
+//                    
+////                    @synchronized(sync){
+////                        [self finishSendingMessage];
+////                        [FNSystemSoundPlayer fn_playMessageSentSound];
+////                    }
+//            
+//                }];
+//            
 
             
  //-------------------------------------end-----------------------------------------------
@@ -2435,285 +2381,6 @@ didTapLoadEarlierMessagesButton:(UIButton *)sender
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-
-
-
-
-
-
-
-
-
-
-
-#pragma mark - -------------------------------registerListener-----------------------------------
-
-
-- (void)registerMsgListener
-{
-    __weak typeof(self) weakSelf = self;
-    
-    //服务端推送SINGLE(一对一聊天)、GROUP(群组聊天)、PUBLIC_ACCOUNT(公众账号消息)、BROADCAST(广播消息)、DIRECTED(定向消息)文本消息事件监听器
-    
-    [globalRcsApi setMsgTextListener:^(rcs_state*R, MessageTextSession* s)
-     {
-         //[weakSelf AddLogC:s->content];
-         NSLog(@"content=======%s",s->content);
-         
-         MessageEntity *m = [MessageEntity new];
-         
-         m.content=[NSString stringWithFormat:@"%s",s->content];
-         m.fromUserId = [NSString stringWithFormat:@"%s",s->from];
-         m.toUserid = [NSString stringWithFormat:@"%s",s->to];
-         m.chatType = s->chat_type;
-         m.directed_type = s->directed_type;
-         
-//-------------------------------------------------------------------------------
-         
-         
-//         int32_t msgNum = (int32_t)((NSArray *)notify.object).count;
-//         NSArray *recvMsgs;
-//         NSArray *fnTables = notify.object;
-//         if ([source isEqualToString:@"private"])
-//         {
-//             NSInteger syncId = [[fnTables lastObject] syncId];
-//             recvMsgs = [FNMsgTable getUnreadMsgForTid:toUserid num:msgNum andSyncId:syncId];
-//             
-//             
-//         } else if ([source isEqualToString:@"group"]) {
-//             
-//             NSInteger syncId=[[fnTables lastObject] syncId];
-//             recvMsgs=[FNGroupMsgTable getUnreadMsgForGroupId:toUserid num:msgNum andSyncId:syncId];
-//         }
-//         
-//         for (int i = 0; i < recvMsgs.count; i++)
-//         {
-//             FNMsgTable *messageData = (FNMsgTable *)recvMsgs[i];
-//             [self scrollToBottomAnimated:YES];
-//             
-//             if ([messageData.msgType isEqualToString:FNMsgTypePlain])
-//             {
-//                 // 文本消息直接刷新UI
-//                 FNMessage *fnMsg = [self.msgDataModel makeTargetFNMsg:[NSArray arrayWithObject:messageData]
-//                                                             mediaData:nil].lastObject;
-//                 
-//                 [FNSystemSoundPlayer fn_playMessageReceivedSound];
-//                 [self.msgDataModel.messages addObject:fnMsg];
-//                 [self finishReceivingMessage];
-//                 
-//             } else {
-//                 // 富文本信息 先下载 接收消息时，发送完图片之后接着发文字，文本先到，要排序
-//                 NSData *data;
-//                 if (messageData.receiveStatus != MsgReceiveSuccess) {
-//                     data = [FNImage dataWithName:@"failure3"];
-//                 }
-//                 
-//                 FNMessage *fnMsg = [self.msgDataModel makeTargetFNMsg:[NSArray arrayWithObject: messageData]
-//                                                             mediaData:data].lastObject;
-//                 if (fnMsg != nil)
-//                 {
-//                     [self.msgDataModel.messages addObject:fnMsg];
-//                     
-//                     if (fnMsg.isMediaMessage) {
-//                         id<FNMessageMediaData> mediaData = fnMsg.media;
-//                         // 媒体文件分类
-//                         if ([mediaData isKindOfClass:[FNPhotoMediaItem class]]) {
-//                             FNPhotoMediaItem *photoItemCopy = (FNPhotoMediaItem *)mediaData;
-//                             photoItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-//                             [self.collectionView reloadData];
-//                             
-//                         }
-//                         else if ([mediaData isKindOfClass:[FNVideoMediaItem class]]) {
-//                             FNVideoMediaItem *avItemCopy = (FNVideoMediaItem *)mediaData;
-//                             avItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-//                             avItemCopy.isReadyToPlay = YES;
-//                             [self.collectionView reloadData];
-//                         }
-//                         else if ([mediaData isKindOfClass:[FNAudioMediaItem class]]) {
-//                             FNAudioMediaItem *avItemCopy = (FNAudioMediaItem *)mediaData;
-//                             avItemCopy.appliesMediaViewMaskAsOutgoing = NO;
-//                             [self.collectionView reloadData];
-//                         }
-//                         else {
-//                             NSLog(@"%s error: unrecognized media item", __PRETTY_FUNCTION__);
-//                         }
-//                         
-//                         // self.showTypingIndicator = !self.showTypingIndicator;
-//                         [FNSystemSoundPlayer fn_playMessageReceivedSound];
-//                         [self finishReceivingMessage];
-//                     }
-//                 }
-//             }
-//         }
-//         [FNRecentConversationTable updateUnReadCount:self.toUserid];
-//         
-//         
-//       
-         
-         
-//-----------------------------------------------------------------------------
-         
-         
-         //         NSString *content = [NSString stringWithUTF8String:s->content];
-         //         [_contentArray addObject:content];
-         //         NSLog(@"%lu",(unsigned long)_contentArray.count);
-         
-         if(s->need_report)
-         {
-             NSString* from = [NSString stringWithUTF8String:s->from];
-             NSString* messageId = [NSString stringWithUTF8String:s->imdn_id];
-             [globalRcsApi msgsendreport:R number:from messageId:messageId reportType:ReportTypeDELIVERED directedType:DirectedTypeNONE callback:^(rcs_state* R, MessageResult *s) {
-                 if (s->error_code == 200) {
-                     //[weakSelf AddLogC:"send report ok"];
-                     NSLog(@"send report ok");
-                 }
-                 else
-                 {
-                     //[weakSelf AddLogC:"send report failed"];
-                     NSLog(@"send report failed");
-                 }
-             }];
-         }
-     }];
-    
-    /*    服务端推送BURN(已焚)、DELIVERED(已送达)、FILE_PROGRESS(文件上传/下载进度)、GROUP_DELIVERED(群组消息已送达)、
-     *   GROUP_READ(群组消息已读)、GROUP_WITH_DRAW(群组消息撤销)、READ(已读)、TYPING(正在输入)、UPDATE_MSG_ID(更新消息 ID)、
-     *    WITH_DRAW(撤回)、消息报告事件监听器
-     */
-    [globalRcsApi setMsgReportListener:^(rcs_state*R, MessageReportSession* s)
-     {
-         //[weakSelf AddLogC:"receive MessageReportSession"];
-        
-         NSLog(@"receice MessageReportSession");
-         
-     }];
-    
-    // 服务端推送彩云文件消息事件监听器
-    [globalRcsApi setMsgCloudfileListener:^(rcs_state*R, MessageCloudFileSession* s)
-     {
-         //[weakSelf AddLogC:"receive MessageCloudFileSession"];
-         NSLog(@"receive MessageCloudFileSession");
-     }];
-    
-    // 服务端推送商店表情消息事件监听器
-    [globalRcsApi setMsgEmoticonListener:^(rcs_state*R, MessageEmoticonSession* s)
-     {
-         //[weakSelf AddLogC:"receive MessageEmoticonSession"];
-         NSLog(@"receice MessageEmoticonSession ");
-     }];
-    
-    // 服务端推送自定义消息,SDK直接透传不处理事件监听器
-    [globalRcsApi setMsgCustomListener:^(rcs_state*R, MessageCustomSession* s)
-     {
-         // [weakSelf AddLogNs:[NSString stringWithFormat:@"receive custom msg, data:%s, data_id:%s, data_type:%d", s->data, s->data_id, s->data_type]];
-         NSLog(@"receive custom msg, data:%s, data_id:%s, data_type:%d", s->data, s->data_id, s->data_type);
-     }];
-    
-    // 服务端推送富文本消息事件监听器
-    [globalRcsApi setMsgFtListener:^(rcs_state*R, MessageFTSession* s)
-     {
-         
-         //[weakSelf AddLogC:"receive MessageFTSession"];
-         NSLog(@"receive MessageFtSession");
-         
-         if(!s->is_report && s->file_size > 0)
-         {
-             NSString* messageId = [NSString stringWithUTF8String:s->imdn_id];
-             NSString* transferId = [NSString stringWithUTF8String:s->transfer_id];
-             
-             NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-             
-             NSString *filePath = [docPaths objectAtIndex:0];
-             
-             UInt64 recordTime = [[NSDate date] timeIntervalSince1970]*1000;
-             
-             NSString * filename = [NSString stringWithFormat:@"%lld", recordTime];
-             
-             NSString* newfilePath = [NSString stringWithFormat:@"%@/%@.jpg", filePath,filename];
-             
-             [globalRcsApi msgfetchfile:R number:weakSelf.localNum
-                              messageId:messageId
-                               chatType:s->chat_type
-                               filePath:newfilePath
-                            contentType:s->content_type
-                               fileName:@""
-                             transferId:transferId
-                                  start:0
-                               fileSize:s->file_size
-                                   hash:@""
-                                 isBurn:s->is_burn
-                               callback:^(rcs_state* R, MessageResult *s) {
-                                   if (s->error_code == 200) {
-                                       //[weakSelf AddLogC:"fetch file ok"];
-                                       NSLog(@"fetch file ok");
-                                   }
-                                   else
-                                   {
-                                       // [weakSelf AddLogC:"fetch file failed"];
-                                       NSLog(@"fetch file failed");
-                                   }
-                               }];
-         }
-         
-     }];
-}
-
-
-
-- (void)registerGroupListListener
-{
-    //__weak typeof(self) weakSelf = self;
-    [globalRcsApi setGroupListListener:^(rcs_state*R, GroupListSession* s)
-     {
-         //[weakSelf AddLogC:"call GroupListListener"];
-         
-         NSLog(@"%d,%s,%d",s->sid,s->user,s->sync_mode);
-         
-     }];
-}
-
-//服务端推送群组详细信息事件监听器
-- (void)registerGroupInfoListener
-{
-    //__weak typeof(self) weakSelf = self;
-    [globalRcsApi setGroupInfoListener:^(rcs_state*R, GroupSession* s)
-     {
-         //[weakSelf AddLogC:"call GroupInfoListener"];
-         
-     }];
-}
-
-//服务端推送INVITED(被邀请入群)、QUIT(退出群)、BOOTED(被踢出群)、
-// CONFIRMED(群邀请处理结果)、DISMISSED(群被解散)、TRANSFER(被提升为管理员)群操作事件监听器
-//描述的事件都是与当前用户有关的信息
-- (void)registerGroupEventListener
-{
-    // __weak typeof(self) weakSelf = self;
-    [globalRcsApi setGroupEventListener:^(rcs_state*R, GroupEventSession* s)
-     {
-         //[weakSelf AddLogC:"call GroupEventListener"];
-     }];
-}
-
-//服务端推送群组通知的信息 这个类型中,描述的是群组其他人发生的和自己无关,不需要额外处理群操作事件监听器
-- (void)registerGroupNotifyListener
-{
-    //__weak typeof(self) weakSelf = self;
-    [globalRcsApi setGroupNotifyListener:^(rcs_state*R,  GroupNotificationSession* s)
-     {
-         //[weakSelf AddLogC:"call GroupNotifyListener"];
-     }];
-}
-
-
-- (void)registerListeners
-{
-    [self registerMsgListener];
-    [self registerGroupNotifyListener];
-    [self registerGroupListListener];
-    [self registerGroupInfoListener];
-    [self registerGroupEventListener];
 }
 
 

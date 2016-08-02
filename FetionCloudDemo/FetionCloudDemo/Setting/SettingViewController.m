@@ -349,45 +349,62 @@
 {
     
     
-    [globalRcsApi logout:R callback:^(rcs_state *R, LogoutResult *s) {
-        if (s->error_code == 200) {
-            
-            CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
-            table.password = @"";
-            [CurrentUserTable update:table];
-            
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
-            
-            dispatch_async(dispatch_get_main_queue(),^{
-                
-                //[[[UIAlertView alloc] initWithTitle:@"" message:@"注销成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
-            });
-            
-            //注销登录停止实例R
-            [globalRcsApi stop:R callback:^(rcs_state *R, ActionResult *s) {
-                
-                if (s->error_code == 200) {
-                    
-                    NSLog(@"succeed");
-                    
-                }else{
-                
-                    NSLog(@"failed");
-                
-                }
-            }];
-            
-        }else{
-            
-            dispatch_async(dispatch_get_main_queue(),^{
-                
-                [[[UIAlertView alloc] initWithTitle:@"" message:@"注销失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-                
-            });
-        }
-    }];
+    [globalRcsApi logout:R];
+    
+    CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
+    table.password = @"";
+    [CurrentUserTable update:table];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    
+    
+    //注销登录停止实例R
+    
+   // [globalRcsApi stop:R];
+    
+    [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
+    
+    
+//    [globalRcsApi logout:R callback:^(rcs_state *R, LogoutResult *s) {
+//        if (s->error_code == 200) {
+//            
+//            CurrentUserTable *table = [CurrentUserTable getWithUserId:[[FNUserConfig getInstance] userID]];
+//            table.password = @"";
+//            [CurrentUserTable update:table];
+//            
+//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"name"];
+//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+//            
+//            dispatch_async(dispatch_get_main_queue(),^{
+//                
+//                //[[[UIAlertView alloc] initWithTitle:@"" message:@"注销成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+//                [UIApplication sharedApplication].keyWindow.rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginController"];
+//            });
+//        
+//            
+////            [globalRcsApi stop:R callback:^(rcs_state *R, ActionResult *s) {
+////                
+////                if (s->error_code == 200) {
+////                    
+////                    NSLog(@"succeed");
+////                    
+////                }else{
+////                
+////                    NSLog(@"failed");
+////                
+////                }
+////            }];
+//            
+//        }else{
+//            
+//            dispatch_async(dispatch_get_main_queue(),^{
+//                
+//                [[[UIAlertView alloc] initWithTitle:@"" message:@"注销失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+//                
+//            });
+//        }
+//    }];
     
     
 }

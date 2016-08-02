@@ -18,11 +18,10 @@ typedef struct Group Group;
 typedef struct UserInfo UserInfo;
 typedef struct EndPoint EndPoint;
 typedef struct UserProfileResult UserProfileResult;
+typedef struct Conversation Conversation;
 typedef struct LogoutResult LogoutResult;
 typedef struct CapsResult CapsResult;
-typedef struct EndpointSession EndpointSession;
 typedef struct AVResult AVResult;
-typedef struct EPManagerSession EPManagerSession;
 typedef struct GroupNotificationSession GroupNotificationSession;
 typedef struct ProvisionResult ProvisionResult;
 typedef struct ActionResult ActionResult;
@@ -32,6 +31,7 @@ typedef struct MessageTextSession MessageTextSession;
 typedef struct UserPortraitResult UserPortraitResult;
 typedef struct MessageFTSession MessageFTSession;
 typedef struct GroupResult GroupResult;
+typedef struct EndpointChangedSession EndpointChangedSession;
 typedef struct SearchGroupResult SearchGroupResult;
 typedef struct Conference Conference;
 typedef struct SearchGroupInfo SearchGroupInfo;
@@ -39,10 +39,14 @@ typedef struct AvSession AvSession;
 typedef struct TokenResult TokenResult;
 typedef struct MessageCustomSession MessageCustomSession;
 typedef struct BuddyEventSession BuddyEventSession;
+typedef struct EndpointResult EndpointResult;
+typedef struct MsgConvStatusSession MsgConvStatusSession;
 typedef struct MemberInfo MemberInfo;
 typedef struct BuddyResult BuddyResult;
-typedef struct GroupListSession GroupListSession;
+typedef struct MsgStatusSession MsgStatusSession;
 typedef struct GroupSession GroupSession;
+typedef struct GroupListSession GroupListSession;
+typedef struct LogoutSession LogoutSession;
 typedef struct MessageEmoticonSession MessageEmoticonSession;
 typedef struct MessageCloudFileSession MessageCloudFileSession;
 typedef struct AvCrypto AvCrypto;
@@ -58,9 +62,10 @@ typedef struct MessageResult MessageResult;
  *
  */
 struct MessageReportSession {
-    const char* report_value; ///<消息报告值
     const char* imdn_id; ///<消息唯一标识id
+    const char* from_user; ///<发送用户
     int report_type; ///<消息报告类型，@see {ReportType}
+    const char* report_value; ///<消息报告值
 };
 
 /**
@@ -137,13 +142,20 @@ struct UserInfo {
 };
 
 /**
- * @brief PC终端信息
+ * @brief 终端对象
  *
  */
 struct EndPoint {
-    const char* epid; ///<终端epid
-    const char* client_type; ///<终端类型
-    const char* client_version; ///<终端版本
+    int create_time; ///<设备激活时间
+    const char* client_id; ///<客户端标识
+    int client_type; ///<客户端类型
+    const char* client_name; ///<客户端名称、服务器根据client_type配置，用于UI显示
+    const char* client_version; ///<客户端版本
+    int is_self; ///<是否自己设备 0: 否, 1 是
+    const char* device_model; ///<设备Model
+    int presence; ///<在线状态 -1 不在线 0	隐身或不在线 1	在线
+    int client_caps; ///<客户端能力
+    int last_active_time; ///<最后活跃时间
 };
 
 /**
@@ -171,6 +183,15 @@ struct UserProfileResult {
     int sid; ///<任务id,用于匹配是哪次api调用
     const char* username; ///<用户名
     int error_code; ///<错误码
+};
+
+/**
+ * @brief 此类描述会话状态信息
+ *
+ */
+struct Conversation {
+    const char* conv_id; ///<为客户端会话Id，为: Uid / GroupId
+    const char* max_sole_id; ///<会话最大消息id
 };
 
 /**
@@ -215,14 +236,6 @@ struct CapsResult {
 };
 
 /**
- * @brief 此类描述当前终端的状态
- *
- */
-struct EndpointSession {
-    int state; ///返回的响应码，@see {EndpointState}
-};
-
-/**
  * @brief 音视频操作结果
  *
  * error_code 解释：
@@ -239,17 +252,6 @@ struct AVResult {
     int sid; ///<任务id,用于匹配是哪次api调用
     const char* error_extra; ///<错误描述
     int error_code; ///<错误码
-};
-
-/**
- * @brief 此类用于描述管理PC终端的的状态信息
- *
- */
-struct EPManagerSession {
-    int state; ///返回的响应码，@see {EPManagerStates}
-    int operation; ///执行操作的类型，@see {EndpointOPEnum}
-    EndPoint** endpoints; ///终端信息，@see {EndPoint}
-    int sid; ///<任务id,用于匹配是哪次api调用
 };
 
 /**
@@ -278,8 +280,9 @@ struct GroupNotificationSession {
  */
 struct ProvisionResult {
     int user_id; ///<用户id
-    int sid; ///<任务id,用于匹配是哪次api调用
     const char* error_extra; ///<错误描述
+    int sid; ///<任务id,用于匹配是哪次api调用
+    const char* client_id; ///<客户端ID
     int error_code; ///<错误码
 };
 
@@ -335,20 +338,25 @@ struct BuddyInfo {
 struct MessageTextSession {
     const char* imdn_id; ///<消息id
     int is_silence; ///<是否需要静默
+    int is_burn_report; ///<是否已发送已焚报告
     int is_delivered; ///<是否已投递
+    int is_report; ///<是否已发送送达报告
+    const char* extension; ///<扩展字段(由客户端自定义,服务端透传)
+    const char* content; ///<文本内容
     int need_read_report; ///<是否需要已读报告
     int is_read; ///<是否已读
-    const char* to; ///<收信人id
-    const char* content; ///<文本内容
-    int send_time; ///<发送时间
     int is_open; ///<是否已打开
-    const char* contribution_id; ///<暂时没用
-    int need_report; ///<是否需要报告
-    int chat_type; ///<聊天类型，@see {ChatType}
-    const char* cc_number; ///<需要@的群成员号码，只在群消息中使用，分号分割
-    int directed_type; ///<定向消息类型，@see {DirectedType}
+    const char* to; ///<收信人id
+    int is_read_report; ///<是否已发送已读报告
+    int send_time; ///<发送时间
     int is_burn; ///<是否是阅后即焚
+    const char* cc_number; ///<需要@的群成员号码，只在群消息中使用，分号分割
+    int need_report; ///<是否需要送达报告
+    int chat_type; ///<聊天类型，@see {ChatType}
+    const char* contribution_id; ///<暂时没用
+    int directed_type; ///<定向消息类型，@see {DirectedType}
     const char* from; ///<发信人id
+    int need_burn_report; ///<是否需要已焚报告
 };
 
 /**
@@ -377,18 +385,21 @@ struct UserPortraitResult {
 struct MessageFTSession {
     const char* imdn_id; ///<消息id
     int is_silence; ///<是否需要静默
+    int is_burn_report; ///<是否已发送已焚报告
     const char* file_path; ///<文件保存路径
     int is_delivered; ///<是否已投递
-    int is_report; ///<本消息是否是报告
+    int is_report; ///<是否已发送送达报告
     const char* file_name; ///<文件名
+    const char* extension; ///<扩展字段(由客户端自定义,服务端透传)
     const char* cc_number; ///<需要@的群成员号码，只在群消息中使用，分号分割
     const char* file_hash; ///<文件hash值
     const char* transfer_id; ///<传输id，下载该文件时使用
+    int file_size; ///<文件大小
     int need_read_report; ///<是否需要已读报告
     int is_read; ///<是否已读
-    int file_size; ///<文件大小
-    const char* to; ///<收信人id
     int is_open; ///<是否已打开
+    const char* to; ///<收信人id
+    int is_read_report; ///<是否已发送已读报告
     int send_time; ///<发送时间
     int is_burn; ///<是否是阅后即焚
     const char* thumbnail_path; ///<缩略图保存路径，只有图片和视频有效
@@ -417,6 +428,15 @@ struct GroupResult {
     int sid; ///<任务id,用于匹配是哪次api调用
     const char* error_extra; ///<错误描述
     int error_code; ///<错误码
+};
+
+/**
+ * @brief 此类描述变化设备节点信息
+ *
+ */
+struct EndpointChangedSession {
+    int action; ///1. login 2. logout
+    EndPoint* endpoint; ///<变化的登陆点
 };
 
 /**
@@ -537,6 +557,34 @@ struct BuddyEventSession {
 };
 
 /**
+ * @brief 此类用于记录获取设备节点的结果
+ *
+ * error_code 解释：
+ * 200:
+ * 408: 请求超时
+ * 500: 服务器错误
+ * -2: 网络错误
+ * -1: 未知错误
+ *
+ */
+struct EndpointResult {
+    EndPoint** endpoints; ///<所有激活的登录设备
+    int sid; ///<任务id,用于匹配是哪次api调用
+    const char* error_extra; ///<错误描述
+    int error_code; ///<错误码
+};
+
+/**
+ * @brief 此类描述同步会话状态信息
+ *
+ */
+struct MsgConvStatusSession {
+    Conversation** conversations; ///<会话状态
+    int convstate; ///<会话状态操作类型, 1:已读 2:删除
+    int chat_type; ///<聊天类型，@see {ChatType}
+};
+
+/**
  *@brief 描述群组成员的信息
  *
  */
@@ -566,15 +614,18 @@ struct BuddyResult {
 };
 
 /**
- * @brief 此类用于记录群列表的信息
+ * @brief 此类描述同步消息状态信息
  *
  */
-struct GroupListSession {
-    const char* user; ///<用户
-    int sync_mode; ///<更新模式: 1增量，2全量
-    const char* version; ///<版本号
-    int sid; ///<任务id,用于匹配是哪次api调用
-    Group** groups; ///<群组列表信息，@see {Group}
+struct MsgStatusSession {
+    const char* imdn_id; ///<消息id
+    int burn_sent; ///<已发送已焚报告 0: 未焚(默认) 1: 已焚
+    int read; ///<已读状态 0: 未读(默认) 1: 已读
+    int deleted; ///<已删除状态  0:未删除(默认) 1:已删除 
+    int time; ///<操作时间
+    int read_sent; ///<已发送已读报告 0: 未读(默认) 1: 已读
+    int opened; ///<打开状态  0:未打开(默认) 1:已打开 (如媒体已经播放)
+    int delivery_sent; ///<已发送送达报告 0: 未送达(默认) 1: 已经送达
 };
 
 /**
@@ -582,13 +633,36 @@ struct GroupListSession {
  *
  */
 struct GroupSession {
-    MemberInfo** members; ///<群成员列表, @see {MemberInfo}
-    const char* group_uri; ///<群组标识
     int create_time; ///<群创建时间，UTC时间，秒
+    int flag; ///<群状态 0:活动的,1:已删除
+    const char* bulletin; ///<群公告
+    const char* group_uri; ///<群组标识
+    MemberInfo** members; ///<群成员列表, @see {MemberInfo}
     const char* version; ///<版本号
+    const char* introduce; ///<群简介
     int sid; ///<任务id,用于匹配是哪次api调用
     int user_count; ///<当前群成员数量
     const char* subject; ///<群名称
+};
+
+/**
+ * @brief 此类用于记录群列表的信息
+ *
+ */
+struct GroupListSession {
+    const char* user; ///<用户
+    int sync_mode; ///<更新模式: 1增量，2全量
+    int sid; ///<任务id,用于匹配是哪次api调用
+    Group** groups; ///<群组列表信息，@see {Group}
+};
+
+/**
+ * @brief 此类描述强制下线通知(服务器在下发完通知后会立即关闭连接，客户端收到通知后不应该再自动重连)
+ *
+ */
+struct LogoutSession {
+    const char* reason; ///<原因描述
+    int type; ///类型，@see {LogoutType}
 };
 
 /**

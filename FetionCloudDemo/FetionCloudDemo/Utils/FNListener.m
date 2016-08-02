@@ -373,19 +373,20 @@
          
          if(s->need_report)
          {
-             NSString* from = [NSString stringWithUTF8String:s->from];
-             NSString* messageId = [NSString stringWithUTF8String:s->imdn_id];
-             [globalRcsApi msgsendreport:R number:from messageId:messageId reportType:ReportTypeDELIVERED directedType:DirectedTypeNONE callback:^(rcs_state* R, MessageResult *s) {
-                 if (s->error_code == 200) {
-                     //[weakSelf AddLogC:"send report ok"];
-                     NSLog(@"send report ok");
-                 }
-                 else
-                 {
-                     //[weakSelf AddLogC:"send report failed"];
-                     NSLog(@"send report failed");
-                 }
-             }];
+            // NSString* from = [NSString stringWithUTF8String:s->from];
+             //NSString* messageId = [NSString stringWithUTF8String:s->imdn_id];
+             
+//             [globalRcsApi msgsendreport:R number:from messageId:messageId reportType:ReportTypeDELIVERED directedType:DirectedTypeNONE callback:^(rcs_state* R, MessageResult *s) {
+//                 if (s->error_code == 200) {
+//                     //[weakSelf AddLogC:"send report ok"];
+//                     NSLog(@"send report ok");
+//                 }
+//                 else
+//                 {
+//                     //[weakSelf AddLogC:"send report failed"];
+//                     NSLog(@"send report failed");
+//                 }
+//             }];
          }
      }];
     

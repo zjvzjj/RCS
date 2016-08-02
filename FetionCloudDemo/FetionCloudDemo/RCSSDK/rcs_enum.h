@@ -24,18 +24,17 @@ DirectedType DirectedTypeFromInt(int v);
 const char* DirectedTypeToString(DirectedType v);
 
 /**
- * @brief 当前终端的在线状态表示
- *
+ * @brief 推送服务器类型
  */
 typedef enum {
-    EndpointStatesCONNECTED = 2, ///<已重新连接服务器
-    EndpointStatesBOOTED = 3, ///<被其他终端踢下线
-    EndpointStatesCONNECT_FAILED = 1, ///<与服务器连接失败
-    EndpointStatesUnknown = -255,
-}EndpointStates;
+    ServerTypeNONE = 1, ///<APNS
+    ServerTypeOTHER = 2, ///<GCM
+    ServerTypePC = 3, ///<小米
+    ServerTypeUnknown = -255,
+}ServerType;
 
-EndpointStates EndpointStatesFromInt(int v);
-const char* EndpointStatesToString(EndpointStates v);
+ServerType ServerTypeFromInt(int v);
+const char* ServerTypeToString(ServerType v);
 
 /**
  * @brief 好友关系操作类型
@@ -59,6 +58,9 @@ const char* BuddyOpsToString(BuddyOps v);
  */
 typedef enum {
     GroupOpEnumJOIN_GROUP = 3, ///<加入群
+    GroupOpEnumCREATE_GROUP = 2, ///<创建群
+    GroupOpEnumMODIFY_INTRODUCE = 13, ///<修改群简介
+    GroupOpEnumREJECT_GROUP = 12, ///<拒绝加入群
     GroupOpEnumINVITE_MEMBER = 1, ///<邀请群成员
     GroupOpEnumMODIFY_SUBJECT = 7, ///<修改群名称
     GroupOpEnumREMOVE_USER = 5, ///<移除群成员
@@ -68,7 +70,7 @@ typedef enum {
     GroupOpEnumMODIFY_NICKNAME = 8, ///<修改群昵称
     GroupOpEnumCHANGE_MANAGER = 6, ///<转让群管理员
     GroupOpEnumEXIT_GROUP = 4, ///<退出群组
-    GroupOpEnumCREATE_GROUP = 2, ///<创建群
+    GroupOpEnumMODIFY_BULLETIN = 14, ///<修改群公告
     GroupOpEnumUnknown = -255,
 }GroupOpEnum;
 
@@ -135,17 +137,22 @@ BuddySyncMode BuddySyncModeFromInt(int v);
 const char* BuddySyncModeToString(BuddySyncMode v);
 
 /**
- * @brief 推送服务器类型
+ * @brief 强制下线的类型
+ *
  */
 typedef enum {
-    ServerTypeNONE = 1, ///<APNS
-    ServerTypeOTHER = 2, ///<GCM
-    ServerTypePC = 3, ///<小米
-    ServerTypeUnknown = -255,
-}ServerType;
+    LogoutTypeMANAFORCEOFFLINE = 101, ///<管理员远程删除(删密码)
+    LogoutTypeBOOTED = 4, ///<被设备管理踢下线（需用户主动登陆）
+    LogoutTypeBLOCKED = 3, ///<冻结
+    LogoutTypeCLOSED = 2, ///<销户
+    LogoutTypeREPEATLOGIN = 1, ///<重复登陆(使用相同的ClientId)
+    LogoutTypeFORCEOFFLINE = 100, ///<无理由强制下线
+    LogoutTypeDELETE = 5, ///<被设备管理删除(删密码)
+    LogoutTypeUnknown = -255,
+}LogoutType;
 
-ServerType ServerTypeFromInt(int v);
-const char* ServerTypeToString(ServerType v);
+LogoutType LogoutTypeFromInt(int v);
+const char* LogoutTypeToString(LogoutType v);
 
 /**
  * @brief 终端管理接口调用的结果枚举
@@ -165,17 +172,22 @@ EPManagerStates EPManagerStatesFromInt(int v);
 const char* EPManagerStatesToString(EPManagerStates v);
 
 /**
- * @brief 终端管理操作类型的枚举
+ * @brief 客户端类型
  */
 typedef enum {
-    EndpointOPEnumKICK_ENDPOINT = 2, ///<踢其他终端下线
-    EndpointOPEnumGEN_PC_TOKEN = 3, ///<扫描二维码登录PC终端
-    EndpointOPEnumGET_EP_STATUS = 1, ///<获取其他终端在线状态
-    EndpointOPEnumUnknown = -255,
-}EndpointOPEnum;
+    ClientTypePC = 3, ///<PC
+    ClientTypeMAC = 6, ///<Mac
+    ClientTypeUNKNOWN = 0, ///<Unknown
+    ClientTypeANDROID = 1, ///<Android
+    ClientTypeIPAD = 5, ///<IPad
+    ClientTypeOPENAPI = 100, ///<OpenApi
+    ClientTypeWEB = 4, ///<WEB
+    ClientTypeIPHONE = 2, ///<iPhone
+    ClientTypeUnknown = -255,
+}ClientType;
 
-EndpointOPEnum EndpointOPEnumFromInt(int v);
-const char* EndpointOPEnumToString(EndpointOPEnum v);
+ClientType ClientTypeFromInt(int v);
+const char* ClientTypeToString(ClientType v);
 
 /**
  * @brief 聊天类型
