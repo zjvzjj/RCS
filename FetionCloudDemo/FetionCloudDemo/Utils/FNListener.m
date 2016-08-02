@@ -340,7 +340,7 @@
          }
          
          
-         message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
+         message.sendtime = s->send_time;
          [FNMsgTable insert:message];
          
          //最近会话
@@ -365,9 +365,11 @@
          [FNRecentConversationTable updateContent:info.content tid:info.targetId];
          [FNRecentConversationTable updateContent:info.content tid:[NSString stringWithFormat:@"%s",s->from]];
         
-         
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"listNewMessage" object:nil];
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"listNewMessage" object:nil];
+         });
+     
          // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_HAS_NEW_MSG object:message];
          
          
@@ -550,8 +552,9 @@
              [FNRecentConversationTable insert:info];
              
              //[[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
+             dispatch_async(dispatch_get_main_queue(), ^{
              [[NSNotificationCenter defaultCenter] postNotificationName:@"listNewMessage" object:nil];
-             
+             });
              weakSelf.localNum =[[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
              //下载富文本文件
              [globalRcsApi msgfetchfile:R number:weakSelf.localNum
@@ -576,9 +579,9 @@
                                        NSLog(@"fetch file ok");
                                        message.playTime = seconds;
                                        [FNMsgTable insert:message];
-                                       
+                                       dispatch_async(dispatch_get_main_queue(), ^{
                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:message];
-                                       
+                                       });
                                    }else{
                                        
                                        NSLog(@"fetch file failed");

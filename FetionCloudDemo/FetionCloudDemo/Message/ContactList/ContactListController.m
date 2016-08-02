@@ -168,11 +168,12 @@
     }
     
     ContactRequestTable *t = notify.object;
-    
-    [ContactRequestTable insert:t];
-    
-    [_addBuddyArray addObject:t];
-
+    [_addBuddyArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![((ContactRequestTable *)obj).userId isEqualToString:t.userId])  {
+            [_addBuddyArray addObject:t];
+            [ContactRequestTable insert:t];
+        }
+    }];
     dispatch_async(dispatch_get_main_queue(),^{
         
         [self.tableView reloadData];

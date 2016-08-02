@@ -419,7 +419,7 @@
     __block BOOL result = NO;
     BOPFMDatabaseQueue *queue = [FNDBManager sharedDatabaseQueue];
     [queue inDatabase:^(BOPFMDatabase *db) {
-        NSString *sql = [NSString stringWithFormat:@"replace into Message values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"];
+        NSString *sql = [NSString stringWithFormat:@"replace into Message values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"];
         result = [db executeUpdate:sql,
                   [NSNumber numberWithLongLong:message.syncId],
                   message.msgId,
@@ -434,7 +434,8 @@
                   [NSNumber numberWithInt:message.sendStatus],
                   [NSNumber numberWithInt:message.readStatus],
                   [NSNumber numberWithInt:message.flag],
-                  message.createDate];
+                  message.createDate,
+                  [NSNumber numberWithInt:message.sendtime]];
     }];
     if (!result)
     {

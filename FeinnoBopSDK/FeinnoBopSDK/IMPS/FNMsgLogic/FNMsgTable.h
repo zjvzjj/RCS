@@ -88,7 +88,7 @@
  *  消息的发送日期
  */
 @property (nonatomic) NSString *createDate;
-
+@property (nonatomic) NSInteger sendtime;
 /** 富文本表部分 **/
 
 /**

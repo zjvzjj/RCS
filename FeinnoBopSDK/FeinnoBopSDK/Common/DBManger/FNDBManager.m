@@ -48,7 +48,7 @@ static BOPFMDatabaseQueue *queue;
         [db executeUpdate:@"create table Contact (name text, mobileNo text primary key, email text, userId text, registerStatus integer, relationship integer, relationshipUserId text, extension text, version text)"];
         
         // 消息表
-        [db executeUpdate:@"create table Message (syncId integer, msgId text, tid text, msgType text, msgAttribute text, contentType text, content text, senderNickname text, senderId text, senderPortraitUrl text, sendStatus integer, readStatus integer, srFlag integer, createDate datetime, primary key(syncId, msgId))"];
+        [db executeUpdate:@"create table Message (syncId integer, msgId text, tid text, msgType text, msgAttribute text, contentType text, content text, senderNickname text, senderId text, senderPortraitUrl text, sendStatus integer, readStatus integer, srFlag integer, createDate datetime,sendtime integer, primary key(syncId, msgId))"];
         // 对消息表 msgId列 加索引
 //        [db executeUpdate:@"create index idx_message on Message(msgId)"];
         

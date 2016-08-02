@@ -24,8 +24,38 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "400"
-            endingLineNumber = "400"
-            landmarkName = "-registerBuddyListListener"
+            endingLineNumber = "400">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FeinnoBopSDK/FeinnoBopSDK/Dependency/fmdb/BOPFMDatabase.m"
+            timestampString = "491854223.753324"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1110"
+            endingLineNumber = "1110"
+            landmarkName = "-executeUpdate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FeinnoBopSDK/FeinnoBopSDK/Dependency/fmdb/BOPFMDatabase.m"
+            timestampString = "491854436.378819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "943"
+            endingLineNumber = "943"
+            landmarkName = "-executeUpdate:error:withArgumentsInArray:orDictionary:orVAList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
