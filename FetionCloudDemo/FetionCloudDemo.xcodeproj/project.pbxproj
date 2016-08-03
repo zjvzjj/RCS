@@ -2003,7 +2003,6 @@
 				TargetAttributes = {
 					6BFC10ED1C21190500D18548 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = KB2UR45D3W;
 					};
 					6BFC11061C21190500D18548 = {
 						CreatedOnToolsVersion = 7.1;

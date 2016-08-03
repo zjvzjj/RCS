@@ -516,7 +516,7 @@
              message.readStatus = MsgAlreadyRead;
              message.receiveStatus = MsgReceiveSuccess;
              message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
-         
+             message.sendtime = s->send_time;
              
              if ([userId isEqualToString:message.senderId]) {
                  

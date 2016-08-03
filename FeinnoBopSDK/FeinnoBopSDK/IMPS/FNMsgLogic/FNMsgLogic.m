@@ -239,6 +239,8 @@
     message.readStatus = MsgAlreadyRead;
     message.flag = MsgSendFlag;
     message.createDate = [FNSystemConfig dateToString:[FNSystemConfig getLocalDate]];
+    UInt64 sendTime = [[NSDate date] timeIntervalSince1970];
+    message.sendtime = sendTime;
     [FNMsgTable insert:message];
     
     FNRecentConversationTable *info = [[FNRecentConversationTable alloc] init];

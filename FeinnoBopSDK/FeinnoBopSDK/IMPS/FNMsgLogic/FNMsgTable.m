@@ -33,12 +33,12 @@
             number = MIN(num, msgsSum);
             int off = msgsSum > number ? (int)msgsSum - number : 0;
       //    sql = [NSString stringWithFormat:@"select * from Message where tid=? and readStatus=%d order by syncId asc, createDate asc limit %d offset %d", (int32_t)MsgAlreadyRead, number, off];
-            sql = [NSString stringWithFormat:@"select * from Message where tid=? and readStatus=%d order by createDate asc, syncId asc limit %d offset %d", (int32_t)MsgAlreadyRead, number, off];
+            sql = [NSString stringWithFormat:@"select * from Message where tid=? and readStatus=%d order by sendtime asc, syncId asc limit %d offset %d", (int32_t)MsgAlreadyRead, number, off];
 
         }
         else
         {
-            sql = [NSString stringWithFormat:@"select * from Message where tid=? order by createDate asc, syncId asc"];
+            sql = [NSString stringWithFormat:@"select * from Message where tid=? order by sendtime asc, syncId asc"];
         }
         rs = [db executeQuery:sql, targetId];
         while ([rs next])
@@ -120,11 +120,11 @@
             int off = 0;
             number = unreadMsgsCount; // 未读消息全部取出
             off = msgsSum > number ? msgsSum - number : 0;
-            sql = [NSString stringWithFormat:@"select * from Message where tid=? order by syncId asc, createDate asc limit %d offset %d", number, off];
+            sql = [NSString stringWithFormat:@"select * from Message where tid=? order by syncId asc, sendtime asc limit %d offset %d", number, off];
         }
         else if (-1 == num)
         {
-            sql = [NSString stringWithFormat:@"select * from Message where tid=? order by syncId asc, createDate asc"];
+            sql = [NSString stringWithFormat:@"select * from Message where tid=? order by syncId asc, sendtime asc"];
         }
         rs = [db executeQuery:sql, targetId];
         while ([rs next])
